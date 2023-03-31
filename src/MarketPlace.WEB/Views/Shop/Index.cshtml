@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ShopViewModel>
+
+@{
+    ViewData["Title"] = "Магазины";
+    int num = 1;
+}
+
+<h2>Список магазинов</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Название</th>
+            <th>Описание</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var shop in Model)
+        {
+            <tr>
+                <td>@(num++)</td>
+                <td>@shop.Name</td>
+                <td><textarea readonly>@shop.Description</textarea></td>
+
+                <td>
+                    <a asp-action="Edit" asp-controller="Shop" asp-route-id="@shop.Id">Изменить</a>
+                </td>
+                <td>
+                    <form asp-action="Delete" asp-controller="Shop" method="post" asp-route-id="@shop.Id">
+                        <input type="submit" value="Удалить" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-controller="Shop" asp-action="Create">Добавить магазин</a>
+</p>

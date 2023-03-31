@@ -20,8 +20,18 @@
             {
                 <div>
                     <a asp-controller="Account" asp-action="Logout">Выйти</a>
-                    <p>Логин: @User.FindFirst(ClaimsIdentity.DefaultNameClaimType)?.Value</p>
-                    <p>Роль: @User.FindFirst(ClaimsIdentity.DefaultRoleClaimType)?.Value</p>
+                    <p>Логин: @User.FindFirst(ClaimsIdentity.DefaultNameClaimType)?.Value. 
+                       Роль: @User.FindFirst(ClaimsIdentity.DefaultRoleClaimType)?.Value</p>
+                </div>
+            }
+
+            @if (User.IsInRole(MarketPlace.DAL.Enum.Role.Admin.ToString()))
+            {
+                <div>
+                    <span>Админ-панель: </span> 
+                    <a asp-controller="Shop" asp-action="Index">Магазины</a> |
+                    <a asp-controller="Account" asp-action="Register">Продавцы</a> |
+                    <a asp-controller="Account" asp-action="Register">Покупатели</a> 
                 </div>
             }
         </p> 

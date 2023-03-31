@@ -1,0 +1,27 @@
+﻿@model ShopViewModel
+
+@{
+    ViewData["Title"] = "Добавление магазина";
+}
+
+<h2>Добавление магазина</h2>
+
+<form asp-action="Create" asp-controller="Shop">
+    <div>
+        <p>
+            <label asp-for="Name"></label>
+            <input asp-for="Name"/>
+            <span asp-validation-for="Name" />
+        </p>
+        <p>
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" />
+        </p>
+        <p>
+            <input type="submit" value="Добавить" />
+        </p>
+    </div>
+</form>
+
+<div asp-validation-summary="All"></div>

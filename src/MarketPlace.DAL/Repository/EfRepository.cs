@@ -30,22 +30,22 @@ public class EfRepository<T> : IRepository<T> where T : Entity
 
     public async Task<T?> FirstOrDefaultAsync(Func<T, bool> filter)
     {
-        return await Task.Run(() => _entities.FirstOrDefault(filter));
+        return await Task.Run(() => _entities.AsNoTracking().FirstOrDefault(filter));
     }
 
     public async Task<T?> GetByIdAsync(int id)
     {
-        return await Task.Run(() => _entities.FirstOrDefault(e => e.Id == id));
+        return await Task.Run(() => _entities.AsNoTracking().FirstOrDefault(e => e.Id == id));
     }
 
     public async Task<IReadOnlyList<T>> ListAllAsync()
     {
-        return await _entities.ToListAsync();
+        return await _entities.AsNoTracking().ToListAsync();
     }
 
     public async Task<IReadOnlyList<T>> ListAsync(Func<T, bool> filter)
     {
-        return await Task.Run(() => _entities.Where(filter).ToList());
+        return await Task.Run(() => _entities.AsNoTracking().Where(filter).ToList());
     }
 
     public async Task UpdateAsync(T entity)

@@ -25,15 +25,20 @@ builder.Services.AddAuthorization();
 // Database configuration.
 var connection = builder.Configuration.GetConnectionString("SQLiteConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(connection), ServiceLifetime.Singleton);
+    options.UseSqlite(connection));
 
-// Registering repositories.
-builder.Services.AddSingleton<IRepository<Product>, EfRepository<Product>>();
-builder.Services.AddSingleton<IRepository<User>, EfRepository<User>>();
-builder.Services.AddSingleton<IUnitOfWork, EfUnitOfWork>();
+// Repositories registration.
+builder.Services.AddScoped<IRepository<User>, EfRepository<User>>();
+builder.Services.AddScoped<IRepository<Customer>, EfRepository<Customer>>();
+builder.Services.AddScoped<IRepository<Seller>, EfRepository<Seller>>();
+builder.Services.AddScoped<IRepository<Shop>, EfRepository<Shop>>();
+builder.Services.AddScoped<IRepository<Product>, EfRepository<Product>>();
+builder.Services.AddScoped<IRepository<CustomerProfile>, EfRepository<CustomerProfile>>();
+builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
-// Registering services.
-builder.Services.AddSingleton<IAccountService, AccountService>();
+// Services registration.
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IShopService, ShopService>();
 
 
 var app = builder.Build();

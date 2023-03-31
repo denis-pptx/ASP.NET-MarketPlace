@@ -6,6 +6,9 @@ public enum StatusCode
     WrongPassword,
     LoginIsUsed,
 
+    ShopNameIsUsed,
+    NoSuchShop,
+
     OK = 200,
     InternalServerError = 500
 }
