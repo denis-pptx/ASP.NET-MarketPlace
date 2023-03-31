@@ -1,0 +1,27 @@
+﻿@model MarketPlace.BLL.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Sign In";
+}
+
+<h2>Login Form</h2>
+
+<form asp-action="Login" asp-controller="Account">
+    <div>
+        <p>
+            <label asp-for="Login"></label>
+            <input asp-for="Login"/>
+            <span asp-validation-for="Login"/>
+        </p>
+        <p>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" />
+            <span asp-validation-for="Password"/>
+        </p>
+        <p>
+            <input type="submit" value="Sign In" />
+        </p>
+    </div>
+</form>
+
+<div asp-validation-summary="All"></div>

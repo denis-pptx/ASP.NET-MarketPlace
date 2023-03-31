@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <div>
+        <a asp-controller="Home" asp-action="Index">Главная</a> 
+
+        <p>
+            @if (!User.Identity!.IsAuthenticated)
+            {
+                <div>
+                    <a asp-controller="Account" asp-action="Login">Войти</a> |
+                    <a asp-controller="Account" asp-action="Register">Зарегистрироваться</a> 
+                </div>
+            }
+            else
+            {
+                <div>
+                    <a asp-controller="Account" asp-action="Logout">Выйти</a>
+                    <p>Логин: @User.FindFirst(ClaimsIdentity.DefaultNameClaimType)?.Value</p>
+                    <p>Роль: @User.FindFirst(ClaimsIdentity.DefaultRoleClaimType)?.Value</p>
+                </div>
+            }
+        </p> 
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

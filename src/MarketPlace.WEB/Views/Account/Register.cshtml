@@ -1,0 +1,32 @@
+﻿@model MarketPlace.BLL.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Sign Up";
+}
+
+<h2>Register Form</h2>
+
+<form asp-action="Register" asp-controller="Account" >
+    <div>
+        <p>
+            <label asp-for="Login"></label>
+            <input asp-for="Login"/>
+            <span asp-validation-for="Login"/>
+        </p>
+        <p>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" />
+            <span asp-validation-for="Password" />
+        </p>
+        <p>
+            <label asp-for="PasswordConfirm"></label>
+            <input asp-for="PasswordConfirm" />
+            <span asp-validation-for="PasswordConfirm" />
+        </p>
+        <p>
+            <input type="submit" value="Sign Up" />
+        </p>
+    </div>
+</form>
+
+<div asp-validation-summary="All"></div>

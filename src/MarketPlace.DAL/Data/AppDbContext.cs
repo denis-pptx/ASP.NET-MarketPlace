@@ -17,7 +17,7 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-		User admin = new User { Id = 1, Login = "admin", Password = "admin" };
+		User admin = new User { Id = 1, Login = "admin", Password = "admin", Role = Enum.Role.Administrator };
 		Product product1 = new Product { Id = 1, Description = "descr", Name = "phone", Price = 500 };
 
 		modelBuilder.Entity<User>().HasData(admin);
