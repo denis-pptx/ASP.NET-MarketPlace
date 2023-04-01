@@ -15,7 +15,7 @@
         <input type="submit" value="Фильтр" />
     </div>
 </form>
-
+@ViewBag.H
 <table border="1">
     <thead>
         <tr>
@@ -33,6 +33,15 @@
                 <td>@seller.Login</td>
                 <td>@seller.Password</td>
                 <td>@seller.Shop.Name</td>
+
+                <td>
+                <a asp-action="Edit" asp-controller="Seller" asp-route-id="@seller.Id">Изменить</a>
+                </td>
+                <td>
+                    <form asp-action="Delete" asp-controller="Seller" method="post" asp-route-id="@seller.Id">
+                        <input type="submit" value="Удалить" />
+                    </form>
+                </td>
             </tr>
         }
     </tbody>

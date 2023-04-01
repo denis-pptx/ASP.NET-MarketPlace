@@ -9,6 +9,8 @@ public enum StatusCode
     ShopNameIsUsed,
     ShopNotFound,
 
+    UserLoginIsUsed,
+    SellerNotFound,
 
     OK = 200,
     InternalServerError = 500

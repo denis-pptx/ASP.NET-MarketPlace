@@ -8,11 +8,11 @@ public interface ISellerService
 {
     Task<Response<IEnumerable<Seller>>> GetByShopIdAsync(int? shopId);
 
-    // Task<Response<bool>> CreateAsync(ShopViewModel vm);
+    Task<Response<bool>> CreateAsync(Seller seller);
 
-    // Task<Response<bool>> DeleteAsync(int id);
+    Task<Response<bool>> DeleteAsync(int id);
 
-    // Task<Response<ShopViewModel>> GetByIdAsync(int id);
+    Task<Response<Seller>> GetByIdAsync(int id);
 
-    // Task<Response<bool>> UpdateAsync(ShopViewModel vm);
+    Task<Response<bool>> UpdateAsync(Seller shop);
 }

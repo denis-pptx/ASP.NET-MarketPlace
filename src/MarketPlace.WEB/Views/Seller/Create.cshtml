@@ -1,0 +1,34 @@
+﻿@model Seller
+
+@{
+    ViewData["Title"] = "Добавление продавца";
+}
+
+<h2>Добавление продавца</h2>
+
+<form asp-action="Create" asp-controller="Seller">
+    <div>
+        
+        <p>
+            <label asp-for="Login"></label>
+            <input asp-for="Login" />
+            <span asp-validation-for="Login" />
+        </p>
+        <p>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" />
+            <span asp-validation-for="Password" />
+        </p>
+        <input type="hidden" name="Role" value="@MarketPlace.DAL.Enum.Role.Seller">
+        <p>
+            <label for="shop">Shop</label>
+            <select id="shop" name="shopId" asp-items="@ViewBag.Shops"></select>
+        </p>
+        <p>
+            <input type="submit" value="Добавить" />
+            <a asp-action="Index" asp-controller="Seller">Отменить</a>
+        </p>
+    </div>
+</form>
+
+<div asp-validation-summary="All"></div>

@@ -147,7 +147,6 @@ public class ShopService : IShopService
                 };
             }
 
-            shop.Id = item.Id;
             shop.Name = item.Name;
             shop.Description = item.Description;
             shop.Products = item.Products;
