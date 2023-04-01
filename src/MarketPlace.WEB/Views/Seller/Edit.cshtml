@@ -1,4 +1,4 @@
-﻿@model Seller
+﻿@model SellerViewModel
 
 @{
     ViewData["Title"] = "Изменение продавца";
@@ -6,27 +6,27 @@
 
 <h2>Изменение продавца</h2>
 
-<form asp-action="Edit" asp-controller="Seller">
+<form asp-action="Edit">
     <div>
 
         <p>
-            <label asp-for="Login"></label>
-            <input asp-for="Login" />
-            <span asp-validation-for="Login" />
+            <label asp-for="Seller.Login"></label>
+            <input asp-for="Seller.Login" name="Login" />
+            <span asp-validation-for="Seller.Login" />
         </p>
         <p>
-            <label asp-for="Password"></label>
-            <input asp-for="Password" />
-            <span asp-validation-for="Password" />
+            <label asp-for="Seller.Password"></label>
+            <input asp-for="Seller.Password" name="Password" />
+            <span asp-validation-for="Seller.Password" />
         </p>
         <input type="hidden" name="Role" value="@MarketPlace.DAL.Enum.Role.Seller">
         <p>
             <label for="shop">Shop</label>
-            <select id="shop" name="shopId" asp-items="@ViewBag.Shops"></select>
+            <select id="shop" name="ShopId" asp-items="@Model.Shops"></select>
         </p>
         <p>
             <input type="submit" value="Сохранить" />
-            <a asp-action="Index" asp-controller="Seller">Отменить</a>
+            <a asp-action="Index">Отменить</a>
         </p>
     </div>
 </form>

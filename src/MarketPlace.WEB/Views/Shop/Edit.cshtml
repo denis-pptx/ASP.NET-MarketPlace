@@ -6,11 +6,11 @@
 
 <h2>Изменение магазина</h2>
 
-<form asp-action="Edit" asp-controller="Shop">
+<form asp-action="Edit">
     <div>
         <p>
             <label asp-for="Name"></label>
-            <input asp-for="Name"/>
+            <input asp-for="Name" />
             <span asp-validation-for="Name" />
         </p>
         <p>
@@ -20,7 +20,7 @@
         </p>
         <p>
             <input type="submit" value="Сохранить" />
-            <a asp-action="Index" asp-controller="Shop">Отменить</a>
+            <a asp-action="Index">Отменить</a>
         </p>
     </div>
 </form>

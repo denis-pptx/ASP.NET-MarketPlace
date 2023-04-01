@@ -14,7 +14,6 @@ public class SellerListViewModel
 
         var sortedShops = shops.Skip(1).OrderBy(s => s.Name).ToList();
         sortedShops.Insert(0, shops.First());
-
         Shops = new SelectList(sortedShops, "Id", "Name", selectedValue);
     }
 }

@@ -39,12 +39,10 @@ public class SellerController : Controller
         var shopRespone = await _shopService.GetAsync();
         if (shopRespone.StatusCode == BLL.Infrastracture.StatusCode.OK)
         {
-            ViewBag.Shops = new SelectList(shopRespone.Data, "Id", "Name");
-            return View();
+            return View(new SellerViewModel(shopRespone.Data!));
         }
         return View("Error", shopRespone.Description);
     }
-
 
     [HttpPost]
     public async Task<IActionResult> Create(Seller item)
@@ -62,8 +60,7 @@ public class SellerController : Controller
         var shopRespone = await _shopService.GetAsync();
         if (shopRespone.StatusCode == BLL.Infrastracture.StatusCode.OK)
         {
-            ViewBag.Shops = new SelectList(shopRespone.Data!.OrderBy(s => s.Name), "Id", "Name");
-            return View(item);
+            return View(new SellerViewModel(shopRespone.Data!, item));
         }
         return View("Error", shopRespone.Description);
     }
@@ -87,12 +84,10 @@ public class SellerController : Controller
         var shopRespone = await _shopService.GetAsync();
         if (shopRespone.StatusCode == BLL.Infrastracture.StatusCode.OK)
         {
-            ViewBag.Shops = new SelectList(shopRespone.Data!.OrderBy(s => s.Name), "Id", "Name");
-
             var sellerResponse = await _sellerService.GetByIdAsync(id);
             if (sellerResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
             {
-                return View(sellerResponse.Data);
+                return View(new SellerViewModel(shopRespone.Data!, sellerResponse.Data!));
             }
             return View("Error", sellerResponse.Description);
         }
@@ -115,8 +110,7 @@ public class SellerController : Controller
         var shopRespone = await _shopService.GetAsync();
         if (shopRespone.StatusCode == BLL.Infrastracture.StatusCode.OK)
         {
-            ViewBag.Shops = new SelectList(shopRespone.Data!.OrderBy(s => s.Name), "Id", "Name");
-            return View(item);
+            return View(new SellerViewModel(shopRespone.Data!, item));
         }
         return View("Error", shopRespone.Description);
     }
