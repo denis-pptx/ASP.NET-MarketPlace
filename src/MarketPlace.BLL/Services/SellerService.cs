@@ -53,7 +53,8 @@ public class SellerService : ISellerService
     {
         try
         {
-            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Login == item.Login);
+            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(
+                s => s.Login.Trim().ToLower() == item.Login.Trim().ToLower());
             if (seller != null)
             {
                 return new()

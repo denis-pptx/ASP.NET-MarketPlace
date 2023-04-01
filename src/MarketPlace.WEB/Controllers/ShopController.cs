@@ -21,7 +21,8 @@ namespace MarketPlace.WEB.Controllers
             var response = await _shopService.GetAsync();
             if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
             {
-                return View(new ShopListViewModel(response.Data!.Where(s => s.Name.Contains(name ?? ""))));
+                return View(new ShopListViewModel(response.Data!.Where(
+                    s => s.Name.Trim().ToLower().Contains(name?.Trim().ToLower() ?? ""))));
             }
             return View("Error", response.Description);
         }

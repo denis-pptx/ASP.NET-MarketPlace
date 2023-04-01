@@ -41,7 +41,8 @@ public class ShopService : IShopService
     {
         try
         {
-            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Name == item.Name);
+            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(
+                s => s.Name.Trim().ToLower() == item.Name.Trim().ToLower());
             if (shop != null)
             {
                 return new()

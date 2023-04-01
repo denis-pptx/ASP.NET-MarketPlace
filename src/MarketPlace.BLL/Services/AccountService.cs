@@ -58,7 +58,8 @@ public class AccountService : IAccountService
     {
         try
         {
-            var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(u => u.Login == vm.Login);
+            var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(
+                u => u.Login.Trim().ToLower() == vm.Login.Trim().ToLower());
 
             if (user != null)
             {

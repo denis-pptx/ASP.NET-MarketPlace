@@ -2,8 +2,6 @@
 using MarketPlace.BLL.ViewModels;
 using MarketPlace.DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace MarketPlace.WEB.Controllers;
 
