@@ -7,7 +7,8 @@ public enum StatusCode
     LoginIsUsed,
 
     ShopNameIsUsed,
-    NoSuchShop,
+    ShopNotFound,
+
 
     OK = 200,
     InternalServerError = 500

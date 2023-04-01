@@ -5,8 +5,8 @@ namespace MarketPlace.DAL.Interfaces;
 public interface IRepository<T> where T : Entity
 {
     Task<T?> GetByIdAsync(int id);
-    Task<IReadOnlyList<T>> ListAllAsync();
-    Task<IReadOnlyList<T>> ListAsync(Func<T, bool> filter);
+    Task<IEnumerable<T>> ListAllAsync();
+    Task<IEnumerable<T>> ListAsync(Func<T, bool> filter);
     Task AddAsync(T entity);
     Task UpdateAsync(T entity);
     Task DeleteAsync(T entity);

@@ -39,6 +39,7 @@ builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 // Services registration.
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IShopService, ShopService>();
+builder.Services.AddScoped<ISellerService, SellerService>();
 
 
 var app = builder.Build();

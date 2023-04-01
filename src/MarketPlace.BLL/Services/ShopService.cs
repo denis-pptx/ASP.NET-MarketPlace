@@ -92,7 +92,7 @@ public class ShopService : IShopService
                 {
                     Data = false,
                     Description = "Такого магазина нет",
-                    StatusCode = StatusCode.NoSuchShop
+                    StatusCode = StatusCode.ShopNotFound
                 };
             }
 
@@ -125,7 +125,7 @@ public class ShopService : IShopService
                 return new()
                 {
                     Description = "Такого магазина нет",
-                    StatusCode = StatusCode.NoSuchShop
+                    StatusCode = StatusCode.ShopNotFound
                 };
             }
 
@@ -160,7 +160,7 @@ public class ShopService : IShopService
                 return new()
                 {
                     Description = "Такого магазина нет",
-                    StatusCode = StatusCode.NoSuchShop
+                    StatusCode = StatusCode.ShopNotFound
                 };
             }
 

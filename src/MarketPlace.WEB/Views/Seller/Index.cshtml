@@ -1,0 +1,43 @@
+﻿@model SellerListViewModel
+
+@{
+    ViewData["Title"] = "Продавцы";
+    int num = 1;
+}
+
+<h2>Список продавцов</h2>
+
+<form asp-action="Index" asp-controller="Seller">
+    <div>
+        <label>Магазин: </label>
+        <select name="shopId" asp-items="Model.Shops"></select>
+  
+        <input type="submit" value="Фильтр" />
+    </div>
+</form>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Логин</th>
+            <th>Пароль</th>
+            <th>Магазин</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var seller in Model.Sellers)
+        {
+            <tr>
+                <td>@(num++)</td>
+                <td>@seller.Login</td>
+                <td>@seller.Password</td>
+                <td>@seller.Shop.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-controller="Seller" asp-action="Create">Добавить продавца</a>
+</p>

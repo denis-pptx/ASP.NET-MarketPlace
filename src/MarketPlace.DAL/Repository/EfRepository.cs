@@ -38,12 +38,12 @@ public class EfRepository<T> : IRepository<T> where T : Entity
         return await Task.Run(() => _entities.AsNoTracking().FirstOrDefault(e => e.Id == id));
     }
 
-    public async Task<IReadOnlyList<T>> ListAllAsync()
+    public async Task<IEnumerable<T>> ListAllAsync()
     {
         return await _entities.AsNoTracking().ToListAsync();
     }
 
-    public async Task<IReadOnlyList<T>> ListAsync(Func<T, bool> filter)
+    public async Task<IEnumerable<T>> ListAsync(Func<T, bool> filter)
     {
         return await Task.Run(() => _entities.AsNoTracking().Where(filter).ToList());
     }
