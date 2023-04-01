@@ -16,13 +16,12 @@ namespace MarketPlace.WEB.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? name)
         {
             var response = await _shopService.GetAsync();
             if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
             {
-                return View(response.Data);
+                return View(new ShopListViewModel(response!.Data!.Where(s => s.Name.Contains(name ?? ""))));
             }
             return View("Error", response.Description);
         }

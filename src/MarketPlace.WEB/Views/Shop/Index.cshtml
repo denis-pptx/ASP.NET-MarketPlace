@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Shop>
+﻿@model ShopListViewModel
 
 @{
     ViewData["Title"] = "Магазины";
@@ -6,6 +6,15 @@
 }
 
 <h2>Список магазинов</h2>
+
+<form asp-action="Index" asp-controller="Shop">
+    <div>
+        <label>Название: </label>
+        <input asp-for="Name" />
+
+        <input type="submit" value="Фильтр" />
+    </div>
+</form>
 
 <table border="1">
     <thead>
@@ -16,7 +25,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var shop in Model)
+        @foreach (var shop in Model.Shops)
         {
             <tr>
                 <td>@(num++)</td>
