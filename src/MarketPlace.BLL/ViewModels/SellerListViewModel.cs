@@ -5,6 +5,16 @@ namespace MarketPlace.BLL.ViewModels;
 
 public class SellerListViewModel
 {
-    public IEnumerable<Seller> Sellers { get; set; } = new List<Seller>();
-    public SelectList Shops { get; set; } = new SelectList(new List<Shop>(), "Id", "Name");
+    public IEnumerable<Seller> Sellers { get; }
+    public SelectList Shops { get; }
+
+    public SellerListViewModel(IEnumerable<Seller> sellers, IEnumerable<Shop> shops, int? selectedValue)
+    {
+        Sellers = sellers.OrderBy(s => s.Login);
+
+        var sortedShops = shops.Skip(1).OrderBy(s => s.Name).ToList();
+        sortedShops.Insert(0, shops.First());
+
+        Shops = new SelectList(sortedShops, "Id", "Name", selectedValue);
+    }
 }

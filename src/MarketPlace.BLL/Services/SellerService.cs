@@ -30,27 +30,7 @@ public class SellerService : ISellerService
                 }
             };
 
-            List<Seller> sellers = (await _unitOfWork.SellerRepository.ListAsync(filter)).ToList();
-
-            for (int i = 0; i < sellers.Count; i++)
-            {
-                var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(shop => shop.Id == sellers[i].ShopId);
-                if (shop == null)
-                {
-                    return new()
-                    {
-                        StatusCode = StatusCode.ShopNotFound,
-                        Description = "Не найден такой магазин"
-                    };
-                }
-                //sellers[i].Shop = new ShopViewModel()
-                //{
-                //    Id = shop.Id,
-                //    Name = shop.Name,
-                //    Description = shop.Description,
-                //};
-            }
-
+            IEnumerable<Seller> sellers = await _unitOfWork.SellerRepository.ListAsync(filter);
 
             return new()
             {

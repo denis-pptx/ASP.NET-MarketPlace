@@ -2,7 +2,7 @@
 
 public enum Role
 {
-    Admin,
     Customer,
     Seller,
+    Admin
 }
