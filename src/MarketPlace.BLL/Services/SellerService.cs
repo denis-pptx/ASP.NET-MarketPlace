@@ -14,7 +14,7 @@ public class SellerService : ISellerService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Response<IEnumerable<SellerViewModel>>> GetByShopIdAsync(int? shopId)
+    public async Task<Response<IEnumerable<Seller>>> GetByShopIdAsync(int? shopId)
     {
         try
         {
@@ -30,15 +30,7 @@ public class SellerService : ISellerService
                 }
             };
 
-            List<SellerViewModel> sellers = (from seller in
-                                             await _unitOfWork.SellerRepository.ListAsync(filter)
-                                             select new SellerViewModel()
-                                             {
-                                                 Id = seller.Id,
-                                                 Login = seller.Login,
-                                                 Password = seller.Password,
-                                                 ShopId = seller.ShopId,
-                                             }).ToList();
+            List<Seller> sellers = (await _unitOfWork.SellerRepository.ListAsync(filter)).ToList();
 
             for (int i = 0; i < sellers.Count; i++)
             {
@@ -51,12 +43,12 @@ public class SellerService : ISellerService
                         Description = "Не найден такой магазин"
                     };
                 }
-                sellers[i].Shop = new ShopViewModel()
-                {
-                    Id = shop.Id,
-                    Name = shop.Name,
-                    Description = shop.Description,
-                };
+                //sellers[i].Shop = new ShopViewModel()
+                //{
+                //    Id = shop.Id,
+                //    Name = shop.Name,
+                //    Description = shop.Description,
+                //};
             }
 
 

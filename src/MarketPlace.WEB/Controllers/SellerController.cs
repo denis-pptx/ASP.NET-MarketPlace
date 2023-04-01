@@ -26,11 +26,11 @@ public class SellerController : Controller
             shopResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
         {
             var shops = shopResponse.Data!.ToList();
-            shops.Insert(0, new ShopViewModel()
-            {
-                Id = 0,
-                Name = "Все"
-            });
+            //shops.Insert(0, new ShopViewModel()
+            //{
+            //    Id = 0,
+            //    Name = "Все"
+            //});
 
             return View(new SellerListViewModel() 
             {

@@ -6,7 +6,7 @@ namespace MarketPlace.BLL.Interfaces;
 
 public interface ISellerService
 {
-    Task<Response<IEnumerable<SellerViewModel>>> GetByShopIdAsync(int? shopId);
+    Task<Response<IEnumerable<Seller>>> GetByShopIdAsync(int? shopId);
 
     // Task<Response<bool>> CreateAsync(ShopViewModel vm);
 

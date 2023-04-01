@@ -15,17 +15,11 @@ public class ShopService : IShopService
     }
 
    
-    public async Task<Response<IEnumerable<ShopViewModel>>> GetAsync()
+    public async Task<Response<IEnumerable<Shop>>> GetAsync()
     {
         try
         {
-            var shops = from shop in await _unitOfWork.ShopRepository.ListAllAsync()
-                        select new ShopViewModel()
-                        {
-                            Id = shop.Id,
-                            Name = shop.Name,
-                            Description = shop.Description
-                        };
+            var shops = await _unitOfWork.ShopRepository.ListAllAsync();
 
             return new()
             {
@@ -43,11 +37,11 @@ public class ShopService : IShopService
         }
     }
 
-    public async Task<Response<bool>> CreateAsync(ShopViewModel vm)
+    public async Task<Response<bool>> CreateAsync(Shop item)
     {
         try
         {
-            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Name == vm.Name);
+            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Name == item.Name);
             if (shop != null)
             {
                 return new()
@@ -57,13 +51,7 @@ public class ShopService : IShopService
                 };
             }
 
-            shop = new()
-            {
-                Name = vm.Name,
-                Description = vm.Description
-            };
-
-            await _unitOfWork.ShopRepository.AddAsync(shop);
+            await _unitOfWork.ShopRepository.AddAsync(item);
 
             return new()
             {
@@ -115,7 +103,7 @@ public class ShopService : IShopService
         }
     }
 
-    public async Task<Response<ShopViewModel>> GetByIdAsync(int id)
+    public async Task<Response<Shop>> GetByIdAsync(int id)
     {
         try
         {
@@ -131,12 +119,7 @@ public class ShopService : IShopService
 
             return new()
             {
-                Data = new ShopViewModel()
-                {
-                    Id = shop.Id,
-                    Name = shop.Name,
-                    Description = shop.Description,
-                },
+                Data = shop,
                 StatusCode = StatusCode.OK
             };
         }
@@ -150,11 +133,11 @@ public class ShopService : IShopService
         }
     }
 
-    public async Task<Response<bool>> UpdateAsync(ShopViewModel vm)
+    public async Task<Response<bool>> UpdateAsync(Shop item)
     {
         try
         {
-            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Id == vm.Id);
+            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Id == item.Id);
             if (shop == null)
             {
                 return new()
@@ -164,14 +147,8 @@ public class ShopService : IShopService
                 };
             }
 
-            shop = new Shop()
-            {
-                Id = vm.Id,
-                Name = vm.Name,
-                Description = vm.Description
-            };
-
-            await _unitOfWork.ShopRepository.UpdateAsync(shop);
+            item.Id = shop.Id;
+            await _unitOfWork.ShopRepository.UpdateAsync(item);
 
             return new()
             {

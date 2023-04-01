@@ -1,6 +1,7 @@
 ﻿using MarketPlace.BLL.Interfaces;
 using MarketPlace.BLL.Services;
 using MarketPlace.BLL.ViewModels;
+using MarketPlace.DAL.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,18 +36,18 @@ namespace MarketPlace.WEB.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(ShopViewModel vm)
+        public async Task<IActionResult> Create(Shop item)
         {
             if (ModelState.IsValid)
             {
-                var response = await _shopService.CreateAsync(vm);
+                var response = await _shopService.CreateAsync(item);
                 if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
                 {
                     return RedirectToAction("Index");
                 }
                 ModelState.AddModelError("", response.Description);
             }
-            return View(vm);
+            return View(item);
         }
 
 
@@ -74,18 +75,18 @@ namespace MarketPlace.WEB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(ShopViewModel vm)
+        public async Task<IActionResult> Edit(Shop item)
         {
             if (ModelState.IsValid)
             {
-                var response = await _shopService.UpdateAsync(vm);
+                var response = await _shopService.UpdateAsync(item);
                 if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
                 {
                     return RedirectToAction("Index");
                 }
                 ModelState.AddModelError("", response.Description);
             }
-            return View(vm);
+            return View(item);
         }
     }
 }

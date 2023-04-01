@@ -5,6 +5,6 @@ namespace MarketPlace.BLL.ViewModels;
 
 public class SellerListViewModel
 {
-    public IEnumerable<SellerViewModel> Sellers { get; set; } = new List<SellerViewModel>();
+    public IEnumerable<Seller> Sellers { get; set; } = new List<Seller>();
     public SelectList Shops { get; set; } = new SelectList(new List<Shop>(), "Id", "Name");
 }
