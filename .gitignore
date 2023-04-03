@@ -2,3 +2,5 @@
 **/obj
 **/bin
 ignore/*
+**/Db
+**/Migrations
