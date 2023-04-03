@@ -21,7 +21,7 @@
         </p>
         <p>
             <label asp-for="Seller.PasswordConfirm"></label>
-            <input asp-for="Seller.PasswordConfirm" name="PasswordConfirm" value="@Model.Seller.Password"/>
+            <input asp-for="Seller.PasswordConfirm" name="PasswordConfirm" />
             <span asp-validation-for="Seller.PasswordConfirm" />
         </p>
         <input type="hidden" name="Role" value="@MarketPlace.DAL.Enum.Role.Seller">

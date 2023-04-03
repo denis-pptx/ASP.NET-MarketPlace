@@ -15,7 +15,7 @@
         <input type="submit" value="Фильтр" />
     </p>
 </form>
-@ViewBag.H
+
 <table border="1">
     <thead>
         <tr>
@@ -32,7 +32,7 @@
                 <td>@(num++)</td>
                 <td>@seller.Login</td>
                 <td>@seller.Password</td>
-                <td>@seller.Shop.Name</td>
+                <td>@seller.Shop!.Name</td>
 
                 <td>
                     <a asp-action="Edit" asp-route-id="@seller.Id">Изменить</a>

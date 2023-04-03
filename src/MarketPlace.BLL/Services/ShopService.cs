@@ -163,7 +163,17 @@ public class ShopService : IShopService
     {
         try
         {
-            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Id == item.Id);
+            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Name == item.Name);
+            if (shop != null && shop.Id != item.Id)
+            {
+                return new()
+                {
+                    Description = "Имя магазина занято",
+                    StatusCode = StatusCode.ShopNameIsUsed
+                };
+            }
+
+            shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Id == item.Id);
             if (shop == null)
             {
                 return new()

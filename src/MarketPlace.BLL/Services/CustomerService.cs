@@ -1,61 +1,48 @@
 ﻿using MarketPlace.BLL.Infrastracture;
 using MarketPlace.BLL.Interfaces;
-using MarketPlace.BLL.ViewModels;
 using MarketPlace.DAL.Entities;
 using MarketPlace.DAL.Interfaces;
 
 namespace MarketPlace.BLL.Services;
 
-public class SellerService : ISellerService
+public class CustomerService : ICustomerService
 {
     private IUnitOfWork _unitOfWork;
-    public SellerService(IUnitOfWork unitOfWork)
+    public CustomerService(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
 
-
-    public async Task<Response<IEnumerable<Seller>>> GetByShopIdAsync(int shopId)
+    public async Task<Response<IEnumerable<Customer>>> GetAsync()
     {
         try
         {
-            Func<Seller, bool> filter = seller =>
-            {
-                if (shopId == 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return seller.ShopId == shopId;
-                }
-            };
-
-            IEnumerable<Seller> sellers = await _unitOfWork.SellerRepository.ListAsync(filter);
+            var customers = await _unitOfWork.CustomerRepository.ListAllAsync();
 
             return new()
             {
                 StatusCode = StatusCode.OK,
-                Data = sellers
+                Data = customers
             };
         }
         catch (Exception ex)
         {
             return new()
             {
-                StatusCode = StatusCode.InternalServerError,
-                Description = ex.Message
+                Description = ex.Message,
+                StatusCode = StatusCode.InternalServerError
             };
         }
     }
 
-    public async Task<Response<bool>> CreateAsync(Seller item)
+    public async Task<Response<bool>> CreateAsync(Customer item)
     {
         try
         {
-            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(
-                s => s.Login.Trim().ToLower() == item.Login.Trim().ToLower());
-            if (seller != null)
+            var customer = await _unitOfWork.CustomerRepository.FirstOrDefaultAsync(
+                c => c.Login.Trim().ToLower() == item.Login.Trim().ToLower());
+
+            if (customer != null)
             {
                 return new()
                 {
@@ -64,7 +51,7 @@ public class SellerService : ISellerService
                 };
             }
 
-            await _unitOfWork.SellerRepository.AddAsync(item);
+            await _unitOfWork.CustomerRepository.AddAsync(item);
 
             return new()
             {
@@ -86,18 +73,18 @@ public class SellerService : ISellerService
     {
         try
         {
-            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Id == id);
-            if (seller == null)
+            var customer = await _unitOfWork.CustomerRepository.FirstOrDefaultAsync(c => c.Id == id);
+            if (customer == null)
             {
                 return new()
                 {
                     Data = false,
-                    Description = "Такого продавца нет",
-                    StatusCode = StatusCode.SellerNotFound
+                    Description = "Такого покупателя нет",
+                    StatusCode = StatusCode.CustomerNotFound
                 };
             }
 
-            await _unitOfWork.SellerRepository.DeleteAsync(seller);
+            await _unitOfWork.CustomerRepository.DeleteAsync(customer);
 
             return new()
             {
@@ -116,23 +103,23 @@ public class SellerService : ISellerService
         }
     }
 
-    public async Task<Response<Seller>> GetByIdAsync(int id)
+    public async Task<Response<Customer>> GetByIdAsync(int id)
     {
         try
         {
-            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Id == id);
-            if (seller == null)
+            var customer = await _unitOfWork.CustomerRepository.FirstOrDefaultAsync(c => c.Id == id);
+            if (customer == null)
             {
                 return new()
                 {
-                    Description = "Такого продавца нет",
-                    StatusCode = StatusCode.SellerNotFound
+                    Description = "Такого покупателя нет",
+                    StatusCode = StatusCode.CustomerNotFound
                 };
             }
 
             return new()
             {
-                Data = seller,
+                Data = customer,
                 StatusCode = StatusCode.OK
             };
         }
@@ -146,12 +133,12 @@ public class SellerService : ISellerService
         }
     }
 
-    public async Task<Response<bool>> UpdateAsync(Seller item)
+    public async Task<Response<bool>> UpdateAsync(Customer item)
     {
         try
         {
-            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Login == item.Login);
-            if (seller != null && seller.Id != item.Id)
+            var customer = await _unitOfWork.CustomerRepository.FirstOrDefaultAsync(c => c.Login == item.Login);
+            if (customer != null && customer.Id != item.Id)
             {
                 return new()
                 {
@@ -160,22 +147,21 @@ public class SellerService : ISellerService
                 };
             }
 
-            seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Id == item.Id);
-            if (seller == null)
+            customer = await _unitOfWork.CustomerRepository.FirstOrDefaultAsync(c => c.Id == item.Id);
+            if (customer == null)
             {
                 return new()
                 {
-                    Description = "Такого магазина нет",
-                    StatusCode = StatusCode.SellerNotFound
+                    Description = "Такого покупателя нет",
+                    StatusCode = StatusCode.CustomerNotFound
                 };
             }
 
-            seller.Login = item.Login;
-            seller.Password = item.Password;
-            seller.ShopId = item.ShopId;
-            seller.Shop = item.Shop;
+            customer.Login = item.Login;
+            customer.Password = item.Password;
+            customer.Profile = item.Profile;
 
-            await _unitOfWork.SellerRepository.UpdateAsync(seller);
+            await _unitOfWork.CustomerRepository.UpdateAsync(customer);
 
             return new()
             {

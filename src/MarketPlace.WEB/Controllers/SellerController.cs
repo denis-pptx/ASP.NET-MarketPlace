@@ -1,4 +1,5 @@
-﻿using MarketPlace.BLL.Interfaces;
+﻿using MarketPlace.BLL.Infrastracture;
+using MarketPlace.BLL.Interfaces;
 using MarketPlace.BLL.ViewModels;
 using MarketPlace.DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -85,6 +86,7 @@ public class SellerController : Controller
             var sellerResponse = await _sellerService.GetByIdAsync(id);
             if (sellerResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
             {
+                sellerResponse.Data!.PasswordConfirm = sellerResponse.Data.Password;
                 return View(new SellerViewModel(shopRespone.Data!, sellerResponse.Data!));
             }
             return View("Error", sellerResponse.Description);
