@@ -15,13 +15,13 @@ public class SellerService : ISellerService
     }
 
 
-    public async Task<Response<IEnumerable<Seller>>> GetByShopIdAsync(int? shopId)
+    public async Task<Response<IEnumerable<Seller>>> GetByShopIdAsync(int shopId)
     {
         try
         {
             Func<Seller, bool> filter = seller =>
             {
-                if (shopId == null || shopId == 0)
+                if (shopId == 0)
                 {
                     return true;
                 }

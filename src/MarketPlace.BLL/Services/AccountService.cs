@@ -54,12 +54,12 @@ public class AccountService : IAccountService
         }
     }
 
-    public async Task<Response<ClaimsPrincipal>> RegisterAsync(RegisterViewModel vm)
+    public async Task<Response<ClaimsPrincipal>> RegisterAsync(Customer item)
     {
         try
         {
             var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(
-                u => u.Login.Trim().ToLower() == vm.Login.Trim().ToLower());
+                u => u.Login.Trim().ToLowerInvariant() == item.Login.Trim().ToLowerInvariant());
 
             if (user != null)
             {
@@ -70,19 +70,12 @@ public class AccountService : IAccountService
                 };
             }
 
-            user = new User()
-            {
-                Login = vm.Login,
-                Password = vm.Password,
-                Role = DAL.Enum.Role.Customer
-            };
-
-            await _unitOfWork.UserRepository.AddAsync(user);
+            await _unitOfWork.CustomerRepository.AddAsync(item);
             
             return new()
             {
                 StatusCode = StatusCode.OK,
-                Data = GetClaimsPrincipal(user)
+                Data = GetClaimsPrincipal(item)
             };
         }
         catch (Exception ex)

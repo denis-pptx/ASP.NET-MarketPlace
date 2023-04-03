@@ -3,7 +3,7 @@ using MarketPlace.BLL.ViewModels;
 using MarketPlace.BLL.Infrastracture;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-
+using MarketPlace.DAL.Entities;
 
 namespace MarketPlace.WEB.Controllers;
 
@@ -50,11 +50,11 @@ public class AccountController : Controller
     public IActionResult Register() => View();
 
     [HttpPost]
-    public async Task<IActionResult> Register(RegisterViewModel vm)
+    public async Task<IActionResult> Register(Customer customer)
     {
         if (ModelState.IsValid)
         {
-            var response = await _accountService.RegisterAsync(vm);
+            var response = await _accountService.RegisterAsync(customer);
             if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
             {
                 await HttpContext.SignInAsync(response.Data!);
@@ -63,6 +63,6 @@ public class AccountController : Controller
             ModelState.AddModelError("", response.Description);
         }
 
-        return View(vm);
+        return View(customer);
     }
 }

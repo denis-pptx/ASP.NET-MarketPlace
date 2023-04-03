@@ -1,4 +1,4 @@
-﻿@model RegisterViewModel
+﻿@model Customer
 
 @{
     ViewData["Title"] = "Sign Up";
@@ -22,6 +22,22 @@
             <label asp-for="PasswordConfirm"></label>
             <input asp-for="PasswordConfirm" />
             <span asp-validation-for="PasswordConfirm" />
+        </p>
+        <input type="hidden" name="Role" value="@MarketPlace.DAL.Enum.Role.Customer">
+        <p>
+            <label asp-for="Profile.Age"></label>
+            <input asp-for="Profile.Age" />
+            <span asp-validation-for="Profile.Age" />
+        </p>
+        <p>
+            <label asp-for="Profile.Email"></label>
+            <input asp-for="Profile.Email" />
+            <span asp-validation-for="Profile.Email" />
+        </p>
+        <p>
+            <label asp-for="Profile.Phone"></label>
+            <input asp-for="Profile.Phone" />
+            <span asp-validation-for="Profile.Phone" />
         </p>
         <p>
             <input type="submit" value="Sign Up" />

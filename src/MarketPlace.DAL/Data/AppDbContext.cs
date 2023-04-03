@@ -16,9 +16,9 @@ public class AppDbContext : DbContext
 	public AppDbContext(DbContextOptions<AppDbContext> options)
 		: base(options)
 	{
-		// Database.EnsureDeleted();
-		Database.EnsureCreated();
-	}
+        // Database.EnsureDeleted();
+        // Database.EnsureCreated();
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -27,11 +27,9 @@ public class AppDbContext : DbContext
 		Product product = new Product { Id = 1, Description = "descr", Name = "phone", Price = 500, ShopId = shop.Id };
 
 		User admin = new User { Id = 1, Login = "admin", Password = "admin", Role = Enum.Role.Admin };
-		Seller seller = new Seller { Id = 2, Login = "seller", Password = "seller", Role = Enum.Role.Seller, ShopId = shop.Id };
 
 		modelBuilder.Entity<Product>().HasData(product);
 		modelBuilder.Entity<Shop>().HasData(shop);
 		modelBuilder.Entity<User>().HasData(admin);
-		modelBuilder.Entity<Seller>().HasData(seller);
     }
 }

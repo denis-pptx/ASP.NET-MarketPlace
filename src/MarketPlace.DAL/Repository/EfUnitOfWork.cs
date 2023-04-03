@@ -11,6 +11,7 @@ public class EfUnitOfWork : IUnitOfWork
     private readonly IRepository<User> _userRepository;
     private readonly IRepository<Shop> _shopRepository;
     private readonly IRepository<Seller> _sellerRepository;
+    private readonly IRepository<Customer> _customerRepository;
 
     public EfUnitOfWork(AppDbContext db)
     {
@@ -19,6 +20,7 @@ public class EfUnitOfWork : IUnitOfWork
         _userRepository = new EfRepository<User>(_db);
         _shopRepository = new EfRepository<Shop>(_db);
         _sellerRepository = new EfRepository<Seller>(_db);
+        _customerRepository = new EfRepository<Customer>(_db);
     }
 
     public IRepository<Product> ProductRepository => _productRepository;
@@ -27,6 +29,8 @@ public class EfUnitOfWork : IUnitOfWork
 
     public IRepository<Shop> ShopRepository => _shopRepository;
     public IRepository<Seller> SellerRepository => _sellerRepository;
+
+    public IRepository<Customer> CustomerRepository => _customerRepository;
 
     public async Task CreateDatabaseAsync()
     {

@@ -15,7 +15,7 @@ public class SellerController : Controller
         _shopService = shopService;
     }
 
-    public async Task<IActionResult> Index(int? shopId)
+    public async Task<IActionResult> Index(int shopId = 0)
     {
         var sellerResponse = await _sellerService.GetByShopIdAsync(shopId);
         var shopResponse = await _shopService.GetAsync();
