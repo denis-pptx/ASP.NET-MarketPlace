@@ -15,4 +15,6 @@ public interface ISellerService
     Task<Response<Seller>> GetByIdAsync(int id);
 
     Task<Response<bool>> UpdateAsync(Seller shop);
+
+    Task<Response<int>> GetShopIdByLogin(string sellerLogin);
 }

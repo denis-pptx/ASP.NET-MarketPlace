@@ -7,5 +7,4 @@ public class Product : Entity
     public double Price { get; set; }
 
     public int ShopId { get; set; }
-    public virtual Shop Shop { get; set; } = null!; 
 }

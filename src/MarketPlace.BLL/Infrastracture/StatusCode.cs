@@ -13,6 +13,8 @@ public enum StatusCode
 
     CustomerNotFound,
 
+    ProductNotFound,
+
     OK = 200,
     InternalServerError = 500
 }

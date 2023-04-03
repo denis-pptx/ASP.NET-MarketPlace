@@ -192,4 +192,34 @@ public class SellerService : ISellerService
             };
         }
     }
+
+    public async Task<Response<int>> GetShopIdByLogin(string sellerLogin)
+    {
+        try
+        {
+            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Login == sellerLogin);
+            if (seller == null)
+            {
+                return new()
+                {
+                    Description = "Такого продавца нет",
+                    StatusCode = StatusCode.SellerNotFound
+                };
+            }
+
+            return new()
+            {
+                Data = seller.ShopId,
+                StatusCode = StatusCode.OK
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                StatusCode = StatusCode.InternalServerError,
+                Description = ex.Message
+            };
+        }
+    }
 }
