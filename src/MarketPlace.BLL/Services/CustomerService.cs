@@ -39,7 +39,7 @@ public class CustomerService : ICustomerService
     {
         try
         {
-            var customer = await _unitOfWork.CustomerRepository.FirstOrDefaultAsync(
+            var customer = await _unitOfWork.UserRepository.FirstOrDefaultAsync(
                 c => c.Login.Trim().ToLower() == item.Login.Trim().ToLower());
 
             if (customer != null)
@@ -137,8 +137,8 @@ public class CustomerService : ICustomerService
     {
         try
         {
-            var customer = await _unitOfWork.CustomerRepository.FirstOrDefaultAsync(c => c.Login == item.Login);
-            if (customer != null && customer.Id != item.Id)
+            var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(u => u.Login == item.Login);
+            if (user != null && user.Id != item.Id)
             {
                 return new()
                 {
@@ -147,7 +147,7 @@ public class CustomerService : ICustomerService
                 };
             }
 
-            customer = await _unitOfWork.CustomerRepository.FirstOrDefaultAsync(c => c.Id == item.Id);
+            var customer = await _unitOfWork.CustomerRepository.FirstOrDefaultAsync(c => c.Id == item.Id);
             if (customer == null)
             {
                 return new()

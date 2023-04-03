@@ -53,7 +53,7 @@ public class SellerService : ISellerService
     {
         try
         {
-            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(
+            var seller = await _unitOfWork.UserRepository.FirstOrDefaultAsync(
                 s => s.Login.Trim().ToLower() == item.Login.Trim().ToLower());
             if (seller != null)
             {
@@ -150,8 +150,8 @@ public class SellerService : ISellerService
     {
         try
         {
-            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Login == item.Login);
-            if (seller != null && seller.Id != item.Id)
+            var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(u => u.Login == item.Login);
+            if (user != null && user.Id != item.Id)
             {
                 return new()
                 {
@@ -160,12 +160,12 @@ public class SellerService : ISellerService
                 };
             }
 
-            seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Id == item.Id);
+            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Id == item.Id);
             if (seller == null)
             {
                 return new()
                 {
-                    Description = "Такого магазина нет",
+                    Description = "Такого продавца нет",
                     StatusCode = StatusCode.SellerNotFound
                 };
             }
