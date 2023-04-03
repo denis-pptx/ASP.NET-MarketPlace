@@ -1,9 +1,8 @@
 ﻿using MarketPlace.BLL.Infrastracture;
 using MarketPlace.BLL.Interfaces;
-using MarketPlace.BLL.ViewModels;
 using MarketPlace.DAL.Entities;
 using MarketPlace.DAL.Interfaces;
-
+using MarketPlace.BLL.Helpers;
 namespace MarketPlace.BLL.Services;
 
 public class ShopService : IShopService
@@ -36,6 +35,32 @@ public class ShopService : IShopService
             };
         }
     }
+
+    public async Task<Response<IEnumerable<Shop>>> GetBySimilarNameAsync(string name = "")
+    {
+        try
+        {
+            Func<Shop, bool> filter = shop => shop.Name.RemoveWhitespaces().ToLowerInvariant().
+                                                Contains(name.RemoveWhitespaces().ToLowerInvariant());
+
+            var shops = await _unitOfWork.ShopRepository.ListAsync(filter);
+
+            return new()
+            {
+                StatusCode = StatusCode.OK,
+                Data = shops
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Description = ex.Message,
+                StatusCode = StatusCode.InternalServerError
+            };
+        }
+    }
+
 
     public async Task<Response<bool>> CreateAsync(Shop item)
     {
@@ -169,4 +194,6 @@ public class ShopService : IShopService
             };
         }
     }
+
+
 }
