@@ -90,17 +90,4 @@ public class ShopController : Controller
         }
         return View(item);
     }
-
-    [HttpGet]
-    public async Task<IActionResult> GetShop()
-    {
-        var sellerLogin = User.FindFirst(ClaimsIdentity.DefaultNameClaimType)?.Value ?? "";
-
-        var response = await _shopService.GetBySellerLoginAsync(sellerLogin);
-        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
-        {
-            return RedirectToAction("Edit", response.Data);
-        }
-        return View("Error", response.Description);
-    }
 }

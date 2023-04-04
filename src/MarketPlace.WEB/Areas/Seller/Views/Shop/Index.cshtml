@@ -1,0 +1,28 @@
+﻿@model Shop
+
+@{
+    ViewData["Title"] = "Магазин";
+}
+
+<h2>Магазин</h2>
+
+<form asp-action="Edit">
+    <div>
+        <p>
+            <label asp-for="Name"></label>
+            <input disabled asp-for="Name" />
+            <span asp-validation-for="Name" />
+        </p>
+        <p>
+            <label asp-for="Description"></label>
+            <textarea disabled asp-for="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" />
+        </p>
+        <p>
+            <input disabled type="submit" value="Сохранить" />
+            @*<a disabled asp-action="Index">Отменить</a>*@
+        </p>
+    </div>
+</form>
+
+<div asp-validation-summary="All"></div>
