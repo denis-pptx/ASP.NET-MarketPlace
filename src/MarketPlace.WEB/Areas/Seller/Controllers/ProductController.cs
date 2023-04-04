@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace MarketPlace.WEB.Controllers;
+namespace MarketPlace.WEB.Areas.Seller.Controllers;
 
+[Area("Seller")]
+[Authorize(Roles = $"Seller")]
 public class ProductController : Controller
 {
     private IProductService _productService;
@@ -26,7 +28,6 @@ public class ProductController : Controller
     }
 
     [HttpGet]
-    [Authorize(Roles = $"Seller")]
     public async Task<IActionResult> Index()
     {
         var sellerResponse = await _sellerService.GetShopIdByLogin(_getSellerLogin());
@@ -43,7 +44,6 @@ public class ProductController : Controller
     }
 
     [HttpGet]
-    [Authorize(Roles = $"Seller")]
     public IActionResult Create()
     {
         return View();
@@ -51,7 +51,6 @@ public class ProductController : Controller
 
 
     [HttpPost]
-    [Authorize(Roles = $"Seller")]
     public async Task<IActionResult> Create(Product item)
     {
         if (ModelState.IsValid)
@@ -74,7 +73,6 @@ public class ProductController : Controller
 
 
     [HttpPost]
-    [Authorize(Roles = $"Seller")]
     public async Task<IActionResult> Delete(int id)
     {
         var response = await _productService.DeleteAsync(id);
@@ -87,7 +85,6 @@ public class ProductController : Controller
 
 
     [HttpGet]
-    [Authorize(Roles = $"Seller")]
     public async Task<IActionResult> Edit(int id)
     {
         var response = await _productService.GetByIdAsync(id);
@@ -99,7 +96,6 @@ public class ProductController : Controller
     }
 
     [HttpPost]
-    [Authorize(Roles = $"Seller")]
     public async Task<IActionResult> Edit(Product item)
     {
         if (ModelState.IsValid)

@@ -47,7 +47,7 @@ public class SellerController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Seller item)
+    public async Task<IActionResult> Create(DAL.Entities.Seller item)
     {
         if (ModelState.IsValid)
         {
@@ -98,7 +98,7 @@ public class SellerController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(Seller item)
+    public async Task<IActionResult> Edit(DAL.Entities.Seller item)
     {
         if (ModelState.IsValid)
         {
