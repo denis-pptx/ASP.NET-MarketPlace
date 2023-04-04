@@ -1,9 +1,10 @@
 ﻿using MarketPlace.BLL.Interfaces;
-using MarketPlace.BLL.Services;
+using MarketPlace.BLL.Infrastracture;
 using MarketPlace.BLL.ViewModels;
 using MarketPlace.DAL.Entities;
-using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace MarketPlace.WEB.Controllers
 {
@@ -86,6 +87,20 @@ namespace MarketPlace.WEB.Controllers
                 ModelState.AddModelError("", response.Description);
             }
             return View(item);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = $"Seller")]
+        public async Task<IActionResult> GetShop()
+        {
+            var sellerLogin = User.FindFirst(ClaimsIdentity.DefaultNameClaimType)?.Value ?? "";
+
+            var response = await _shopService.GetBySellerLoginAsync(sellerLogin);
+            if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+            {
+                return RedirectToAction("Edit", response.Data);
+            }
+            return View("Error", response.Description);
         }
     }
 }

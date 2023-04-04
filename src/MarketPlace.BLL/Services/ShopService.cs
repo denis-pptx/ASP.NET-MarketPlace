@@ -61,6 +61,36 @@ public class ShopService : IShopService
         }
     }
 
+    public async Task<Response<Shop>> GetBySellerLoginAsync(string sellerLogin)
+    {
+        try
+        {
+            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Login == sellerLogin);
+
+            if (seller == null)
+            {
+                return new()
+                {
+                    Description = "Такого продавца нет",
+                    StatusCode = StatusCode.SellerNotFound
+                };
+            }
+
+            return new()
+            {
+                StatusCode = StatusCode.OK,
+                Data = seller.Shop
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Description = ex.Message,
+                StatusCode = StatusCode.InternalServerError
+            };
+        }
+    }
 
     public async Task<Response<bool>> CreateAsync(Shop item)
     {
@@ -205,5 +235,5 @@ public class ShopService : IShopService
         }
     }
 
-
+    
 }
