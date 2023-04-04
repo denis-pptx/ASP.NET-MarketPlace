@@ -6,20 +6,20 @@
 </head>
 <body>
     <div>
-        <a asp-controller="Home" asp-action="Index">Главная</a>
+        <a asp-controller="Home" asp-action="Index" asp-route-area="">Главная</a>
 
         <p>
             @if (!User.Identity!.IsAuthenticated)
             {
                 <div>
-                    <a asp-controller="Account" asp-action="Login">Войти</a> |
-                    <a asp-controller="Account" asp-action="Register">Зарегистрироваться</a>
+                    <a asp-controller="Account" asp-action="Login" asp-route-area="">Войти</a> |
+                    <a asp-controller="Account" asp-action="Register" asp-route-area="">Зарегистрироваться</a>
                 </div>
             }
             else
             {
                 <div>
-                    <a asp-controller="Account" asp-action="Logout">Выйти</a>
+                    <a asp-controller="Account" asp-action="Logout" asp-route-area="">Выйти</a>
                     <p>
                         Логин: @User.FindFirst(ClaimsIdentity.DefaultNameClaimType)?.Value.
                         Роль: @User.FindFirst(ClaimsIdentity.DefaultRoleClaimType)?.Value
@@ -31,9 +31,9 @@
             {
                 <div>
                     <span>Админ-панель: </span>
-                    <a asp-controller="Shop" asp-action="Index">Магазины</a> |
-                    <a asp-controller="Seller" asp-action="Index">Продавцы</a> |
-                    <a asp-controller="Customer" asp-action="Index">Покупатели</a>
+                    <a asp-action="Index" asp-controller="Shop" asp-route-area="Admin">Магазины</a> |
+                    <a asp-controller="Seller" asp-action="Index" asp-route-area="Admin">Продавцы</a> |
+                    <a asp-controller="Customer" asp-action="Index" asp-route-area="Admin">Покупатели</a>
                 </div>
             }
             else if (User.IsInRole(MarketPlace.DAL.Enum.Role.Seller.ToString()))

@@ -2,10 +2,13 @@
 using MarketPlace.BLL.Interfaces;
 using MarketPlace.BLL.ViewModels;
 using MarketPlace.DAL.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MarketPlace.WEB.Controllers;
+namespace MarketPlace.WEB.Areas.Admin.Controllers;
 
+[Area("Admin")]
+[Authorize(Roles = $"Admin")]
 public class SellerController : Controller
 {
     private ISellerService _sellerService;
@@ -25,7 +28,7 @@ public class SellerController : Controller
             shopResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
         {
             var shops = shopResponse.Data!.ToList();
-            shops.Insert(0, new Shop() { Id = 0,  Name = "Все" });
+            shops.Insert(0, new Shop() { Id = 0, Name = "Все" });
 
             return View(new SellerListViewModel(sellerResponse!.Data!, shops, shopId));
         }

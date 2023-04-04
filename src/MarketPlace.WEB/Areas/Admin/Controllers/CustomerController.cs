@@ -2,11 +2,14 @@
 using MarketPlace.BLL.Services;
 using MarketPlace.BLL.ViewModels;
 using MarketPlace.DAL.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
 
-namespace MarketPlace.WEB.Controllers;
+namespace MarketPlace.WEB.Areas.Admin.Controllers;
 
+[Area("Admin")]
+[Authorize(Roles = $"Admin")]
 public class CustomerController : Controller
 {
     private ICustomerService _customerService;
