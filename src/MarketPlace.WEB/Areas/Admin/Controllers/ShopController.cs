@@ -5,6 +5,7 @@ using MarketPlace.DAL.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using MarketPlace.BLL.Services;
 
 namespace MarketPlace.WEB.Areas.Admin.Controllers;
 
@@ -31,23 +32,50 @@ public class ShopController : Controller
 
 
     [HttpGet]
-    public IActionResult Create()
+    public async Task<IActionResult> Save(int id)
     {
-        return View();
+        // Create.
+        if (id == 0)
+        {
+            return View();
+        }
+
+        // Update.
+        var response = await _shopService.GetByIdAsync(id);
+        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+        {
+            return View(response.Data);
+        }
+        return View("Error", response.Description);
     }
 
 
     [HttpPost]
-    public async Task<IActionResult> Create(Shop item)
+    public async Task<IActionResult> Save(Shop item)
     {
         if (ModelState.IsValid)
         {
-            var response = await _shopService.CreateAsync(item);
-            if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+            // Create.
+            if (item.Id == 0)
             {
-                return RedirectToAction("Index");
+                var response = await _shopService.CreateAsync(item);
+                if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError("", response.Description);
             }
-            ModelState.AddModelError("", response.Description);
+            // Update.
+            else
+            {
+                var response = await _shopService.UpdateAsync(item);
+                if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError("", response.Description);
+            }
+
         }
         return View(item);
     }
@@ -62,32 +90,5 @@ public class ShopController : Controller
             return RedirectToAction("Index");
         }
         return View("Error", response.Description);
-    }
-
-
-    [HttpGet]
-    public async Task<IActionResult> Edit(int id)
-    {
-        var response = await _shopService.GetByIdAsync(id);
-        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
-        {
-            return View(response.Data);
-        }
-        return View("Error", response.Description);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Edit(Shop item)
-    {
-        if (ModelState.IsValid)
-        {
-            var response = await _shopService.UpdateAsync(item);
-            if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
-            {
-                return RedirectToAction("Index");
-            }
-            ModelState.AddModelError("", response.Description);
-        }
-        return View(item);
     }
 }

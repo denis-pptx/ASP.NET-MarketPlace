@@ -33,7 +33,7 @@
                 <td><textarea readonly>@shop.Description</textarea></td>
 
                 <td>
-                    <a asp-action="Edit" asp-route-id="@shop.Id">Изменить</a>
+                    <a asp-action="Save" asp-route-id="@shop.Id">Изменить</a>
                 </td>
                 <td>
                     <form asp-action="Delete" method="post" asp-route-id="@shop.Id">
@@ -46,5 +46,5 @@
 </table>
 
 <p>
-    <a asp-action="Create">Добавить магазин</a>
+    <a asp-action="Save">Добавить магазин</a>
 </p>
