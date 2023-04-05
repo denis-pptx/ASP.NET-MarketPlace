@@ -27,7 +27,7 @@
                 <td>@product.Price</td>
 
                 <td>
-                    <a asp-action="Edit" asp-route-id="@product.Id">Изменить</a>
+                    <a asp-action="Save" asp-route-id="@product.Id">Изменить</a>
                 </td>
                 <td>
                     <form asp-action="Delete" method="post" asp-route-id="@product.Id">
@@ -41,6 +41,6 @@
 </table>
 
 <p>
-    <a asp-action="Create">Добавить товар</a>
+    <a asp-action="Save">Добавить товар</a>
 </p>
 

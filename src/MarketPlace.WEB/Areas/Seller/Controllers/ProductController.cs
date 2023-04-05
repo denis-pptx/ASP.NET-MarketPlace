@@ -5,6 +5,7 @@ using MarketPlace.BLL.ViewModels;
 using MarketPlace.DAL.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Security.Claims;
 
 namespace MarketPlace.WEB.Areas.Seller.Controllers;
@@ -16,11 +17,6 @@ public class ProductController : Controller
     private IProductService _productService;
     private ISellerService _sellerService;
 
-    private string _getSellerLogin()
-    {
-        return User.FindFirst(ClaimsIdentity.DefaultNameClaimType)?.Value ?? "";
-    }
-
     public ProductController(IProductService productService, ISellerService sellerService)
     {
         _productService = productService;
@@ -30,7 +26,7 @@ public class ProductController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var sellerResponse = await _sellerService.GetShopIdByLogin(_getSellerLogin());
+        var sellerResponse = await _sellerService.GetShopIdByLogin(User.Identity?.Name ?? "");
         if (sellerResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
         {
             var productResponse = await _productService.GetByShopIdAsync(sellerResponse.Data);
@@ -43,31 +39,58 @@ public class ProductController : Controller
         return View("Error", sellerResponse.Description);
     }
 
+
     [HttpGet]
-    public IActionResult Create()
+    public async Task<IActionResult> Save(int id)
     {
-        return View();
+        // Create.
+        if (id == 0)
+        {
+            return View();
+        }
+
+        // Update.
+        var response = await _productService.GetByIdAsync(id);
+        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+        {
+            return View(response.Data);
+        }
+        return View("Error", response.Description);
     }
 
 
     [HttpPost]
-    public async Task<IActionResult> Create(Product item)
+    public async Task<IActionResult> Save(Product item)
     {
         if (ModelState.IsValid)
         {
-            var sellerResponse = await _sellerService.GetShopIdByLogin(_getSellerLogin());
-            if (sellerResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
+            // Create.
+            if (item.Id == 0)
             {
-                var productResponse = await _productService.CreateAsync(sellerResponse.Data, item);
-                if (productResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                var sellerResponse = await _sellerService.GetShopIdByLogin(User.Identity?.Name ?? "");
+                if (sellerResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                {
+                    var productResponse = await _productService.CreateAsync(sellerResponse.Data, item);
+                    if (productResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    ModelState.AddModelError("", productResponse.Description);
+                }
+                ModelState.AddModelError("", sellerResponse.Description);
+            }
+            // Update.
+            else
+            {
+                var response = await _productService.UpdateAsync(item);
+                if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
                 {
                     return RedirectToAction("Index");
                 }
-                ModelState.AddModelError("", productResponse.Description);
+                ModelState.AddModelError("", response.Description);
             }
-            ModelState.AddModelError("", sellerResponse.Description);
-
         }
+
         return View(item);
     }
 
@@ -81,32 +104,5 @@ public class ProductController : Controller
             return RedirectToAction("Index");
         }
         return View("Error", response.Description);
-    }
-
-
-    [HttpGet]
-    public async Task<IActionResult> Edit(int id)
-    {
-        var response = await _productService.GetByIdAsync(id);
-        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
-        {
-            return View(response.Data);
-        }
-        return View("Error", response.Description);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Edit(Product item)
-    {
-        if (ModelState.IsValid)
-        {
-            var response = await _productService.UpdateAsync(item);
-            if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
-            {
-                return RedirectToAction("Index");
-            }
-            ModelState.AddModelError("", response.Description);
-        }
-        return View(item);
     }
 }
