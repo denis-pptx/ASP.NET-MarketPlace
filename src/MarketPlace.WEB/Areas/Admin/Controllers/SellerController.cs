@@ -35,28 +35,55 @@ public class SellerController : Controller
         return View("Error", $"{sellerResponse.Description}\n{shopResponse.Description}");
     }
 
+
     [HttpGet]
-    public async Task<IActionResult> Create()
+    public async Task<IActionResult> Save(int id)
     {
         var shopRespone = await _shopService.GetAsync();
         if (shopRespone.StatusCode == BLL.Infrastracture.StatusCode.OK)
         {
-            return View(new SellerViewModel(shopRespone.Data!));
+            if (id == 0)
+            {
+                return View(new SellerViewModel(shopRespone.Data!));
+            }
+
+            var sellerResponse = await _sellerService.GetByIdAsync(id);
+            if (sellerResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
+            {
+                sellerResponse.Data!.PasswordConfirm = sellerResponse.Data.Password;
+                return View(new SellerViewModel(shopRespone.Data!, sellerResponse.Data!));
+            }
+            return View("Error", sellerResponse.Description);
         }
         return View("Error", shopRespone.Description);
     }
 
+
     [HttpPost]
-    public async Task<IActionResult> Create(DAL.Entities.Seller item)
+    public async Task<IActionResult> Save(DAL.Entities.Seller item)
     {
         if (ModelState.IsValid)
         {
-            var createResponse = await _sellerService.CreateAsync(item);
-            if (createResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
+            // Create.
+            if (item.Id == 0)
             {
-                return RedirectToAction("Index");
+                var createResponse = await _sellerService.CreateAsync(item);
+                if (createResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError("", createResponse.Description);
             }
-            ModelState.AddModelError("", createResponse.Description);
+            // Update.
+            else
+            {
+                var updateResponse = await _sellerService.UpdateAsync(item);
+                if (updateResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError("", updateResponse.Description);
+            }
         }
 
         var shopRespone = await _shopService.GetAsync();
@@ -77,44 +104,5 @@ public class SellerController : Controller
             return RedirectToAction("Index");
         }
         return View("Error", response.Description);
-    }
-
-
-    [HttpGet]
-    public async Task<IActionResult> Edit(int id)
-    {
-        var shopRespone = await _shopService.GetAsync();
-        if (shopRespone.StatusCode == BLL.Infrastracture.StatusCode.OK)
-        {
-            var sellerResponse = await _sellerService.GetByIdAsync(id);
-            if (sellerResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
-            {
-                sellerResponse.Data!.PasswordConfirm = sellerResponse.Data.Password;
-                return View(new SellerViewModel(shopRespone.Data!, sellerResponse.Data!));
-            }
-            return View("Error", sellerResponse.Description);
-        }
-        return View("Error", shopRespone.Description);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Edit(DAL.Entities.Seller item)
-    {
-        if (ModelState.IsValid)
-        {
-            var response = await _sellerService.UpdateAsync(item);
-            if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
-            {
-                return RedirectToAction("Index");
-            }
-            ModelState.AddModelError("", response.Description);
-        }
-
-        var shopRespone = await _shopService.GetAsync();
-        if (shopRespone.StatusCode == BLL.Infrastracture.StatusCode.OK)
-        {
-            return View(new SellerViewModel(shopRespone.Data!, item));
-        }
-        return View("Error", shopRespone.Description);
     }
 }

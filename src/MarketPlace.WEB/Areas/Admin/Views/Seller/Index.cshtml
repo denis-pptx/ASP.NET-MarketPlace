@@ -35,7 +35,7 @@
                 <td>@seller.Shop!.Name</td>
 
                 <td>
-                    <a asp-action="Edit" asp-route-id="@seller.Id">Изменить</a>
+                    <a asp-action="Save" asp-route-id="@seller.Id">Изменить</a>
                 </td>
                 <td>
                     <form asp-action="Delete" method="post" asp-route-id="@seller.Id">
@@ -50,7 +50,7 @@
 @if (Model.Shops.Count() > 1)
 {
     <p>
-        <a asp-action="Create">Добавить продавца</a>
+        <a asp-action="Save">Добавить продавца</a>
     </p>
 }
 
