@@ -23,13 +23,13 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
-		Shop shop = new Shop { Id = 1, Name = "restore" };
-		Product product = new Product { Id = 1, Description = "descr", Name = "phone", Price = 500, ShopId = shop.Id };
-
+		// Shop shop = new Shop { Id = 1, Name = "restore" };
+		// Product product = new Product { Id = 1, Description = "descr", Name = "phone", Price = 500, ShopId = shop.Id };
+		 
 		User admin = new User { Id = 1, Login = "admin", Password = "admin", Role = Enum.Role.Admin };
 
-		modelBuilder.Entity<Product>().HasData(product);
-		modelBuilder.Entity<Shop>().HasData(shop);
-		modelBuilder.Entity<User>().HasData(admin);
+		// modelBuilder.Entity<Product>().HasData(product);
+		// modelBuilder.Entity<Shop>().HasData(shop);
+		// modelBuilder.Entity<User>().HasData(admin);
     }
 }
