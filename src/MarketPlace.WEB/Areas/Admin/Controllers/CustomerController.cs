@@ -30,43 +30,15 @@ public class CustomerController : Controller
     }
 
     [HttpGet]
-    public IActionResult Create()
+    public async Task<IActionResult> Save(int id)
     {
-        return View();
-    }
-
-
-    [HttpPost]
-    public async Task<IActionResult> Create(Customer item)
-    {
-        if (ModelState.IsValid)
+        // Create.
+        if (id == 0)
         {
-            var response = await _customerService.CreateAsync(item);
-            if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
-            {
-                return RedirectToAction("Index");
-            }
-            ModelState.AddModelError("", response.Description);
+            return View();
         }
-        return View(item);
-    }
 
-
-    [HttpPost]
-    public async Task<IActionResult> Delete(int id)
-    {
-        var response = await _customerService.DeleteAsync(id);
-        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
-        {
-            return RedirectToAction("Index");
-        }
-        return View("Error", response.Description);
-    }
-
-
-    [HttpGet]
-    public async Task<IActionResult> Edit(int id)
-    {
+        // Update.
         var response = await _customerService.GetByIdAsync(id);
         if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
         {
@@ -77,17 +49,43 @@ public class CustomerController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(Customer item)
+    public async Task<IActionResult> Save(Customer item)
     {
         if (ModelState.IsValid)
         {
-            var response = await _customerService.UpdateAsync(item);
-            if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+            // Create.
+            if (item.Id == 0)
             {
-                return RedirectToAction("Index");
+                var response = await _customerService.CreateAsync(item);
+                if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError("", response.Description);
             }
-            ModelState.AddModelError("", response.Description);
+            // Update.
+            else
+            {
+                var response = await _customerService.UpdateAsync(item);
+                if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError("", response.Description);
+            }
+
         }
         return View(item);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var response = await _customerService.DeleteAsync(id);
+        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+        {
+            return RedirectToAction("Index");
+        }
+        return View("Error", response.Description);
     }
 }

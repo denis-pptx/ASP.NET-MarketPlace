@@ -31,7 +31,7 @@
                 <td>@customer.Profile.Phone</td>
 
                 <td>
-                    <a asp-action="Edit" asp-route-id="@customer.Id">Изменить</a>
+                    <a asp-action="Save" asp-route-id="@customer.Id">Изменить</a>
                 </td>
                 <td>
                     <form asp-action="Delete" method="post" asp-route-id="@customer.Id">
@@ -45,7 +45,7 @@
 
 
 <p>
-    <a asp-action="Create">Добавить покупателя</a>
+    <a asp-action="Save">Добавить покупателя</a>
 </p>
 
 

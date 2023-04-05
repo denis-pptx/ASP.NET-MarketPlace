@@ -1,3 +1,4 @@
+using MarketPlace.BLL.Helpers;
 using MarketPlace.BLL.Interfaces;
 using MarketPlace.BLL.Services;
 using MarketPlace.DAL.Data;
@@ -43,9 +44,13 @@ builder.Services.AddScoped<ISellerService, SellerService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
+// Helpers registration.
+builder.Services.AddTransient<SaveHelper>();
+
 
 var app = builder.Build();
 
+// Authentication / authorization settings.
 app.UseAuthentication();
 app.UseAuthorization();
 
