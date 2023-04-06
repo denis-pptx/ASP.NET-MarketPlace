@@ -58,7 +58,7 @@ app.UseAuthorization();
 // Mapping routes to controllers.
 app.MapControllerRoute(
     name: "area",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area:exists}/{controller}/{action}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
