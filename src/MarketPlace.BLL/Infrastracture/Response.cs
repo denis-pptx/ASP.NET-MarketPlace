@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace MarketPlace.BLL.Infrastracture;
+﻿namespace MarketPlace.BLL.Infrastracture;
 
 public class Response<T>
 {

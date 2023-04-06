@@ -18,7 +18,7 @@ public class CustomerController : Controller
         {
             return View(new CustomerListViewModel(response.Data!));
         }
-        return View("Error", response.Description);
+        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
     }
 
     [HttpGet]
@@ -37,7 +37,7 @@ public class CustomerController : Controller
             response.Data!.PasswordConfirm = response.Data.Password;
             return View(response.Data);
         }
-        return View("Error", response.Description);
+        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
     }
 
     [HttpPost]
@@ -78,6 +78,6 @@ public class CustomerController : Controller
         {
             return RedirectToAction("Index");
         }
-        return View("Error", response.Description);
+        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
     }
 }

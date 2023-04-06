@@ -18,7 +18,7 @@ public class ShopController : Controller
         {
             return View(new ShopListViewModel(response.Data!));
         }
-        return View("Error", response.Description);
+        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
     }
 
 
@@ -37,7 +37,7 @@ public class ShopController : Controller
         {
             return View(response.Data);
         }
-        return View("Error", response.Description);
+        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
     }
 
 
@@ -80,6 +80,6 @@ public class ShopController : Controller
         {
             return RedirectToAction("Index");
         }
-        return View("Error", response.Description);
+        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
     }
 }

@@ -24,9 +24,9 @@ public class ProductController : Controller
             {
                 return View(new ProductListViewModel(productResponse.Data!));
             }
-            return View("Error", productResponse.Description);
+            return View("Error", new ErrorViewModel(productResponse.StatusCode, productResponse.Description));
         }
-        return View("Error", sellerResponse.Description);
+        return View("Error", new ErrorViewModel(sellerResponse.StatusCode, sellerResponse.Description));
     }
 
 
@@ -45,7 +45,7 @@ public class ProductController : Controller
         {
             return View(response.Data);
         }
-        return View("Error", response.Description);
+        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
     }
 
 
@@ -93,6 +93,6 @@ public class ProductController : Controller
         {
             return RedirectToAction("Index");
         }
-        return View("Error", response.Description);
+        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
     }
 }

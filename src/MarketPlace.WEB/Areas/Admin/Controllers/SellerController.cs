@@ -15,14 +15,16 @@ public class SellerController : Controller
     public async Task<IActionResult> Index(int shopId = 0)
     {
         var sellerResponse = await _sellerService.GetByShopIdAsync(shopId);
-        var shopResponse = await _shopService.GetAsync();
-
-        if (sellerResponse.StatusCode == HttpStatusCode.OK &&
-            shopResponse.StatusCode == HttpStatusCode.OK)
+        if (sellerResponse.StatusCode == HttpStatusCode.OK)
         {
-            return View(new SellerListViewModel(sellerResponse.Data!, shopResponse.Data!, shopId));
+            var shopResponse = await _shopService.GetAsync();
+            if (shopResponse.StatusCode == HttpStatusCode.OK)
+            {
+                return View(new SellerListViewModel(sellerResponse.Data!, shopResponse.Data!, shopId));
+            }
+            return View("Error", new ErrorViewModel(shopResponse.StatusCode, shopResponse.Description));
         }
-        return View("Error", $"{sellerResponse.Description}\n{shopResponse.Description}");
+        return View("Error", new ErrorViewModel(sellerResponse.StatusCode, sellerResponse.Description));
     }
 
 
@@ -43,9 +45,9 @@ public class SellerController : Controller
                 sellerResponse.Data!.PasswordConfirm = sellerResponse.Data.Password;
                 return View(new SellerViewModel(shopRespone.Data!, sellerResponse.Data!));
             }
-            return View("Error", sellerResponse.Description);
+            return View("Error", new ErrorViewModel(sellerResponse.StatusCode, sellerResponse.Description));
         }
-        return View("Error", shopRespone.Description);
+        return View("Error", new ErrorViewModel(shopRespone.StatusCode, shopRespone.Description));
     }
 
 
@@ -81,7 +83,7 @@ public class SellerController : Controller
         {
             return View(new SellerViewModel(shopRespone.Data!, item));
         }
-        return View("Error", shopRespone.Description);
+        return View("Error", new ErrorViewModel(shopRespone.StatusCode, shopRespone.Description));
     }
 
 
@@ -93,6 +95,6 @@ public class SellerController : Controller
         {
             return RedirectToAction("Index");
         }
-        return View("Error", response.Description);
+        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
     }
 }
