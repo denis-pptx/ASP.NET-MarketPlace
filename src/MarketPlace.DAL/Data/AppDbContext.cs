@@ -12,20 +12,23 @@ public class AppDbContext : DbContext
 	public AppDbContext(DbContextOptions<AppDbContext> options)
 		: base(options)
 	{
-        //Database.EnsureDeleted();
-        //Database.EnsureCreated();
+        // Database.EnsureDeleted();
+        // Database.EnsureCreated();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+		modelBuilder.Entity<User>()
+			.HasIndex(u => u.Login)
+			.IsUnique();
 
-		// Shop shop = new Shop { Id = 1, Name = "restore" };
-		// Product product = new Product { Id = 1, Description = "descr", Name = "phone", Price = 500, ShopId = shop.Id };
-		 
-		User admin = new User { Id = 1, Login = "admin", Password = "admin", Role = Enum.Role.Admin };
 
-		// modelBuilder.Entity<Product>().HasData(product);
-		// modelBuilder.Entity<Shop>().HasData(shop);
-		modelBuilder.Entity<User>().HasData(admin);
+		modelBuilder.Entity<User>().HasData(new User 
+		{ 
+			Id = 1, 
+			Login = "admin", 
+			Password = "admin",
+			Role = Role.Admin 
+		});
     }
 }

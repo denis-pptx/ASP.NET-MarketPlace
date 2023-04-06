@@ -34,7 +34,6 @@ public class CustomerController : Controller
         var response = await _customerService.GetByIdAsync(id);
         if (response.StatusCode == HttpStatusCode.OK)
         {
-            response.Data!.PasswordConfirm = response.Data.Password;
             return View(response.Data);
         }
         return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
@@ -43,6 +42,8 @@ public class CustomerController : Controller
     [HttpPost]
     public async Task<IActionResult> Save(Customer item)
     {
+        ModelState.Remove("PasswordConfirm");
+
         if (ModelState.IsValid)
         {
             // Create.

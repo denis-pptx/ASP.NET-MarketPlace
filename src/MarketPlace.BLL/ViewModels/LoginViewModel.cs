@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MarketPlace.BLL.ViewModels;
+﻿namespace MarketPlace.BLL.ViewModels;
 
 public class LoginViewModel
 {

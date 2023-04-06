@@ -1,6 +1,4 @@
-﻿using MarketPlace.DAL.Entities;
-
-namespace MarketPlace.BLL.ViewModels;
+﻿namespace MarketPlace.BLL.ViewModels;
 
 public class ShopListViewModel
 {

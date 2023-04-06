@@ -42,7 +42,6 @@ public class SellerController : Controller
             var sellerResponse = await _sellerService.GetByIdAsync(id);
             if (sellerResponse.StatusCode == HttpStatusCode.OK)
             {
-                sellerResponse.Data!.PasswordConfirm = sellerResponse.Data.Password;
                 return View(new SellerViewModel(shopRespone.Data!, sellerResponse.Data!));
             }
             return View("Error", new ErrorViewModel(sellerResponse.StatusCode, sellerResponse.Description));
@@ -54,6 +53,8 @@ public class SellerController : Controller
     [HttpPost]
     public async Task<IActionResult> Save(DAL.Entities.Seller item)
     {
+        ModelState.Remove("PasswordConfirm");
+
         if (ModelState.IsValid)
         {
             // Create.

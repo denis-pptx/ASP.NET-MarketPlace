@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace MarketPlace.BLL.Helpers;
+﻿namespace MarketPlace.BLL.Helpers;
 
 public static class StringHelper
 {

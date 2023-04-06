@@ -18,10 +18,6 @@
             <label asp-for="Password"></label>
             <input asp-for="Password" />
         </p>
-        <p>
-            <label asp-for="PasswordConfirm"></label>
-            <input asp-for="PasswordConfirm" />
-        </p>
         <input type="hidden" name="Role" value="@MarketPlace.DAL.Enum.Role.Customer">
 
         <input type="hidden" name="Profile.Id" value="@(Model?.Profile?.Id ?? 0)">

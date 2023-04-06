@@ -1,8 +1,4 @@
-﻿using MarketPlace.BLL.Infrastracture;
-using MarketPlace.BLL.ViewModels;
-using MarketPlace.DAL.Entities;
-
-namespace MarketPlace.BLL.Interfaces;
+﻿namespace MarketPlace.BLL.Interfaces;
 
 public interface IShopService
 {

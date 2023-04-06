@@ -1,9 +1,4 @@
-﻿using MarketPlace.BLL.Infrastracture;
-using MarketPlace.BLL.ViewModels;
-using MarketPlace.DAL.Entities;
-using System.Security.Claims;
-
-namespace MarketPlace.BLL.Interfaces;
+﻿namespace MarketPlace.BLL.Interfaces;
 
 public interface IAccountService
 {

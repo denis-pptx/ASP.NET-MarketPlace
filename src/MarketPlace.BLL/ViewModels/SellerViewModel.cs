@@ -1,7 +1,4 @@
-﻿using MarketPlace.DAL.Entities;
-using Microsoft.AspNetCore.Mvc.Rendering;
-
-namespace MarketPlace.BLL.ViewModels;
+﻿namespace MarketPlace.BLL.ViewModels;
 
 public class SellerViewModel
 {

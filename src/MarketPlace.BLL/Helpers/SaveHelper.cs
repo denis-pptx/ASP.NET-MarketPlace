@@ -1,6 +1,4 @@
-﻿using MarketPlace.DAL.Entities;
-
-namespace MarketPlace.BLL.Helpers;
+﻿namespace MarketPlace.BLL.Helpers;
 
 public class SaveHelper
 {

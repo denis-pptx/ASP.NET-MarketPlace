@@ -1,7 +1,4 @@
-﻿using MarketPlace.BLL.Infrastracture;
-using MarketPlace.DAL.Entities;
-
-namespace MarketPlace.BLL.Interfaces;
+﻿namespace MarketPlace.BLL.Interfaces;
 
 public interface ICustomerService
 {
