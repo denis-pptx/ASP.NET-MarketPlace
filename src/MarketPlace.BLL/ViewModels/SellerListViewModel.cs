@@ -12,8 +12,8 @@ public class SellerListViewModel
     {
         Sellers = sellers.OrderBy(s => s.Login);
 
-        var sortedShops = shops.Skip(1).OrderBy(s => s.Name).ToList();
-        sortedShops.Insert(0, shops.First());
-        Shops = new SelectList(sortedShops, "Id", "Name", selectedValue);
+        var orderedShops = shops.OrderBy(s => s.Name).ToList();
+        orderedShops.Insert(0, new Shop() { Id = 0, Name = "Все" });
+        Shops = new SelectList(orderedShops, "Id", "Name", selectedValue);
     }
 }

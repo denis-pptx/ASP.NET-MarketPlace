@@ -20,10 +20,7 @@ public class SellerController : Controller
         if (sellerResponse.StatusCode == HttpStatusCode.OK &&
             shopResponse.StatusCode == HttpStatusCode.OK)
         {
-            var shops = shopResponse.Data!.ToList();
-            shops.Insert(0, new Shop() { Id = 0, Name = "Все" });
-
-            return View(new SellerListViewModel(sellerResponse!.Data!, shops, shopId));
+            return View(new SellerListViewModel(sellerResponse.Data!, shopResponse.Data!, shopId));
         }
         return View("Error", $"{sellerResponse.Description}\n{shopResponse.Description}");
     }
