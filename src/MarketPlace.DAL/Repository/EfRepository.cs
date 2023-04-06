@@ -1,10 +1,4 @@
-﻿using MarketPlace.DAL.Data;
-using MarketPlace.DAL.Entities;
-using MarketPlace.DAL.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-
-namespace MarketPlace.DAL.Repository;
+﻿namespace MarketPlace.DAL.Repository;
 
 public class EfRepository<T> : IRepository<T> where T : Entity
 {

@@ -1,12 +1,4 @@
-﻿using MarketPlace.BLL.Interfaces;
-using MarketPlace.BLL.Services;
-using MarketPlace.BLL.ViewModels;
-using MarketPlace.DAL.Entities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Xml.Linq;
-
-namespace MarketPlace.WEB.Areas.Admin.Controllers;
+﻿namespace MarketPlace.WEB.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize(Roles = $"Admin")]
@@ -22,7 +14,7 @@ public class CustomerController : Controller
     public async Task<IActionResult> Index()
     {
         var response = await _customerService.GetAsync();
-        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+        if (response.StatusCode == HttpStatusCode.OK)
         {
             return View(new CustomerListViewModel(response.Data!));
         }
@@ -40,7 +32,7 @@ public class CustomerController : Controller
 
         // Update.
         var response = await _customerService.GetByIdAsync(id);
-        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+        if (response.StatusCode == HttpStatusCode.OK)
         {
             response.Data!.PasswordConfirm = response.Data.Password;
             return View(response.Data);
@@ -57,7 +49,7 @@ public class CustomerController : Controller
             if (item.Id == 0)
             {
                 var response = await _customerService.CreateAsync(item);
-                if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
                     return RedirectToAction("Index");
                 }
@@ -67,7 +59,7 @@ public class CustomerController : Controller
             else
             {
                 var response = await _customerService.UpdateAsync(item);
-                if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
                     return RedirectToAction("Index");
                 }
@@ -81,8 +73,8 @@ public class CustomerController : Controller
     [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
-        var response = await _customerService.DeleteAsync(id);
-        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+        var response = await _customerService.DeleteAsync(id);  
+        if (response.StatusCode == HttpStatusCode.OK)
         {
             return RedirectToAction("Index");
         }

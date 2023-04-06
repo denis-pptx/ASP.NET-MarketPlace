@@ -1,13 +1,4 @@
-﻿using MarketPlace.BLL.Interfaces;
-using MarketPlace.BLL.Infrastracture;
-using MarketPlace.BLL.ViewModels;
-using MarketPlace.DAL.Entities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using MarketPlace.BLL.Services;
-
-namespace MarketPlace.WEB.Areas.Admin.Controllers;
+﻿namespace MarketPlace.WEB.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize(Roles = $"Admin")]
@@ -23,7 +14,7 @@ public class ShopController : Controller
     public async Task<IActionResult> Index(string name = "")
     {
         var response = await _shopService.GetBySimilarNameAsync(name);
-        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+        if (response.StatusCode == HttpStatusCode.OK)
         {
             return View(new ShopListViewModel(response.Data!));
         }
@@ -42,7 +33,7 @@ public class ShopController : Controller
 
         // Update.
         var response = await _shopService.GetByIdAsync(id);
-        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+        if (response.StatusCode == HttpStatusCode.OK)
         {
             return View(response.Data);
         }
@@ -59,7 +50,7 @@ public class ShopController : Controller
             if (item.Id == 0)
             {
                 var response = await _shopService.CreateAsync(item);
-                if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
                     return RedirectToAction("Index");
                 }
@@ -69,7 +60,7 @@ public class ShopController : Controller
             else
             {
                 var response = await _shopService.UpdateAsync(item);
-                if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
                     return RedirectToAction("Index");
                 }
@@ -85,7 +76,7 @@ public class ShopController : Controller
     public async Task<IActionResult> Delete(int id)
     {
         var response = await _shopService.DeleteAsync(id);
-        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+        if (response.StatusCode == HttpStatusCode.OK)
         {
             return RedirectToAction("Index");
         }

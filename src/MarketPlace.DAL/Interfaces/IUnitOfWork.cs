@@ -1,6 +1,4 @@
-﻿using MarketPlace.DAL.Entities;
-
-namespace MarketPlace.DAL.Interfaces;
+﻿namespace MarketPlace.DAL.Interfaces;
 
 public interface IUnitOfWork
 {

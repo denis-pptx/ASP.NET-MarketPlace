@@ -1,8 +1,4 @@
-﻿using MarketPlace.DAL.Enum;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace MarketPlace.DAL.Entities;
+﻿namespace MarketPlace.DAL.Entities;
 
 public class User : Entity
 {

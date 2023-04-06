@@ -22,7 +22,7 @@ public class ShopService : IShopService
 
             return new()
             {
-                StatusCode = StatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Data = shops
             };
         }
@@ -31,7 +31,7 @@ public class ShopService : IShopService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -47,7 +47,7 @@ public class ShopService : IShopService
 
             return new()
             {
-                StatusCode = StatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Data = shops
             };
         }
@@ -56,7 +56,7 @@ public class ShopService : IShopService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -71,14 +71,14 @@ public class ShopService : IShopService
             {
                 return new()
                 {
-                    Description = "Такого продавца нет",
-                    StatusCode = StatusCode.SellerNotFound
+                    Description = "Seller not found",
+                    StatusCode = HttpStatusCode.NotFound
                 };
             }
 
             return new()
             {
-                StatusCode = StatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Data = seller.Shop
             };
         }
@@ -87,7 +87,7 @@ public class ShopService : IShopService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -102,8 +102,8 @@ public class ShopService : IShopService
             {
                 return new()
                 {
-                    Description = "Имя магазина занято",
-                    StatusCode = StatusCode.ShopNameIsUsed
+                    Description = "Shop name is already used",
+                    StatusCode = HttpStatusCode.Conflict
                 };
             }
 
@@ -111,7 +111,7 @@ public class ShopService : IShopService
 
             return new()
             {
-                StatusCode = StatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Data = true,
             };
         }
@@ -120,7 +120,7 @@ public class ShopService : IShopService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -134,9 +134,9 @@ public class ShopService : IShopService
             {
                 return new()
                 {
-                    Data = false,
-                    Description = "Такого магазина нет",
-                    StatusCode = StatusCode.ShopNotFound
+                    Description = "Shop not found",
+                    StatusCode = HttpStatusCode.NotFound,
+                    Data = false
                 };
             }
 
@@ -144,17 +144,17 @@ public class ShopService : IShopService
 
             return new()
             {
-                Data = true,
-                StatusCode = StatusCode.OK
+                StatusCode = HttpStatusCode.OK,
+                Data = true
             };
         }
         catch(Exception ex)
         {
             return new()
             {
-                Data = false,
-                StatusCode = StatusCode.InternalServerError,
-                Description = ex.Message
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError,
+                Data = false
             };
         }
     }
@@ -168,23 +168,23 @@ public class ShopService : IShopService
             {
                 return new()
                 {
-                    Description = "Такого магазина нет",
-                    StatusCode = StatusCode.ShopNotFound
+                    Description = "Shop not found",
+                    StatusCode = HttpStatusCode.NotFound
                 };
             }
 
             return new()
             {
-                Data = shop,
-                StatusCode = StatusCode.OK
+                StatusCode = HttpStatusCode.OK,
+                Data = shop
             };
         }
         catch (Exception ex)
         {
             return new()
             {
-                StatusCode = StatusCode.InternalServerError,
-                Description = ex.Message
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -198,8 +198,8 @@ public class ShopService : IShopService
             {
                 return new()
                 {
-                    Description = "Имя магазина занято",
-                    StatusCode = StatusCode.ShopNameIsUsed
+                    Description = "Shop name is already used",
+                    StatusCode = HttpStatusCode.Conflict
                 };
             }
 
@@ -208,8 +208,8 @@ public class ShopService : IShopService
             {
                 return new()
                 {
-                    Description = "Такого магазина нет",
-                    StatusCode = StatusCode.ShopNotFound
+                    Description = "Shop not found",
+                    StatusCode = HttpStatusCode.NotFound
                 };
             }
 
@@ -217,7 +217,7 @@ public class ShopService : IShopService
 
             return new()
             {
-                StatusCode = StatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Data = true,
             };
         }
@@ -226,7 +226,7 @@ public class ShopService : IShopService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }

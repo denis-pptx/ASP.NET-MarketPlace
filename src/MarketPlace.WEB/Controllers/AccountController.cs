@@ -1,11 +1,4 @@
-﻿using MarketPlace.BLL.Interfaces;
-using MarketPlace.BLL.ViewModels;
-using MarketPlace.BLL.Infrastracture;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
-using MarketPlace.DAL.Entities;
-
-namespace MarketPlace.WEB.Controllers;
+﻿namespace MarketPlace.WEB.Controllers;
 
 public class AccountController : Controller
 {
@@ -34,7 +27,7 @@ public class AccountController : Controller
         if (ModelState.IsValid)
         {
             var response = await _accountService.LoginAsync(vm);
-            if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)        
             {
                 await HttpContext.SignInAsync(response.Data!);
                 return RedirectToAction("Index", "Home");
@@ -55,7 +48,7 @@ public class AccountController : Controller
         if (ModelState.IsValid)
         {
             var response = await _accountService.RegisterAsync(customer);
-            if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
             {
                 await HttpContext.SignInAsync(response.Data!);
                 return RedirectToAction("Index", "Home");

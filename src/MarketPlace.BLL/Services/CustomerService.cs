@@ -21,7 +21,7 @@ public class CustomerService : ICustomerService
 
             return new()
             {
-                StatusCode = StatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Data = customers
             };
         }
@@ -30,7 +30,7 @@ public class CustomerService : ICustomerService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -46,8 +46,8 @@ public class CustomerService : ICustomerService
             {
                 return new()
                 {
-                    Description = "Логин занят",
-                    StatusCode = StatusCode.LoginIsUsed
+                    Description = "Login is already used",
+                    StatusCode = HttpStatusCode.Conflict
                 };
             }
 
@@ -55,7 +55,7 @@ public class CustomerService : ICustomerService
 
             return new()
             {
-                StatusCode = StatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Data = true,
             };
         }
@@ -64,7 +64,7 @@ public class CustomerService : ICustomerService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -78,9 +78,9 @@ public class CustomerService : ICustomerService
             {
                 return new()
                 {
-                    Data = false,
-                    Description = "Такого покупателя нет",
-                    StatusCode = StatusCode.CustomerNotFound
+                    Description = "Customer not found",
+                    StatusCode = HttpStatusCode.NotFound,
+                    Data = false
                 };
             }
 
@@ -88,17 +88,17 @@ public class CustomerService : ICustomerService
 
             return new()
             {
-                Data = true,
-                StatusCode = StatusCode.OK
+                StatusCode = HttpStatusCode.OK,
+                Data = true
             };
         }
         catch (Exception ex)
         {
             return new()
             {
-                Data = false,
-                StatusCode = StatusCode.InternalServerError,
-                Description = ex.Message
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError,
+                Data = false
             };
         }
     }
@@ -112,23 +112,23 @@ public class CustomerService : ICustomerService
             {
                 return new()
                 {
-                    Description = "Такого покупателя нет",
-                    StatusCode = StatusCode.CustomerNotFound
+                    Description = "Customer not found",
+                    StatusCode = HttpStatusCode.NotFound
                 };
             }
 
             return new()
             {
-                Data = customer,
-                StatusCode = StatusCode.OK
+                StatusCode = HttpStatusCode.OK,
+                Data = customer
             };
         }
         catch (Exception ex)
         {
             return new()
             {
-                StatusCode = StatusCode.InternalServerError,
-                Description = ex.Message
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -142,8 +142,8 @@ public class CustomerService : ICustomerService
             {
                 return new()
                 {
-                    Description = "Логин занят",
-                    StatusCode = StatusCode.LoginIsUsed
+                    Description = "Login is already used",
+                    StatusCode = HttpStatusCode.Conflict
                 };
             }
 
@@ -153,7 +153,7 @@ public class CustomerService : ICustomerService
                 return new()
                 {
                     Description = "Такого покупателя нет",
-                    StatusCode = StatusCode.CustomerNotFound
+                    StatusCode = HttpStatusCode.NotFound
                 };
             }
 
@@ -161,7 +161,7 @@ public class CustomerService : ICustomerService
 
             return new()
             {
-                StatusCode = StatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Data = true,
             };
         }
@@ -170,7 +170,7 @@ public class CustomerService : ICustomerService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }

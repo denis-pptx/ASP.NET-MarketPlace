@@ -19,23 +19,12 @@ public class SellerService : ISellerService
     {
         try
         {
-            Func<Seller, bool> filter = seller =>
-            {
-                if (shopId == 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return seller.ShopId == shopId;
-                }
-            };
-
-            IEnumerable<Seller> sellers = await _unitOfWork.SellerRepository.ListAsync(filter);
+            IEnumerable<Seller> sellers = await _unitOfWork.SellerRepository.
+                ListAsync(s => shopId == 0 || s.ShopId == shopId);
 
             return new()
             {
-                StatusCode = StatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Data = sellers
             };
         }
@@ -43,8 +32,8 @@ public class SellerService : ISellerService
         {
             return new()
             {
-                StatusCode = StatusCode.InternalServerError,
-                Description = ex.Message
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -59,8 +48,8 @@ public class SellerService : ISellerService
             {
                 return new()
                 {
-                    Description = "Логин занят",
-                    StatusCode = StatusCode.LoginIsUsed
+                    Description = "Login is already used",
+                    StatusCode = HttpStatusCode.Conflict
                 };
             }
 
@@ -68,7 +57,7 @@ public class SellerService : ISellerService
 
             return new()
             {
-                StatusCode = StatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Data = true,
             };
         }
@@ -77,7 +66,7 @@ public class SellerService : ISellerService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -91,9 +80,9 @@ public class SellerService : ISellerService
             {
                 return new()
                 {
-                    Data = false,
-                    Description = "Такого продавца нет",
-                    StatusCode = StatusCode.SellerNotFound
+                    Description = "Seller not found",
+                    StatusCode = HttpStatusCode.NotFound,
+                    Data = false
                 };
             }
 
@@ -101,17 +90,17 @@ public class SellerService : ISellerService
 
             return new()
             {
-                Data = true,
-                StatusCode = StatusCode.OK
+                StatusCode = HttpStatusCode.OK,
+                Data = true
             };
         }
         catch (Exception ex)
         {
             return new()
             {
-                Data = false,
-                StatusCode = StatusCode.InternalServerError,
-                Description = ex.Message
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError,
+                Data = false
             };
         }
     }
@@ -125,23 +114,23 @@ public class SellerService : ISellerService
             {
                 return new()
                 {
-                    Description = "Такого продавца нет",
-                    StatusCode = StatusCode.SellerNotFound
+                    Description = "Seller not found",
+                    StatusCode = HttpStatusCode.NotFound
                 };
             }
 
             return new()
             {
-                Data = seller,
-                StatusCode = StatusCode.OK
+                StatusCode = HttpStatusCode.OK,
+                Data = seller
             };
         }
         catch (Exception ex)
         {
             return new()
             {
-                StatusCode = StatusCode.InternalServerError,
-                Description = ex.Message
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -155,8 +144,8 @@ public class SellerService : ISellerService
             {
                 return new()
                 {
-                    Description = "Логин занят",
-                    StatusCode = StatusCode.LoginIsUsed
+                    Description = "Login is already used",
+                    StatusCode = HttpStatusCode.Conflict
                 };
             }
 
@@ -165,8 +154,8 @@ public class SellerService : ISellerService
             {
                 return new()
                 {
-                    Description = "Такого продавца нет",
-                    StatusCode = StatusCode.SellerNotFound
+                    Description = "Seller not found",
+                    StatusCode = HttpStatusCode.NotFound
                 };
             }
 
@@ -174,7 +163,7 @@ public class SellerService : ISellerService
 
             return new()
             {
-                StatusCode = StatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Data = true,
             };
         }
@@ -183,7 +172,7 @@ public class SellerService : ISellerService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -197,23 +186,23 @@ public class SellerService : ISellerService
             {
                 return new()
                 {
-                    Description = "Такого продавца нет",
-                    StatusCode = StatusCode.SellerNotFound
+                    Description = "Seller not found",
+                    StatusCode = HttpStatusCode.NotFound
                 };
             }
 
             return new()
             {
-                Data = seller.ShopId,
-                StatusCode = StatusCode.OK
+                StatusCode = HttpStatusCode.OK,
+                Data = seller.ShopId
             };
         }
         catch (Exception ex)
         {
             return new()
             {
-                StatusCode = StatusCode.InternalServerError,
-                Description = ex.Message
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }

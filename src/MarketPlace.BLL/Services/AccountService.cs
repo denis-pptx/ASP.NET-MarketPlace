@@ -1,11 +1,4 @@
-﻿using MarketPlace.BLL.Infrastracture;
-using MarketPlace.BLL.Interfaces;
-using MarketPlace.BLL.ViewModels;
-using MarketPlace.DAL.Entities;
-using MarketPlace.DAL.Interfaces;
-using System.Security.Claims;
-
-namespace MarketPlace.BLL.Services;
+﻿namespace MarketPlace.BLL.Services;
 
 public class AccountService : IAccountService
 {
@@ -24,8 +17,8 @@ public class AccountService : IAccountService
             {
                 return new()
                 {
-                    Description = "Пользователь не найден",
-                    StatusCode = StatusCode.UserNotFound
+                    Description = "User not found",
+                    StatusCode = HttpStatusCode.NotFound
                 };
             }
 
@@ -33,15 +26,15 @@ public class AccountService : IAccountService
             {
                 return new()
                 {
-                    Description = "Неверный пароль",
-                    StatusCode = StatusCode.WrongPassword
+                    Description = "Wrong password",
+                    StatusCode = HttpStatusCode.Unauthorized
                 };
             }
 
             return new()
             {
-                StatusCode = StatusCode.OK,
-                Data = GetClaimsPrincipal(user)
+                Data = GetClaimsPrincipal(user),
+                StatusCode = HttpStatusCode.OK
             };
         }
         catch (Exception ex)
@@ -49,7 +42,7 @@ public class AccountService : IAccountService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -65,8 +58,8 @@ public class AccountService : IAccountService
             {
                 return new()
                 {
-                    Description = "Логин занят",
-                    StatusCode = StatusCode.LoginIsUsed
+                    Description = "Login is already used",
+                    StatusCode = HttpStatusCode.Conflict
                 };
             }
 
@@ -74,8 +67,8 @@ public class AccountService : IAccountService
             
             return new()
             {
-                StatusCode = StatusCode.OK,
-                Data = GetClaimsPrincipal(item)
+                Data = GetClaimsPrincipal(item),
+                StatusCode = HttpStatusCode.OK
             };
         }
         catch (Exception ex)
@@ -83,7 +76,7 @@ public class AccountService : IAccountService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }

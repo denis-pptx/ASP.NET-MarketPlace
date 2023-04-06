@@ -1,8 +1,4 @@
-﻿using MarketPlace.DAL.Entities;
-using Microsoft.EntityFrameworkCore;
-
-namespace MarketPlace.DAL.Data;
-
+﻿namespace MarketPlace.DAL.Data;
 
 public class AppDbContext : DbContext
 {

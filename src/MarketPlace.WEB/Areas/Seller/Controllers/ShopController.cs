@@ -1,9 +1,4 @@
-﻿using MarketPlace.BLL.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-
-namespace MarketPlace.WEB.Areas.Seller.Controllers;
+﻿namespace MarketPlace.WEB.Areas.Seller.Controllers;
 
 [Area("Seller")]
 [Authorize(Roles = $"Seller")]
@@ -18,10 +13,8 @@ public class ShopController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var sellerLogin = User.FindFirst(ClaimsIdentity.DefaultNameClaimType)?.Value ?? "";
-
-        var response = await _shopService.GetBySellerLoginAsync(sellerLogin);
-        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+        var response = await _shopService.GetBySellerLoginAsync(User.Identity?.Name ?? "");
+        if (response.StatusCode == HttpStatusCode.OK)
         {
             return View(response.Data);
         }

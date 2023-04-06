@@ -1,14 +1,4 @@
-﻿using MarketPlace.BLL.Infrastracture;
-using MarketPlace.BLL.Interfaces;
-using MarketPlace.BLL.Services;
-using MarketPlace.BLL.ViewModels;
-using MarketPlace.DAL.Entities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using System.Security.Claims;
-
-namespace MarketPlace.WEB.Areas.Seller.Controllers;
+﻿namespace MarketPlace.WEB.Areas.Seller.Controllers;
 
 [Area("Seller")]
 [Authorize(Roles = $"Seller")]
@@ -27,10 +17,10 @@ public class ProductController : Controller
     public async Task<IActionResult> Index()
     {
         var sellerResponse = await _sellerService.GetShopIdByLogin(User.Identity?.Name ?? "");
-        if (sellerResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
+        if (sellerResponse.StatusCode == HttpStatusCode.OK)
         {
             var productResponse = await _productService.GetByShopIdAsync(sellerResponse.Data);
-            if (productResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
+            if (productResponse.StatusCode == HttpStatusCode.OK)
             {
                 return View(new ProductListViewModel(productResponse.Data!));
             }
@@ -51,7 +41,7 @@ public class ProductController : Controller
 
         // Update.
         var response = await _productService.GetByIdAsync(id);
-        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+        if (response.StatusCode == HttpStatusCode.OK)
         {
             return View(response.Data);
         }
@@ -68,10 +58,10 @@ public class ProductController : Controller
             if (item.Id == 0)
             {
                 var sellerResponse = await _sellerService.GetShopIdByLogin(User.Identity?.Name ?? "");
-                if (sellerResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                if (sellerResponse.StatusCode == HttpStatusCode.OK)
                 {
                     var productResponse = await _productService.CreateAsync(sellerResponse.Data, item);
-                    if (productResponse.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                    if (productResponse.StatusCode == HttpStatusCode.OK)
                     {
                         return RedirectToAction("Index");
                     }
@@ -83,7 +73,7 @@ public class ProductController : Controller
             else
             {
                 var response = await _productService.UpdateAsync(item);
-                if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
                     return RedirectToAction("Index");
                 }
@@ -99,7 +89,7 @@ public class ProductController : Controller
     public async Task<IActionResult> Delete(int id)
     {
         var response = await _productService.DeleteAsync(id);
-        if (response.StatusCode == BLL.Infrastracture.StatusCode.OK)
+        if (response.StatusCode == HttpStatusCode.OK)
         {
             return RedirectToAction("Index");
         }

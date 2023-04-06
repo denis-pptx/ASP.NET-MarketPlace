@@ -22,7 +22,7 @@ public class ProductService : IProductService
 
             return new()
             {
-                StatusCode = StatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Data = products
             };
         }
@@ -31,7 +31,7 @@ public class ProductService : IProductService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -44,7 +44,7 @@ public class ProductService : IProductService
 
             return new()
             {
-                StatusCode = StatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Data = products
             };
         }
@@ -53,7 +53,7 @@ public class ProductService : IProductService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -68,8 +68,8 @@ public class ProductService : IProductService
             {
                 return new()
                 {
-                    StatusCode = StatusCode.ShopNotFound,
-                    Description = "Магазин не найден"
+                    Description = "Shop not found",
+                    StatusCode = HttpStatusCode.NotFound
                 };
             }
 
@@ -78,7 +78,7 @@ public class ProductService : IProductService
             
             return new()
             {
-                StatusCode = StatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Data = true,
             };
         }
@@ -87,7 +87,7 @@ public class ProductService : IProductService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -101,9 +101,9 @@ public class ProductService : IProductService
             {
                 return new()
                 {
-                    Data = false,
-                    Description = "Такого продукта нет",
-                    StatusCode = StatusCode.ProductNotFound
+                    Description = "Product not found",
+                    StatusCode = HttpStatusCode.NotFound,
+                    Data = false
                 };
             }
 
@@ -111,17 +111,17 @@ public class ProductService : IProductService
 
             return new()
             {
-                Data = true,
-                StatusCode = StatusCode.OK
+                StatusCode = HttpStatusCode.OK,
+                Data = true
             };
         }
         catch (Exception ex)
         {
             return new()
             {
-                Data = false,
-                StatusCode = StatusCode.InternalServerError,
-                Description = ex.Message
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError,
+                Data = false
             };
         }
     }
@@ -135,8 +135,8 @@ public class ProductService : IProductService
             {
                 return new()
                 {
-                    Description = "Такого товара нет",
-                    StatusCode = StatusCode.ProductNotFound
+                    Description = "Product not found",
+                    StatusCode = HttpStatusCode.NotFound
                 };
             }
 
@@ -144,7 +144,7 @@ public class ProductService : IProductService
 
             return new()
             {
-                StatusCode = StatusCode.OK,
+                StatusCode = HttpStatusCode.OK,
                 Data = true,
             };
         }
@@ -153,7 +153,7 @@ public class ProductService : IProductService
             return new()
             {
                 Description = ex.Message,
-                StatusCode = StatusCode.InternalServerError
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }
@@ -167,23 +167,23 @@ public class ProductService : IProductService
             {
                 return new()
                 {
-                    Description = "Товар не найден",
-                    StatusCode = StatusCode.ProductNotFound
+                    Description = "Product not found",
+                    StatusCode = HttpStatusCode.NotFound
                 };
             }
 
             return new()
             {
+                StatusCode = HttpStatusCode.OK,
                 Data = product,
-                StatusCode = StatusCode.OK
             };
         }
         catch (Exception ex)
         {
             return new()
             {
-                StatusCode = StatusCode.InternalServerError,
-                Description = ex.Message
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
             };
         }
     }

@@ -1,8 +1,4 @@
-﻿using MarketPlace.DAL.Data;
-using MarketPlace.DAL.Entities;
-using MarketPlace.DAL.Interfaces;
-
-namespace MarketPlace.DAL.Repository;
+﻿namespace MarketPlace.DAL.Repository;
 
 public class EfUnitOfWork : IUnitOfWork
 {
