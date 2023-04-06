@@ -23,6 +23,8 @@
             <input asp-for="PasswordConfirm" />
         </p>
         <input type="hidden" name="Role" value="@MarketPlace.DAL.Enum.Role.Customer">
+
+        <input type="hidden" name="Profile.Id" value="@(Model?.Profile?.Id ?? 0)">
         <p>
             <label asp-for="Profile.Age"></label>
             <input asp-for="Profile.Age" />
@@ -35,6 +37,9 @@
             <label asp-for="Profile.Phone"></label>
             <input asp-for="Profile.Phone" />
         </p>
+        <input type="hidden" name="Profile.CustomerId" value="@(Model?.Id ?? 0)">
+       
+
         <p>
             <input type="submit" value="OK" />
             <a asp-action="Index">Cancel</a>

@@ -140,11 +140,7 @@ public class ProductService : IProductService
                 };
             }
 
-            product.Name = item.Name;
-            product.Description = item.Description;
-            product.Price = item.Price;
-
-            await _unitOfWork.ProductRepository.UpdateAsync(product);
+            await _unitOfWork.ProductRepository.UpdateAsync(item);
 
             return new()
             {

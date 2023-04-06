@@ -10,7 +10,6 @@
 
 <form asp-action="Save">
     <div>
-
         <p>
             <label asp-for="Seller.Login"></label>
             <input asp-for="Seller.Login" name="Login" />
@@ -28,6 +27,7 @@
             <label for="shop">Shop</label>
             <select id="shop" name="ShopId" asp-items="@Model.Shops"></select>
         </p>
+
         <p>
             <input type="submit" value="OK" />
             <a asp-action="Index">Cancel</a>

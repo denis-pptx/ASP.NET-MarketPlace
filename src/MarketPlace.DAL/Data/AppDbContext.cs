@@ -16,8 +16,8 @@ public class AppDbContext : DbContext
 	public AppDbContext(DbContextOptions<AppDbContext> options)
 		: base(options)
 	{
-        // Database.EnsureDeleted();
-        // Database.EnsureCreated();
+        //Database.EnsureDeleted();
+        //Database.EnsureCreated();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,6 +30,6 @@ public class AppDbContext : DbContext
 
 		// modelBuilder.Entity<Product>().HasData(product);
 		// modelBuilder.Entity<Shop>().HasData(shop);
-		// modelBuilder.Entity<User>().HasData(admin);
+		modelBuilder.Entity<User>().HasData(admin);
     }
 }

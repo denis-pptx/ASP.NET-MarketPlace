@@ -170,12 +170,7 @@ public class SellerService : ISellerService
                 };
             }
 
-            seller.Login = item.Login;
-            seller.Password = item.Password;
-            seller.ShopId = item.ShopId;
-            seller.Shop = item.Shop;
-
-            await _unitOfWork.SellerRepository.UpdateAsync(seller);
+            await _unitOfWork.SellerRepository.UpdateAsync(item);
 
             return new()
             {

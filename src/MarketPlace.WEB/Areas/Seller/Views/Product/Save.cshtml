@@ -22,6 +22,8 @@
             <label asp-for="Price"></label>
             <input asp-for="Price" />
         </p>
+        <input type="hidden" name="ShopId" value="@(Model?.ShopId ?? 0)">
+
         <p>
             <input type="submit" value="OK" />
             <a asp-action="Index">Cancel</a>

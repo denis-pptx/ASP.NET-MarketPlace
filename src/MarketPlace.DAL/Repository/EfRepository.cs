@@ -2,6 +2,7 @@
 using MarketPlace.DAL.Entities;
 using MarketPlace.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace MarketPlace.DAL.Repository;
 
@@ -50,6 +51,12 @@ public class EfRepository<T> : IRepository<T> where T : Entity
 
     public async Task UpdateAsync(T entity)
     {
+        var entityToDetach = await _entities.FirstOrDefaultAsync(e => e.Id == entity.Id);
+        if (entityToDetach != null)
+        {
+            _db.Entry(entityToDetach).State = EntityState.Detached;
+        }
+        
         await Task.Run(() => _entities.Update(entity));
         await _db.SaveChangesAsync();
     }

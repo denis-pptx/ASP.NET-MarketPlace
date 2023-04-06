@@ -1,4 +1,6 @@
-﻿namespace MarketPlace.DAL.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MarketPlace.DAL.Entities;
 
 public abstract class Entity
 {

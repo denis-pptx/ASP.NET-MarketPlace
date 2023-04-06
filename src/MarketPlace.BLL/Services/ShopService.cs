@@ -213,11 +213,7 @@ public class ShopService : IShopService
                 };
             }
 
-            shop.Name = item.Name;
-            shop.Description = item.Description;
-            shop.Products = item.Products;
-
-            await _unitOfWork.ShopRepository.UpdateAsync(shop);
+            await _unitOfWork.ShopRepository.UpdateAsync(item);
 
             return new()
             {

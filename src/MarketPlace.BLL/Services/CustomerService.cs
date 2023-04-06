@@ -157,11 +157,7 @@ public class CustomerService : ICustomerService
                 };
             }
 
-            customer.Login = item.Login;
-            customer.Password = item.Password;
-            customer.Profile = item.Profile;
-
-            await _unitOfWork.CustomerRepository.UpdateAsync(customer);
+            await _unitOfWork.CustomerRepository.UpdateAsync(item);
 
             return new()
             {
