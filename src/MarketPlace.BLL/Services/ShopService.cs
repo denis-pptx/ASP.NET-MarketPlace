@@ -70,8 +70,7 @@ public class ShopService : IShopService
     {
         try
         {
-            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Login == sellerLogin);
-            
+            var seller = await _unitOfWork.SellerRepository.SingleOrDefaultAsync(s => s.Login == sellerLogin);
             if (seller == null)
             {
                 return new()
@@ -81,7 +80,7 @@ public class ShopService : IShopService
                 };
             }
 
-            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Id == seller.ShopId);
+            var shop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(s => s.Id == seller.ShopId);
             if (shop == null)
             {
                 return new()
@@ -112,7 +111,7 @@ public class ShopService : IShopService
     {
         try
         {
-            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(
+            var shop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(
                 s => s.Name.Trim().ToLower() == item.Name.Trim().ToLower());
             if (shop != null)
             {
@@ -145,7 +144,7 @@ public class ShopService : IShopService
     {
         try
         {
-            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Id == id);
+            var shop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(s => s.Id == id);
             if (shop == null)
             {
                 return new()
@@ -179,7 +178,7 @@ public class ShopService : IShopService
     {
         try
         {
-            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Id == id);
+            var shop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(s => s.Id == id);
             if (shop == null)
             {
                 return new()
@@ -209,7 +208,7 @@ public class ShopService : IShopService
     {
         try
         {
-            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Name == item.Name);
+            var shop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(s => s.Name == item.Name);
             if (shop != null && shop.Id != item.Id)
             {
                 return new()
@@ -219,7 +218,7 @@ public class ShopService : IShopService
                 };
             }
 
-            shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Id == item.Id);
+            shop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(s => s.Id == item.Id);
             if (shop == null)
             {
                 return new()

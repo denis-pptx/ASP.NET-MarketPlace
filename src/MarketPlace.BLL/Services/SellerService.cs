@@ -18,7 +18,7 @@ public class SellerService : ISellerService
 
             foreach (var seller in sellers)
             {
-                var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Id == seller.ShopId);
+                var shop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(s => s.Id == seller.ShopId);
                 if (shop == null)
                 {
                     return new()
@@ -50,7 +50,7 @@ public class SellerService : ISellerService
     {
         try
         {
-            var seller = await _unitOfWork.UserRepository.FirstOrDefaultAsync(
+            var seller = await _unitOfWork.UserRepository.SingleOrDefaultAsync(
                 s => s.Login.Trim().ToLower() == item.Login.Trim().ToLower());
             if (seller != null)
             {
@@ -83,7 +83,7 @@ public class SellerService : ISellerService
     {
         try
         {
-            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Id == id);
+            var seller = await _unitOfWork.SellerRepository.SingleOrDefaultAsync(s => s.Id == id);
             if (seller == null)
             {
                 return new()
@@ -117,7 +117,7 @@ public class SellerService : ISellerService
     {
         try
         {
-            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Id == id);
+            var seller = await _unitOfWork.SellerRepository.SingleOrDefaultAsync(s => s.Id == id);
             if (seller == null)
             {
                 return new()
@@ -127,7 +127,7 @@ public class SellerService : ISellerService
                 };
             }
 
-            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Id == seller.ShopId);
+            var shop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(s => s.Id == seller.ShopId);
             if (shop == null)
             {
                 return new()
@@ -158,7 +158,7 @@ public class SellerService : ISellerService
     {
         try
         {
-            var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(u => u.Login == item.Login);
+            var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Login == item.Login);
             if (user != null && user.Id != item.Id)
             {
                 return new()
@@ -168,7 +168,7 @@ public class SellerService : ISellerService
                 };
             }
 
-            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Id == item.Id);
+            var seller = await _unitOfWork.SellerRepository.SingleOrDefaultAsync(s => s.Id == item.Id);
             if (seller == null)
             {
                 return new()
@@ -200,7 +200,7 @@ public class SellerService : ISellerService
     {
         try
         {
-            var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Login == sellerLogin);
+            var seller = await _unitOfWork.SellerRepository.SingleOrDefaultAsync(s => s.Login == sellerLogin);
             if (seller == null)
             {
                 return new()

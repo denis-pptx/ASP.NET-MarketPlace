@@ -16,7 +16,7 @@ public class CustomerService : ICustomerService
             foreach (var customer in customers)
             {
                 var profile = await _unitOfWork.CustomerProfileRepository
-                    .FirstOrDefaultAsync(cp => cp.CustomerId == customer.Id);
+                    .SingleOrDefaultAsync(cp => cp.CustomerId == customer.Id);
 
                 if (profile == null) 
                 {
@@ -49,7 +49,7 @@ public class CustomerService : ICustomerService
     {
         try
         {
-            var customer = await _unitOfWork.UserRepository.FirstOrDefaultAsync(
+            var customer = await _unitOfWork.UserRepository.SingleOrDefaultAsync(
                 c => c.Login.Trim().ToLower() == item.Login.Trim().ToLower());
 
             if (customer != null)
@@ -83,7 +83,7 @@ public class CustomerService : ICustomerService
     {
         try
         {
-            var customer = await _unitOfWork.CustomerRepository.FirstOrDefaultAsync(c => c.Id == id);
+            var customer = await _unitOfWork.CustomerRepository.SingleOrDefaultAsync(c => c.Id == id);
             if (customer == null)
             {
                 return new()
@@ -117,7 +117,7 @@ public class CustomerService : ICustomerService
     {
         try
         {
-            var customer = await _unitOfWork.CustomerRepository.FirstOrDefaultAsync(c => c.Id == id);
+            var customer = await _unitOfWork.CustomerRepository.SingleOrDefaultAsync(c => c.Id == id);
             if (customer == null)
             {
                 return new()
@@ -128,7 +128,7 @@ public class CustomerService : ICustomerService
             }
 
             var profile = await _unitOfWork.CustomerProfileRepository
-                .FirstOrDefaultAsync(cp => cp.CustomerId == customer.Id);
+                .SingleOrDefaultAsync(cp => cp.CustomerId == customer.Id);
             if (profile == null)
             {
                 return new()
@@ -159,7 +159,7 @@ public class CustomerService : ICustomerService
     {
         try
         {
-            var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(u => u.Login == item.Login);
+            var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Login == item.Login);
             if (user != null && user.Id != item.Id)
             {
                 return new()
@@ -169,7 +169,7 @@ public class CustomerService : ICustomerService
                 };
             }
 
-            var customer = await _unitOfWork.CustomerRepository.FirstOrDefaultAsync(c => c.Id == item.Id);
+            var customer = await _unitOfWork.CustomerRepository.SingleOrDefaultAsync(c => c.Id == item.Id);
             if (customer == null)
             {
                 return new()

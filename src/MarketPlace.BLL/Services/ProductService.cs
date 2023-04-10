@@ -57,8 +57,7 @@ public class ProductService : IProductService
     {
         try
         {
-            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Id == shopId);
-
+            var shop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(s => s.Id == shopId);
             if (shop == null)
             {
                 return new()
@@ -91,7 +90,7 @@ public class ProductService : IProductService
     {
         try
         {
-            var product = await _unitOfWork.ProductRepository.FirstOrDefaultAsync(p => p.Id == id);
+            var product = await _unitOfWork.ProductRepository.SingleOrDefaultAsync(p => p.Id == id);
             if (product == null)
             {
                 return new()
@@ -125,7 +124,7 @@ public class ProductService : IProductService
     {
         try
         {
-            var product = await _unitOfWork.ProductRepository.FirstOrDefaultAsync(p => p.Id == item.Id);
+            var product = await _unitOfWork.ProductRepository.SingleOrDefaultAsync(p => p.Id == item.Id);
             if (product == null)
             {
                 return new()
@@ -157,7 +156,7 @@ public class ProductService : IProductService
     {
         try
         {
-            var product = await _unitOfWork.ProductRepository.FirstOrDefaultAsync(p => p.Id == id);
+            var product = await _unitOfWork.ProductRepository.SingleOrDefaultAsync(p => p.Id == id);
             if (product == null)
             {
                 return new()

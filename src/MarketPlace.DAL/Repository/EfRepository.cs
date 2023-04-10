@@ -28,6 +28,11 @@ public class EfRepository<T> : IRepository<T> where T : Entity
         return await Task.Run(() => _entities.FirstOrDefault(filter));
     }
 
+    public async Task<T?> SingleOrDefaultAsync(Func<T, bool> filter)
+    {
+        return await Task.Run(() => _entities.SingleOrDefault(filter));
+    }
+
     public async Task<T?> GetByIdAsync(int id)
     {
         return await Task.Run(() => _entities.FirstOrDefault(e => e.Id == id));

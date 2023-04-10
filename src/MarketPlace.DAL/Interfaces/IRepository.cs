@@ -9,4 +9,5 @@ public interface IRepository<T> where T : Entity
     Task UpdateAsync(T entity);
     Task DeleteAsync(T entity);
     Task<T?> FirstOrDefaultAsync(Func<T, bool> filter);
+    Task<T?> SingleOrDefaultAsync(Func<T, bool> filter);
 }

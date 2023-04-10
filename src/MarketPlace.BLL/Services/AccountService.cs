@@ -11,7 +11,7 @@ public class AccountService : IAccountService
     {
         try
         {
-            var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(u => u.Login == vm.Login);
+            var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Login == vm.Login);
 
             if (user == null)
             {
@@ -51,7 +51,7 @@ public class AccountService : IAccountService
     {
         try
         {
-            var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(
+            var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(
                 u => u.Login.Trim().ToLowerInvariant() == item.Login.Trim().ToLowerInvariant());
 
             if (user != null)
