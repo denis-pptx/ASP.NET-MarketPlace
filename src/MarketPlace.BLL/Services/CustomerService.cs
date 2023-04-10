@@ -147,7 +147,7 @@ public class CustomerService : ICustomerService
             {
                 return new()
                 {
-                    Description = "Такого покупателя нет",
+                    Description = "Customer not found",
                     StatusCode = HttpStatusCode.NotFound
                 };
             }
