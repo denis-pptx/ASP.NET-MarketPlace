@@ -16,6 +16,20 @@ public class SellerService : ISellerService
             IEnumerable<Seller> sellers = await _unitOfWork.SellerRepository.
                 ListAsync(s => shopId == 0 || s.ShopId == shopId);
 
+            foreach (var seller in sellers)
+            {
+                var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Id == seller.ShopId);
+                if (shop == null)
+                {
+                    return new()
+                    {
+                        Description = "Seller's shop not found",
+                        StatusCode = HttpStatusCode.NotFound
+                    };
+                }
+                seller.Shop = shop;
+            }
+
             return new()
             {
                 StatusCode = HttpStatusCode.OK,
@@ -112,6 +126,17 @@ public class SellerService : ISellerService
                     StatusCode = HttpStatusCode.NotFound
                 };
             }
+
+            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Id == seller.ShopId);
+            if (shop == null)
+            {
+                return new()
+                {
+                    Description = "Seller's shop not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+            seller.Shop = shop;
 
             return new()
             {

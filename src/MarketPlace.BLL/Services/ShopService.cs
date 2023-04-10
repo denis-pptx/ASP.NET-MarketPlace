@@ -14,6 +14,11 @@ public class ShopService : IShopService
         try
         {
             var shops = await _unitOfWork.ShopRepository.ListAllAsync();
+            foreach(var shop in shops)
+            {
+                shop.Products = (await _unitOfWork.ProductRepository
+                    .ListAsync(p => p.ShopId == shop.Id)).ToList();
+            }
 
             return new()
             {
@@ -39,6 +44,11 @@ public class ShopService : IShopService
                                                 Contains(name.RemoveWhitespaces().ToLowerInvariant());
 
             var shops = await _unitOfWork.ShopRepository.ListAsync(filter);
+            foreach (var shop in shops)
+            {
+                shop.Products = (await _unitOfWork.ProductRepository
+                    .ListAsync(p => p.ShopId == shop.Id)).ToList();
+            }
 
             return new()
             {
@@ -61,7 +71,7 @@ public class ShopService : IShopService
         try
         {
             var seller = await _unitOfWork.SellerRepository.FirstOrDefaultAsync(s => s.Login == sellerLogin);
-
+            
             if (seller == null)
             {
                 return new()
@@ -70,6 +80,17 @@ public class ShopService : IShopService
                     StatusCode = HttpStatusCode.NotFound
                 };
             }
+
+            var shop = await _unitOfWork.ShopRepository.FirstOrDefaultAsync(s => s.Id == seller.ShopId);
+            if (shop == null)
+            {
+                return new()
+                {
+                    Description = "Seller's shop not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+            seller.Shop = shop;
 
             return new()
             {

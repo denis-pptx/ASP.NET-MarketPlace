@@ -26,7 +26,7 @@ builder.Services.AddAuthorization();
 // Database configuration.
 var connection = builder.Configuration.GetConnectionString("SQLiteConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseLazyLoadingProxies().UseSqlite(connection));
+    options.UseSqlite(connection));
 
 // Repositories registration.
 builder.Services.AddScoped<IRepository<User>, EfRepository<User>>();

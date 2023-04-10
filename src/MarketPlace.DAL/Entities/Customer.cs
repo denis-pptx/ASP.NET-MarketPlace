@@ -2,5 +2,5 @@
 
 public class Customer : User
 {
-    public virtual CustomerProfile Profile { get; set; } = null!;
+    public CustomerProfile Profile { get; set; } = null!;
 }
