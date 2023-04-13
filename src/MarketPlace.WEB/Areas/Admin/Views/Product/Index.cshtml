@@ -1,0 +1,57 @@
+﻿@model ProductListViewModel
+@inject IShopService shopService
+
+@{
+    ViewData["Title"] = "Товары";
+    int num = 1;
+
+    var response = await shopService.GetByIdAsync((int)ViewData["shopId"]!);
+    string shopName = response.StatusCode switch
+    {
+        HttpStatusCode.OK => $"\"{response.Data!.Name}\"",
+        _ => ""
+    };
+}
+
+<h2>Список товаров магазина @shopName</h2>
+
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Стоимость</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>@(num++)</td>
+                <td>@product.Name</td>
+                <td><textarea readonly>@product.Description</textarea></td>
+                <td>@product.Price</td>
+
+                <td>
+                    <a asp-action="Save" asp-route-id="@product.Id"
+                        asp-route-shopId="@(ViewData["shopId"])">Изменить</a>
+                </td>
+                <td>
+                    <form asp-action="Delete" method="post" asp-route-id="@product.Id" 
+                        asp-route-shopId="@(ViewData["shopId"])">
+                        <input type="submit" value="Удалить" />
+                    </form>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="Save" asp-route-shopId="@(ViewData["shopId"])">Добавить товар</a>
+    <a asp-controller="Shop" asp-action="Index">Назад</a>
+</p>
+

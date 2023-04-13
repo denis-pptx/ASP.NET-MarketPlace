@@ -63,7 +63,8 @@ public class ProductController : Controller
                 var sellerResponse = await _sellerService.GetShopIdByLogin(User.Identity?.Name ?? "");
                 if (sellerResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    var productResponse = await _productService.CreateAsync(sellerResponse.Data, item);
+                    item.ShopId = sellerResponse.Data;
+                    var productResponse = await _productService.CreateAsync(item);
                     if (productResponse.StatusCode == HttpStatusCode.OK)
                     {
                         return RedirectToAction("Index");

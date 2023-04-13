@@ -1,4 +1,6 @@
-﻿namespace MarketPlace.BLL.Services;
+﻿using MarketPlace.DAL.Entities;
+
+namespace MarketPlace.BLL.Services;
 
 public class ProductService : IProductService
 {
@@ -35,6 +37,16 @@ public class ProductService : IProductService
     {
         try
         {
+            var shop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(s => s.Id == shopId);
+            if (shop == null)
+            {
+                return new()
+                {
+                    Description = "Shop not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+
             var products = await _unitOfWork.ProductRepository.ListAsync(p => p.ShopId == shopId);
 
             return new()
@@ -53,11 +65,11 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task<Response<bool>> CreateAsync(int shopId, Product product)
+    public async Task<Response<bool>> CreateAsync(Product product)
     {
         try
         {
-            var shop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(s => s.Id == shopId);
+            var shop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(s => s.Id == product.ShopId);
             if (shop == null)
             {
                 return new()
@@ -67,7 +79,6 @@ public class ProductService : IProductService
                 };
             }
 
-            product.ShopId = shopId;
             await _unitOfWork.ProductRepository.AddAsync(product);
             
             return new()

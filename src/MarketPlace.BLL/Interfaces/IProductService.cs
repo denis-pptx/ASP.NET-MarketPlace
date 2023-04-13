@@ -6,7 +6,7 @@ public interface IProductService
 
     Task<Response<IEnumerable<Product>>> GetByShopIdAsync(int shopId);
 
-    Task<Response<bool>> CreateAsync(int shopId, Product product);
+    Task<Response<bool>> CreateAsync(Product product);
 
     Task<Response<bool>> DeleteAsync(int id);
 

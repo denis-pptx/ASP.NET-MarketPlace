@@ -1,0 +1,34 @@
+﻿@model Product
+@inject SaveHelper saveHelper
+
+@{
+    var title = SaveHelper.IsEdit(Model) ? "Изменение товара" : "Добавление товара";
+    ViewData["Title"] = title;
+}
+
+<h2>@title</h2>
+
+<form asp-action="Save">
+    <div>
+        <p>
+            <label asp-for="Name"></label>
+            <input asp-for="Name" />
+        </p>
+        <p>
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+        </p>
+        <p>
+            <label asp-for="Price"></label>
+            <input asp-for="Price" />
+        </p>
+        <input type="hidden" name="ShopId" value="@(ViewData["shopId"])">
+
+        <p>
+            <input type="submit" value="OK" />
+            <a asp-action="Index" asp-route-shopId="@(ViewData["shopId"])">Cancel</a>
+        </p>
+    </div>
+</form>
+
+<div asp-validation-summary="All"></div>
