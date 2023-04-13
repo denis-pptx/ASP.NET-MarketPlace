@@ -65,7 +65,6 @@ public class AccountService : IAccountService
                 };
             }
 
-            await _unitOfWork.CustomerProfileRepository.AddAsync(item.Profile);
             await _unitOfWork.CustomerRepository.AddAsync(item);
             
             return new()
