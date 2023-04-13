@@ -1,4 +1,7 @@
 ﻿using MarketPlace.DAL.Entities;
+using MarketPlace.DAL.Enum;
+using Microsoft.AspNetCore.Http;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MarketPlace.BLL.Services;
 
@@ -181,6 +184,33 @@ public class ProductService : IProductService
             {
                 StatusCode = HttpStatusCode.OK,
                 Data = product,
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
+            };
+        }
+    }
+
+    public Response<SelectList> GetCategories()
+    {
+        try
+        {
+            var categories = from type in (ProductCategory[])Enum.GetValues(typeof(ProductCategory))
+                        select new 
+                        {
+                            Id = (int)type,
+                            Name = type.GetDisplayName()
+                        };
+
+            return new()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Data = new SelectList(categories, "Id", "Name")
             };
         }
         catch (Exception ex)

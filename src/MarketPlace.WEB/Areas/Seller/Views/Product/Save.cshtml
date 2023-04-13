@@ -1,5 +1,6 @@
 ﻿@model Product
 @inject SaveHelper saveHelper
+@inject IProductService productService
 
 @{
     var title = SaveHelper.IsEdit(Model) ? "Изменение товара" : "Добавление товара";
@@ -21,6 +22,10 @@
         <p>
             <label asp-for="Price"></label>
             <input asp-for="Price" />
+        </p>
+        <p>
+            <label asp-for="Category"></label>
+            <select asp-for="Category" asp-items="@productService.GetCategories().Data"></select>
         </p>
         <input type="hidden" name="ShopId" value="@(Model?.ShopId ?? 0)">
 

@@ -13,4 +13,6 @@ public interface IProductService
     Task<Response<Product>> GetByIdAsync(int id);
 
     Task<Response<bool>> UpdateAsync(Product product);
+
+    Response<SelectList> GetCategories();
 }

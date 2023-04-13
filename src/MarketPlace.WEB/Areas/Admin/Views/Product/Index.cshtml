@@ -23,6 +23,7 @@
             <th>Название</th>
             <th>Описание</th>
             <th>Стоимость</th>
+            <th>Категория</th>
         </tr>
     </thead>
     <tbody>
@@ -33,14 +34,15 @@
                 <td>@product.Name</td>
                 <td><textarea readonly>@product.Description</textarea></td>
                 <td>@product.Price</td>
+                <td>@product.Category.GetDisplayName()</td>
 
                 <td>
                     <a asp-action="Save" asp-route-id="@product.Id"
-                        asp-route-shopId="@(ViewData["shopId"])">Изменить</a>
+                   asp-route-shopId="@(ViewData["shopId"])">Изменить</a>
                 </td>
                 <td>
-                    <form asp-action="Delete" method="post" asp-route-id="@product.Id" 
-                        asp-route-shopId="@(ViewData["shopId"])">
+                    <form asp-action="Delete" method="post" asp-route-id="@product.Id"
+                      asp-route-shopId="@(ViewData["shopId"])">
                         <input type="submit" value="Удалить" />
                     </form>
                 </td>
@@ -52,6 +54,8 @@
 
 <p>
     <a asp-action="Save" asp-route-shopId="@(ViewData["shopId"])">Добавить товар</a>
+</p>
+<p>
     <a asp-controller="Shop" asp-action="Index">Назад</a>
 </p>
 
