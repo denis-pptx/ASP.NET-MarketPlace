@@ -1,6 +1,6 @@
-﻿namespace MarketPlace.BLL.Helpers;
+﻿namespace MarketPlace.BLL.Extensions;
 
-public static class StringHelper
+public static class StringExtension
 {
     public static string RemoveWhitespaces(this string str)
     {

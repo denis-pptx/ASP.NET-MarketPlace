@@ -1,4 +1,6 @@
-﻿namespace MarketPlace.BLL.Services;
+﻿using MarketPlace.BLL.DTO;
+
+namespace MarketPlace.BLL.Services;
 
 public class AccountService : IAccountService
 {
@@ -7,11 +9,11 @@ public class AccountService : IAccountService
     {
         _unitOfWork = unitOfWork;
     }
-    public async Task<Response<ClaimsPrincipal>> LoginAsync(LoginViewModel vm)
+    public async Task<Response<ClaimsPrincipal>> LoginAsync(LoginDTO dto)
     {
         try
         {
-            var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Login == vm.Login);
+            var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Login == dto.Login);
 
             if (user == null)
             {
@@ -22,7 +24,7 @@ public class AccountService : IAccountService
                 };
             }
 
-            if (user.Password != vm.Password)
+            if (user.Password != dto.Password)
             {
                 return new()
                 {

@@ -1,4 +1,6 @@
-﻿namespace MarketPlace.WEB.Areas.Admin.Controllers;
+﻿using MarketPlace.DAL.Response;
+
+namespace MarketPlace.WEB.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize(Roles = $"Admin")]
@@ -27,9 +29,9 @@ public class SellerController : Controller
                     ShopId = shopId
                 });
             }
-            return View("Error", new ErrorViewModel(shopResponse.StatusCode, shopResponse.Description));
+            return View("Error", new ErrorViewModel(shopResponse.Deconstruct()));
         }
-        return View("Error", new ErrorViewModel(sellerResponse.StatusCode, sellerResponse.Description));
+        return View("Error", new ErrorViewModel(sellerResponse.Deconstruct()));
     }
 
 
@@ -54,13 +56,13 @@ public class SellerController : Controller
             {
                 return View(new SellerViewModel()
                 {
-                    Seller = sellerResponse.Data,
+                    Seller = sellerResponse.Data!,
                     Shops = shopSelectList
                 });
             }
-            return View("Error", new ErrorViewModel(sellerResponse.StatusCode, sellerResponse.Description));
+            return View("Error", new ErrorViewModel(sellerResponse.Deconstruct()));
         }
-        return View("Error", new ErrorViewModel(shopRespone.StatusCode, shopRespone.Description));
+        return View("Error", new ErrorViewModel(shopRespone.Deconstruct()));
     }
 
 
@@ -102,7 +104,7 @@ public class SellerController : Controller
                 Seller = item
             });
         }
-        return View("Error", new ErrorViewModel(shopRespone.StatusCode, shopRespone.Description));
+        return View("Error", new ErrorViewModel(shopRespone.Deconstruct()));
     }
 
 
@@ -114,6 +116,6 @@ public class SellerController : Controller
         {
             return RedirectToAction("Index");
         }
-        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
+        return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
 }

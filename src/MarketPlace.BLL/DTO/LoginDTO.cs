@@ -1,6 +1,6 @@
-﻿namespace MarketPlace.BLL.ViewModels;
+﻿namespace MarketPlace.BLL.DTO;
 
-public class LoginViewModel
+public class LoginDTO
 {
     [Required(ErrorMessage = "Не указан логин")]
     public string Login { get; set; } = null!;

@@ -21,7 +21,7 @@ public class CustomerController : Controller
                 Customers = response.Data!.OrderBy(c => c.Login)
             }); 
         }
-        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
+        return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
 
     [HttpGet]
@@ -39,7 +39,7 @@ public class CustomerController : Controller
         {
             return View(response.Data);
         }
-        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
+        return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
 
     [HttpPost]
@@ -82,6 +82,6 @@ public class CustomerController : Controller
         {
             return RedirectToAction("Index");
         }
-        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
+        return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace MarketPlace.BLL.Helpers;
+﻿namespace MarketPlace.WEB.Helpers;
 
 public class SaveHelper
 {

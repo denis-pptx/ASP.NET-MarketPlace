@@ -1,8 +1,10 @@
-﻿namespace MarketPlace.BLL.Interfaces;
+﻿using MarketPlace.BLL.DTO;
+
+namespace MarketPlace.BLL.Interfaces;
 
 public interface IAccountService
 {
     Task<Response<ClaimsPrincipal>> RegisterAsync(Customer customer);
 
-    Task<Response<ClaimsPrincipal>> LoginAsync(LoginViewModel vm);
+    Task<Response<ClaimsPrincipal>> LoginAsync(LoginDTO dto);
 }

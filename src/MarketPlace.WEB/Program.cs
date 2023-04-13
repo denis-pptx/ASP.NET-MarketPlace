@@ -1,8 +1,5 @@
-using MarketPlace.BLL.Helpers;
-using MarketPlace.BLL.Interfaces;
 using MarketPlace.BLL.Services;
 using MarketPlace.DAL.Data;
-using MarketPlace.DAL.Entities;
 using MarketPlace.DAL.Interfaces;
 using MarketPlace.DAL.Repository;
 using Microsoft.AspNetCore.Authentication.Cookies;

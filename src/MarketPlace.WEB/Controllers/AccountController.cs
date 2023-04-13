@@ -1,4 +1,6 @@
-﻿namespace MarketPlace.WEB.Controllers;
+﻿using MarketPlace.BLL.DTO;
+
+namespace MarketPlace.WEB.Controllers;
 
 public class AccountController : Controller
 {
@@ -22,7 +24,7 @@ public class AccountController : Controller
     public IActionResult Login() => View();
 
     [HttpPost]
-    public async Task<IActionResult> Login(LoginViewModel vm)
+    public async Task<IActionResult> Login(LoginDTO vm)
     {
         if (ModelState.IsValid)
         {

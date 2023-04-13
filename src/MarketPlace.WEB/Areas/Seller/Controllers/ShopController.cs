@@ -18,7 +18,7 @@ public class ShopController : Controller
         {
             return View(response.Data);
         }
-        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
+        return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
 
     [HttpGet]
@@ -29,7 +29,7 @@ public class ShopController : Controller
         {
             return View(response.Data);
         }
-        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
+        return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
 
 
@@ -38,22 +38,12 @@ public class ShopController : Controller
     {
         if (ModelState.IsValid)
         {
-            var getResponse = await _shopService.GetBySellerLoginAsync(User.Identity?.Name ?? "");
-            if (getResponse.StatusCode == HttpStatusCode.OK)
+            var response = await _shopService.UpdateAsync(item);
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                item.Id = getResponse.Data!.Id;
-                var updateResponse = await _shopService.UpdateAsync(item);
-
-                if (updateResponse.StatusCode == HttpStatusCode.OK)
-                {
-                    return RedirectToAction("Index");
-                }
-                ModelState.AddModelError("", updateResponse.Description);
+                return RedirectToAction("Index");
             }
-            else
-            {
-                return View("Error", new ErrorViewModel(getResponse.StatusCode, getResponse.Description));
-            }  
+            ModelState.AddModelError("", response.Description);
         }
         return View(item);
     }

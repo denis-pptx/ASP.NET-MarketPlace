@@ -1,4 +1,6 @@
-﻿namespace MarketPlace.BLL.Services;
+﻿using MarketPlace.BLL.Extensions;
+
+namespace MarketPlace.BLL.Services;
 
 public class ShopService : IShopService
 {

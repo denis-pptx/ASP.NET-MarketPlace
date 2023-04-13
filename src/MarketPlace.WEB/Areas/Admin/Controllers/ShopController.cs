@@ -22,7 +22,7 @@ public class ShopController : Controller
                 Name = name
             });
         }
-        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
+        return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
 
 
@@ -41,7 +41,7 @@ public class ShopController : Controller
         {
             return View(response.Data);
         }
-        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
+        return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
 
 
@@ -84,6 +84,6 @@ public class ShopController : Controller
         {
             return RedirectToAction("Index");
         }
-        return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
+        return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
 }
