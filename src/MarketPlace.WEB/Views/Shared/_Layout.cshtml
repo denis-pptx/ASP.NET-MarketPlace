@@ -12,14 +12,14 @@
             @if (!User.Identity!.IsAuthenticated)
             {
                 <div>
-                    <a asp-controller="Account" asp-action="Login" asp-route-area="">Войти</a> |
-                    <a asp-controller="Account" asp-action="Register" asp-route-area="">Зарегистрироваться</a>
+                    <a asp-area="" asp-controller="Account" asp-action="Login">Войти</a> |
+                    <a asp-area ="" asp-controller="Account" asp-action="Register">Зарегистрироваться</a>
                 </div>
             }
             else
             {
                 <div>
-                    <a asp-controller="Account" asp-action="Logout" asp-route-area="">Выйти</a>
+                    <a asp-area="" asp-controller="Account" asp-action="Logout">Выйти</a>
                     <p>
                         Логин: @User.FindFirst(ClaimsIdentity.DefaultNameClaimType)?.Value.
                         Роль: @User.FindFirst(ClaimsIdentity.DefaultRoleClaimType)?.Value
@@ -31,9 +31,9 @@
             {
                 <div>
                     <span>Админ-панель: </span>
-                    <a asp-action="Index" asp-controller="Shop" asp-route-area="Admin">Магазины</a> |
-                    <a asp-controller="Seller" asp-action="Index" asp-route-area="Admin">Продавцы</a> |
-                    <a asp-controller="Customer" asp-action="Index" asp-route-area="Admin">Покупатели</a>
+                    <a asp-area="Admin" asp-action="Index" asp-controller="Shop">Магазины</a> |
+                    <a asp-area="Admin" asp-controller="Seller" asp-action="Index">Продавцы</a> |
+                    <a asp-area="Admin" asp-controller="Customer" asp-action="Index">Покупатели</a>
                 </div>
             }
             else if (User.IsInRole(MarketPlace.DAL.Enum.Role.Seller.ToString()))
@@ -41,8 +41,18 @@
                 <div>
                     <span>Панель продавца: </span>
 
-                    <a asp-controller="Shop" asp-action="Index" asp-route-area="Seller">Магазин</a> |
-                    <a asp-controller="Product" asp-action="Index" asp-route-area="Seller">Товары</a>
+                    <a asp-area="Seller" asp-controller="Shop" asp-action="Index">Магазин</a> |
+                    <a asp-area="Seller" asp-controller="Product" asp-action="Index">Товары</a>
+                </div>
+            }
+            else if (User.IsInRole(MarketPlace.DAL.Enum.Role.Customer.ToString()))
+            {
+                <div>
+                    <span>Панель покупателя: </span>
+
+                    <a asp-route-area="Customer" asp-controller="Customer" asp-action="Edit">Профиль</a> |
+                    <a asp-area="Customer" asp-controller="Product" asp-action="Index">Корзина</a> |
+                    <a asp-area="Customer" asp-controller="Product" asp-action="Index">Избранные</a>
                 </div>
             }
         </p>

@@ -155,6 +155,49 @@ public class CustomerService : ICustomerService
         }
     }
 
+    public async Task<Response<Customer>> GetByLoginAsync(string login)
+    {
+        try
+        {
+            var customer = await _unitOfWork.CustomerRepository.SingleOrDefaultAsync(c => c.Login == login);
+            if (customer == null)
+            {
+                return new()
+                {
+                    Description = "Customer not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+
+            var profile = await _unitOfWork.CustomerProfileRepository
+                .SingleOrDefaultAsync(cp => cp.CustomerId == customer.Id);
+            if (profile == null)
+            {
+                return new()
+                {
+                    Description = "Customer's profile not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+            customer.Profile = profile;
+
+            return new()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Data = customer
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
+            };
+        }
+    }
+
+
     public async Task<Response<bool>> UpdateAsync(Customer item)
     {
         try
@@ -196,4 +239,6 @@ public class CustomerService : ICustomerService
             };
         }
     }
+
+    
 }

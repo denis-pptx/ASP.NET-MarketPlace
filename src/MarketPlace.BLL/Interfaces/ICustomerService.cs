@@ -9,6 +9,7 @@ public interface ICustomerService
     Task<Response<bool>> DeleteAsync(int id);
 
     Task<Response<Customer>> GetByIdAsync(int id);
+    Task<Response<Customer>> GetByLoginAsync(string login);
 
     Task<Response<bool>> UpdateAsync(Customer shop);
 }

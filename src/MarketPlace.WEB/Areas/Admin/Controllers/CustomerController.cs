@@ -43,7 +43,7 @@ public class CustomerController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Save(Customer item)
+    public async Task<IActionResult> Save(DAL.Entities.Customer item)
     {
         ModelState.Remove("PasswordConfirm");
 
