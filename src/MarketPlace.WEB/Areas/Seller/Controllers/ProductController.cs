@@ -22,7 +22,10 @@ public class ProductController : Controller
             var productResponse = await _productService.GetByShopIdAsync(sellerResponse.Data);
             if (productResponse.StatusCode == HttpStatusCode.OK)
             {
-                return View(new ProductListViewModel(productResponse.Data!));
+                return View(new ProductListViewModel()
+                {
+                    Products = productResponse.Data!
+                });
             }
             return View("Error", new ErrorViewModel(productResponse.StatusCode, productResponse.Description));
         }

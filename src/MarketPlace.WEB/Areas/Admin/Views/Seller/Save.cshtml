@@ -11,17 +11,17 @@
 <form asp-action="Save">
     <div>
         <p>
-            <label asp-for="Seller.Login"></label>
-            <input asp-for="Seller.Login" name="Login" />
+            <label asp-for="Seller!.Login"></label>
+            <input asp-for="Seller!.Login" name="Login" />
         </p>
         <p>
-            <label asp-for="Seller.Password"></label>
-            <input asp-for="Seller.Password" name="Password" />
+            <label asp-for="Seller!.Password"></label>
+            <input asp-for="Seller!.Password" name="Password" />
         </p>
         <input type="hidden" name="Role" value="@MarketPlace.DAL.Enum.Role.Seller">
         <p>
-            <label for="shop">Shop</label>
-            <select id="shop" name="ShopId" asp-items="@Model.Shops"></select>
+            <label asp-for="Seller!.ShopId">Shop: </label>
+            <select asp-for="Seller!.ShopId" name="ShopId" asp-items="@Model.Shops"></select>
         </p>
 
         <p>

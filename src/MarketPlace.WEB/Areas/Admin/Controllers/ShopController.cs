@@ -11,12 +11,16 @@ public class ShopController : Controller
     }
 
 
-    public async Task<IActionResult> Index(string name = "")
+    public async Task<IActionResult> Index(string? name)
     {
         var response = await _shopService.GetBySimilarNameAsync(name);
         if (response.StatusCode == HttpStatusCode.OK)
         {
-            return View(new ShopListViewModel(response.Data!));
+            return View(new ShopListViewModel()
+            {
+                Shops = response.Data!.OrderBy(s => s.Name),
+                Name = name
+            });
         }
         return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
     }

@@ -36,10 +36,12 @@ public class ShopService : IShopService
         }
     }
 
-    public async Task<Response<IEnumerable<Shop>>> GetBySimilarNameAsync(string name = "")
+    public async Task<Response<IEnumerable<Shop>>> GetBySimilarNameAsync(string? name)
     {
         try
         {
+            name = name == null ? string.Empty : name;
+
             Func<Shop, bool> filter = shop => shop.Name.RemoveWhitespaces().ToLowerInvariant().
                                                 Contains(name.RemoveWhitespaces().ToLowerInvariant());
 

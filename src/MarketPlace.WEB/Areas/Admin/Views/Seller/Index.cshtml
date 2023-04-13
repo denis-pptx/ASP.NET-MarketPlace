@@ -9,8 +9,10 @@
 
 <form asp-action="Index">
     <p>
-        <label>Магазин: </label>
-        <select name="shopId" asp-items="Model.Shops"></select>
+        <label asp-for="ShopId">Магазин: </label>
+        <select asp-for="ShopId" asp-items="Model.Shops">
+            <option value="0">Все</option>
+        </select>
 
         <input type="submit" value="Фильтр" />
     </p>

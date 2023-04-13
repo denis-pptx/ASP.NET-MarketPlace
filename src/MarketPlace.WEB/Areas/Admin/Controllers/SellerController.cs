@@ -12,7 +12,7 @@ public class SellerController : Controller
         _shopService = shopService;
     }
 
-    public async Task<IActionResult> Index(int shopId = 0)
+    public async Task<IActionResult> Index(int shopId)
     {
         var sellerResponse = await _sellerService.GetByShopIdAsync(shopId);
         if (sellerResponse.StatusCode == HttpStatusCode.OK)
@@ -20,7 +20,12 @@ public class SellerController : Controller
             var shopResponse = await _shopService.GetAsync();
             if (shopResponse.StatusCode == HttpStatusCode.OK)
             {
-                return View(new SellerListViewModel(sellerResponse.Data!, shopResponse.Data!, shopId));
+                return View(new SellerListViewModel()
+                {
+                    Sellers = sellerResponse.Data!.OrderBy(s => s.Login),
+                    Shops = new SelectList(shopResponse.Data!.OrderBy(s => s.Name), "Id", "Name"),
+                    ShopId = shopId
+                });
             }
             return View("Error", new ErrorViewModel(shopResponse.StatusCode, shopResponse.Description));
         }
@@ -34,15 +39,24 @@ public class SellerController : Controller
         var shopRespone = await _shopService.GetAsync();
         if (shopRespone.StatusCode == HttpStatusCode.OK)
         {
+            var shopSelectList = new SelectList(shopRespone.Data!.OrderBy(s => s.Name), "Id", "Name");
+
             if (id == 0)
             {
-                return View(new SellerViewModel(shopRespone.Data!));
+                return View(new SellerViewModel()
+                {
+                    Shops = shopSelectList
+                });
             }
 
             var sellerResponse = await _sellerService.GetByIdAsync(id);
             if (sellerResponse.StatusCode == HttpStatusCode.OK)
             {
-                return View(new SellerViewModel(shopRespone.Data!, sellerResponse.Data!));
+                return View(new SellerViewModel()
+                {
+                    Seller = sellerResponse.Data,
+                    Shops = shopSelectList
+                });
             }
             return View("Error", new ErrorViewModel(sellerResponse.StatusCode, sellerResponse.Description));
         }
@@ -82,7 +96,11 @@ public class SellerController : Controller
         var shopRespone = await _shopService.GetAsync();
         if (shopRespone.StatusCode == HttpStatusCode.OK)
         {
-            return View(new SellerViewModel(shopRespone.Data!, item));
+            return View(new SellerViewModel()
+            {
+                Shops = new SelectList(shopRespone.Data!.OrderBy(s => s.Name), "Id", "Name"),
+                Seller = item
+            });
         }
         return View("Error", new ErrorViewModel(shopRespone.StatusCode, shopRespone.Description));
     }

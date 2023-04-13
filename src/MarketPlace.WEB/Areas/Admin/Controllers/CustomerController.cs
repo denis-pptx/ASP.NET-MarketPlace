@@ -16,7 +16,10 @@ public class CustomerController : Controller
         var response = await _customerService.GetAsync();
         if (response.StatusCode == HttpStatusCode.OK)
         {
-            return View(new CustomerListViewModel(response.Data!));
+            return View(new CustomerListViewModel()
+            {
+                Customers = response.Data!.OrderBy(c => c.Login)
+            }); 
         }
         return View("Error", new ErrorViewModel(response.StatusCode, response.Description));
     }
