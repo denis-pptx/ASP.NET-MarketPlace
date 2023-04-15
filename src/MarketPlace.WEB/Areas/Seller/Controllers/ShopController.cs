@@ -1,7 +1,7 @@
 ﻿namespace MarketPlace.WEB.Areas.Seller.Controllers;
 
 [Area("Seller")]
-[Authorize(Roles = $"Seller")]
+[Authorize(Roles = "Seller")]
 public class ShopController : Controller
 {
     IShopService _shopService;
