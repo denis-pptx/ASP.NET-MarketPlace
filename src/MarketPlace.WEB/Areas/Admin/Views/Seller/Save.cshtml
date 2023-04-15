@@ -18,7 +18,7 @@
             <label asp-for="Seller.Password"></label>
             <input asp-for="Seller.Password" name="Password" />
         </p>
-        <input type="hidden" name="Role" value="@MarketPlace.DAL.Enum.Role.Seller">
+        <input type="hidden" asp-for="Seller.Role" name="Role" value="@MarketPlace.DAL.Enum.Role.Seller">
         <p>
             <label asp-for="Seller.ShopId">Shop: </label>
             <select asp-for="Seller.ShopId" name="ShopId" asp-items="@Model.Shops"></select>

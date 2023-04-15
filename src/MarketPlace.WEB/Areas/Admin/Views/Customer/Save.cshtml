@@ -18,9 +18,9 @@
             <label asp-for="Password"></label>
             <input asp-for="Password" />
         </p>
-        <input type="hidden" name="Role" value="@MarketPlace.DAL.Enum.Role.Customer">
+        <input type="hidden" asp-for="Role" value="@MarketPlace.DAL.Enum.Role.Customer">
 
-        <input type="hidden" name="Profile.Id" value="@(Model?.Profile?.Id ?? 0)">
+        <input type="hidden" asp-for="Profile.Id" value="@(Model?.Profile?.Id ?? 0)">
         <p>
             <label asp-for="Profile.Age"></label>
             <input asp-for="Profile.Age" />
@@ -33,7 +33,7 @@
             <label asp-for="Profile.Phone"></label>
             <input asp-for="Profile.Phone" />
         </p>
-        <input type="hidden" name="Profile.CustomerId" value="@(Model?.Id ?? 0)">
+        <input type="hidden" asp-for="Profile.CustomerId" value="@(Model?.Id ?? 0)">
        
 
         <p>
