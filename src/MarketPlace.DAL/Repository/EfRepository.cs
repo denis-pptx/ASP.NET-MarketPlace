@@ -50,12 +50,6 @@ public class EfRepository<T> : IRepository<T> where T : Entity
 
     public async Task UpdateAsync(T entity)
     {
-        var entityToDetach = await _entities.FirstOrDefaultAsync(e => e.Id == entity.Id);
-        if (entityToDetach != null)
-        {
-            _db.Entry(entityToDetach).State = EntityState.Detached;
-        }
-        
         await Task.Run(() => _entities.Update(entity));
         await _db.SaveChangesAsync();
     }
