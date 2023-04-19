@@ -1,4 +1,7 @@
-﻿namespace MarketPlace.WEB.Areas.Admin.Controllers;
+﻿using MarketPlace.DAL.Entities;
+using MarketPlace.DAL.Response;
+
+namespace MarketPlace.WEB.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize(Roles = "Admin")]
@@ -17,11 +20,10 @@ public class ProductController : Controller
         var response = await _productService.GetByShopIdAsync(shopId);
         if (response.StatusCode == HttpStatusCode.OK)
         {
-            ViewData["shopId"] = shopId;
-
-            return View(new ProductListViewModel()
+            return View(new Models.ProductListViewModel()
             {
-                Products = response.Data!
+                Products = response.Data!,
+                ShopId = shopId
             });
         }
         return View("Error", new ErrorViewModel(response.Deconstruct()));
@@ -31,19 +33,24 @@ public class ProductController : Controller
     [HttpGet]
     public async Task<IActionResult> Save(int id, int shopId)
     {
-        ViewData["shopId"] = shopId;
-
         // Create.
         if (id == 0)
         {
-            return View();
+            return View(new Models.ProductViewModel()
+            {
+                ShopId = shopId
+            });
         }
 
         // Update.
         var response = await _productService.GetByIdAsync(id);
         if (response.StatusCode == HttpStatusCode.OK)
         {
-            return View(response.Data);
+            return View(new Models.ProductViewModel
+            {
+                Product = response.Data!,
+                ShopId = shopId
+            });
         }
         return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
@@ -76,8 +83,11 @@ public class ProductController : Controller
             }
         }
 
-        ViewData["shopId"] = item.ShopId;
-        return View(item);
+        return View(new Models.ProductViewModel
+        {
+            Product = item,
+            ShopId = item.ShopId
+        });
     }
 
 

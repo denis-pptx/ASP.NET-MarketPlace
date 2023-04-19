@@ -1,11 +1,11 @@
-﻿@model ProductListViewModel
+﻿@model MarketPlace.WEB.Areas.Admin.Models.ProductListViewModel
 @inject IShopService shopService
 
 @{
     ViewData["Title"] = "Товары";
     int num = 1;
 
-    var response = await shopService.GetByIdAsync((int)ViewData["shopId"]!);
+    var response = await shopService.GetByIdAsync(Model.ShopId);
     string shopName = response.StatusCode switch
     {
         HttpStatusCode.OK => $"\"{response.Data!.Name}\"",
@@ -37,12 +37,12 @@
                 <td>@product.Category.GetDisplayName()</td>
 
                 <td>
-                    <a asp-action="Save" asp-route-id="@product.Id"
-                   asp-route-shopId="@(ViewData["shopId"])">Изменить</a>
+                    <a asp-action="Save" asp-route-id="@product.Id" 
+                        asp-route-shopId="@Model.ShopId">Изменить</a>
                 </td>
                 <td>
-                    <form asp-action="Delete" method="post" asp-route-id="@product.Id"
-                      asp-route-shopId="@(ViewData["shopId"])">
+                    <form asp-action="Delete" method="post" asp-route-id="@product.Id" 
+                        asp-route-shopId="@Model.ShopId">
                         <input type="submit" value="Удалить" />
                     </form>
                 </td>
@@ -53,7 +53,7 @@
 </table>
 
 <p>
-    <a asp-action="Save" asp-route-shopId="@(ViewData["shopId"])">Добавить товар</a>
+    <a asp-action="Save" asp-route-shopId="@Model.ShopId">Добавить товар</a>
 </p>
 <p>
     <a asp-controller="Shop" asp-action="Index">Назад</a>

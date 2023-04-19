@@ -1,7 +1,7 @@
-﻿global using MarketPlace.BLL.Interfaces;
+﻿global using MarketPlace.WEB.Helpers;
+global using MarketPlace.WEB.Models;
+global using MarketPlace.BLL.Interfaces;
 global using MarketPlace.BLL.DTO;
-global using MarketPlace.WEB.ViewModels;
-global using MarketPlace.WEB.Helpers;
 global using MarketPlace.DAL.Entities;
 
 

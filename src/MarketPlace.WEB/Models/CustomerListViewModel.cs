@@ -1,4 +1,4 @@
-﻿namespace MarketPlace.WEB.ViewModels;
+﻿namespace MarketPlace.WEB.Models;
 
 public class CustomerListViewModel
 {
