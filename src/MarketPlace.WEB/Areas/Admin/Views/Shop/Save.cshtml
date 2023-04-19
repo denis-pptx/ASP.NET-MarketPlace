@@ -8,8 +8,9 @@
 
 <h2>@title</h2>
 
-<form asp-action="Save">
+<form asp-action="SaveShop">
     <div>
+        <input type="hidden" asp-for="Id" />
         <p>
             <label asp-for="Name"></label>
             <input asp-for="Name" />

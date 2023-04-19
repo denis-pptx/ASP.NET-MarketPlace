@@ -1,0 +1,25 @@
+﻿@model Shop
+
+@{
+    var title = "Delete";
+    ViewData["Title"] = title;
+}
+
+<h2>Вы действительно хотите удалить магазин?</h2>
+
+<div>
+    <p>
+        <label asp-for="Name"></label>
+        @Html.DisplayFor(model => model.Name)
+    </p>
+    <p>
+        <label asp-for="Description"></label>
+        <textarea readonly asp-for="Description" class="form-control"></textarea>
+    </p>
+
+    <form asp-action="DeleteConfirmed">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index">Cancel</a>
+    </form>
+</div>
