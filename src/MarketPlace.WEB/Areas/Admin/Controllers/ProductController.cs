@@ -5,6 +5,7 @@ namespace MarketPlace.WEB.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize(Roles = "Admin")]
+[Route("Admin/{controller}/{action}")]
 public class ProductController : Controller
 {
     private IProductService _productService;
@@ -15,6 +16,7 @@ public class ProductController : Controller
     }
 
     [HttpGet]
+    [Route("{shopId}")]
     public async Task<IActionResult> Index(int shopId)
     {
         var response = await _productService.GetByShopIdAsync(shopId);
@@ -31,6 +33,7 @@ public class ProductController : Controller
 
 
     [HttpGet]
+    [Route("{id=0}/{shopId}")]
     public async Task<IActionResult> Save(int id, int shopId)
     {
         // Create.
@@ -57,6 +60,7 @@ public class ProductController : Controller
 
 
     [HttpPost]
+    [Route("{id?}/{shopId?}")]
     public async Task<IActionResult> Save(Product item)
     {
         if (ModelState.IsValid)
