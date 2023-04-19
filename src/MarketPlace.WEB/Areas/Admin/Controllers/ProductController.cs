@@ -39,7 +39,7 @@ public class ProductController : Controller
         // Create.
         if (id == 0)
         {
-            return View(new Models.ProductViewModel()
+            return View(new Product()
             {
                 ShopId = shopId
             });
@@ -49,11 +49,7 @@ public class ProductController : Controller
         var response = await _productService.GetByIdAsync(id);
         if (response.StatusCode == HttpStatusCode.OK)
         {
-            return View(new Models.ProductViewModel
-            {
-                Product = response.Data!,
-                ShopId = shopId
-            });
+            return View(response.Data!);
         }
         return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
@@ -87,11 +83,7 @@ public class ProductController : Controller
             }
         }
 
-        return View(new Models.ProductViewModel
-        {
-            Product = item,
-            ShopId = item.ShopId
-        });
+        return View(item);
     }
 
 

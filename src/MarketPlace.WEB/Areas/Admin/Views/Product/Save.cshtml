@@ -1,9 +1,9 @@
-﻿@model MarketPlace.WEB.Areas.Admin.Models.ProductViewModel
+﻿@model Product
 @inject SaveHelper saveHelper
 @inject IProductService productService
 
 @{
-    var title = SaveHelper.IsEdit(Model.Product) ? "Изменение товара" : "Добавление товара";
+    var title = SaveHelper.IsEdit(Model) ? "Изменение товара" : "Добавление товара";
     ViewData["Title"] = title;
 }
 
@@ -12,22 +12,20 @@
 <form asp-action="Save">
     <div>
         <p>
-            <label asp-for="Product.Name"></label>
-            <input asp-for="Product.Name" name="Name" />
+            <label asp-for="Name"></label>
+            <input asp-for="Name" />
         </p>
         <p>
-            <label asp-for="Product.Description"></label>
-            <textarea asp-for="Product.Description" name="Description" 
-                class="form-control"></textarea>
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
         </p>
         <p>
-            <label asp-for="Product.Price"></label>
-            <input asp-for="Product.Price" name="Price" />
+            <label asp-for="Price"></label>
+            <input asp-for="Price" />
         </p>
         <p>
-            <label asp-for="Product.Category"></label>
-            <select asp-for="Product.Category" name="Category" 
-                asp-items="@productService.GetCategories().Data"></select>
+            <label asp-for="Category"></label>
+            <select asp-for="Category" asp-items="@productService.GetCategories().Data"></select>
         </p>
         <input type="hidden" asp-for="ShopId" value="@Model.ShopId">
 
