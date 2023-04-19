@@ -1,4 +1,6 @@
-﻿namespace MarketPlace.WEB.Areas.Seller.Controllers;
+﻿using MarketPlace.WEB.Areas.Seller.Models;
+
+namespace MarketPlace.WEB.Areas.Seller.Controllers;
 
 [Area("Seller")]
 [Authorize(Roles = "Seller")]
