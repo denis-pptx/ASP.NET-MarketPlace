@@ -1,5 +1,4 @@
-﻿using MarketPlace.DAL.Entities;
-using MarketPlace.DAL.Response;
+﻿using MarketPlace.WEB.Areas.Admin.Models;
 
 namespace MarketPlace.WEB.Areas.Admin.Controllers;
 
@@ -22,7 +21,7 @@ public class ProductController : Controller
         var response = await _productService.GetByShopIdAsync(shopId);
         if (response.StatusCode == HttpStatusCode.OK)
         {
-            return View(new Models.ProductListViewModel()
+            return View(new ProductListViewModel()
             {
                 Products = response.Data!,
                 ShopId = shopId

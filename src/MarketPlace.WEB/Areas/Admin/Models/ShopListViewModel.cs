@@ -1,4 +1,4 @@
-﻿namespace MarketPlace.WEB.Models;
+﻿namespace MarketPlace.WEB.Areas.Admin.Models;
 
 public class ShopListViewModel
 {

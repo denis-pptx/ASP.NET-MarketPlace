@@ -1,4 +1,4 @@
-﻿using MarketPlace.DAL.Response;
+﻿using MarketPlace.WEB.Areas.Admin.Models;
 
 namespace MarketPlace.WEB.Areas.Admin.Controllers;
 

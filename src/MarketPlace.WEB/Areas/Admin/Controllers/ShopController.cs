@@ -1,4 +1,6 @@
-﻿namespace MarketPlace.WEB.Areas.Admin.Controllers;
+﻿using MarketPlace.WEB.Areas.Admin.Models;
+
+namespace MarketPlace.WEB.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize(Roles = "Admin")]
