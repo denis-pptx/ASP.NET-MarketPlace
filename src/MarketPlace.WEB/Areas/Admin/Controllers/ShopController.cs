@@ -40,6 +40,7 @@ public class ShopController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Save([FromForm] int id)
     {
         // Create.

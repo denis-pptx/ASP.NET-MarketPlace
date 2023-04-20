@@ -7,14 +7,16 @@ namespace MarketPlace.WEB.Areas.Admin.Controllers;
 public class ProductController : Controller
 {
     private readonly IProductService _productService;
+    private readonly IShopService _shopService;
 
-    public ProductController(IProductService productService)
+    public ProductController(IProductService productService, IShopService shopService)
     {
         _productService = productService;
+        _shopService = shopService;
     }
 
 
-    public async Task<IActionResult> Index(int shopId)
+    public async Task<IActionResult> Index(int shopId, int categoryId)
     {
         shopId = TempData["shopId"] switch
         {
@@ -22,19 +24,31 @@ public class ProductController : Controller
             _ => (int)TempData["shopId"]!
         };
 
-        var response = await _productService.GetByShopIdAsync(shopId);
-        if (response.StatusCode == HttpStatusCode.OK)
+        var productResponse = await _productService.GetByShopAndCategoryAsync(shopId, categoryId);
+        if (productResponse.StatusCode == HttpStatusCode.OK)
         {
-            return View(new ProductListViewModel()
+            var shopResponse = await _shopService.GetCategoriesByIdAsync(shopId);
+            if (shopResponse.StatusCode == HttpStatusCode.OK)
             {
-                Products = response.Data!,
-                ShopId = shopId
-            });
+                return View(new ProductListViewModel()
+                {
+                    Products = productResponse.Data!.
+                        OrderBy(p => p.Category.GetDisplayName()).ThenBy(p => p.Name),
+
+                    Categories = shopResponse.Data!,
+                    CategoryId = categoryId,
+
+                    ShopId = shopId
+                });
+            }
+            return View("Error", new ErrorViewModel(shopResponse.Deconstruct()));
         }
-        return View("Error", new ErrorViewModel(response.Deconstruct()));
+        return View("Error", new ErrorViewModel(productResponse.Deconstruct()));
+        
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Save(int id, int shopId)
     {
         // Create.
@@ -57,7 +71,9 @@ public class ProductController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> SaveProduct(Product item)
+    [ActionName("SaveProduct")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Save(Product item)
     {
         if (ModelState.IsValid)
         {
@@ -90,6 +106,7 @@ public class ProductController : Controller
 
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id, int shopId)
     {
         var response = await _productService.DeleteAsync(id);

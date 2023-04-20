@@ -1,5 +1,4 @@
-﻿using MarketPlace.BLL.Extensions;
-using MarketPlace.WEB.Areas.Seller.Models;
+﻿using MarketPlace.WEB.Areas.Seller.Models;
 
 namespace MarketPlace.WEB.Areas.Seller.Controllers;
 

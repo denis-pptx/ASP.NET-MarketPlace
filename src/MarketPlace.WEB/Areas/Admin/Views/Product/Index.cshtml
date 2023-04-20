@@ -15,6 +15,17 @@
 
 <h2>Список товаров магазина @shopName</h2>
 
+<form asp-action="Index">
+    <p>
+        <label asp-for="CategoryId">Категория: </label>
+        <select asp-for="CategoryId" asp-items="Model.Categories">
+            <option value="0">Все</option>
+        </select>
+
+        <input type="hidden" name="shopId" value="@Model.ShopId" />
+        <input type="submit" value="Фильтр" />
+    </p>
+</form>
 
 <table border="1">
     <thead>
@@ -56,14 +67,19 @@
 </table>
 
 
-<div style="margin: 10px 0px;">
+<p>
     <form asp-action="Save">
         <input type="hidden" name="shopId" value="@Model.ShopId" />
         <input type="submit" value="Добавить товар" />
     </form>
-</div>
+</p>
 
 <p>
-    <a asp-controller="Shop" asp-action="Index">Назад</a>
+    <form asp-controller="Shop" asp-action="Details">
+        <input type="hidden" name="id" value="@Model.ShopId" />
+        <input type="submit" value="Назад" />
+    </form>
 </p>
+
+
 

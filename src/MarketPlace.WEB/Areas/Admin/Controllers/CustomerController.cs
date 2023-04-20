@@ -45,6 +45,7 @@ public class CustomerController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Save(DAL.Entities.Customer item)
     {
         ModelState.Remove("PasswordConfirm");
@@ -77,6 +78,7 @@ public class CustomerController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
         var response = await _customerService.DeleteAsync(id);  
