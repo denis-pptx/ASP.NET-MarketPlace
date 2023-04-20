@@ -7,6 +7,16 @@
 
 <h2>Список товаров</h2>
 
+<form asp-action="Index">
+    <p>
+        <label asp-for="CategoryId">Категория: </label>
+        <select asp-for="CategoryId" asp-items="Model.Categories">
+            <option value="0">Все</option>
+        </select>
+
+        <input type="submit" value="Фильтр" />
+    </p>
+</form>
 
 <table border="1">
     <thead>

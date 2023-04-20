@@ -3,7 +3,7 @@
 public enum ProductCategory
 {
     [Display(Name = "Недвижимость")]
-    Realty,
+    Realty = 1,
 
     [Display(Name = "Авто и транспорт")]
     Transport,

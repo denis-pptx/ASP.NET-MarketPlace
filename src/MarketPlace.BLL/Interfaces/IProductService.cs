@@ -5,6 +5,7 @@ public interface IProductService
     Task<Response<IEnumerable<Product>>> GetAsync();
 
     Task<Response<IEnumerable<Product>>> GetByShopIdAsync(int shopId);
+    Task<Response<IEnumerable<Product>>> GetByShopAndCategoryAsync(int shopId, int categoryId);
 
     Task<Response<bool>> CreateAsync(Product product);
 

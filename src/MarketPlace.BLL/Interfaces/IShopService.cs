@@ -15,4 +15,6 @@ public interface IShopService
     Task<Response<Shop>> GetByIdAsync(int id);
 
     Task<Response<bool>> UpdateAsync(Shop shop);
+
+    Task<Response<SelectList>> GetCategoriesByIdAsync(int id);
 }

@@ -1,4 +1,5 @@
-﻿using MarketPlace.WEB.Areas.Seller.Models;
+﻿using MarketPlace.BLL.Extensions;
+using MarketPlace.WEB.Areas.Seller.Models;
 
 namespace MarketPlace.WEB.Areas.Seller.Controllers;
 
@@ -6,28 +7,38 @@ namespace MarketPlace.WEB.Areas.Seller.Controllers;
 [Authorize(Roles = "Seller")]
 public class ProductController : Controller
 {
-    private IProductService _productService;
-    private ISellerService _sellerService;
-
-    public ProductController(IProductService productService, ISellerService sellerService)
+    private readonly IProductService _productService;
+    private readonly ISellerService _sellerService;
+    private readonly IShopService _shopService;
+    public ProductController(IProductService productService, 
+        ISellerService sellerService, IShopService shopService)
     {
         _productService = productService;
         _sellerService = sellerService;
+        _shopService = shopService;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int categoryId)
     {
         var sellerResponse = await _sellerService.GetShopIdByLogin(User.Identity?.Name ?? "");
         if (sellerResponse.StatusCode == HttpStatusCode.OK)
         {
-            var productResponse = await _productService.GetByShopIdAsync(sellerResponse.Data);
+            var productResponse = await _productService.GetByShopAndCategoryAsync(sellerResponse.Data, categoryId);
             if (productResponse.StatusCode == HttpStatusCode.OK)
             {
-                return View(new ProductListViewModel()
+                var shopResponse = await _shopService.GetCategoriesByIdAsync(sellerResponse.Data);
+                if (shopResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    Products = productResponse.Data!
-                });
+                    return View(new ProductListViewModel()
+                    {
+                        Products = productResponse.Data!.
+                            OrderBy(p => p.Category.GetDisplayName()).ThenBy(p => p.Name),
+
+                        Categories = shopResponse.Data!,
+                        CategoryId = categoryId
+                    });
+                }
+                return View("Error", new ErrorViewModel(shopResponse.Deconstruct()));
             }
             return View("Error", new ErrorViewModel(productResponse.Deconstruct()));
         }

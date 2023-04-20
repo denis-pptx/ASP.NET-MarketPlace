@@ -68,6 +68,32 @@ public class ProductService : IProductService
         }
     }
 
+    public async Task<Response<IEnumerable<Product>>> GetByShopAndCategoryAsync(int shopId, int categoryId)
+    {
+        try
+        {
+            var productResponse = await this.GetByShopIdAsync(shopId);
+            if (productResponse.StatusCode == HttpStatusCode.OK)
+            {
+                return new()
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Data = productResponse.Data!.Where(p => categoryId == 0 || (int)p.Category == categoryId)
+                };
+            }
+
+            return productResponse;
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
+            };
+        }
+    }
+
     public async Task<Response<bool>> CreateAsync(Product product)
     {
         try
@@ -83,7 +109,7 @@ public class ProductService : IProductService
             }
 
             await _unitOfWork.ProductRepository.AddAsync(product);
-            
+
             return new()
             {
                 StatusCode = HttpStatusCode.OK,
@@ -201,11 +227,12 @@ public class ProductService : IProductService
         try
         {
             var categories = from type in (ProductCategory[])Enum.GetValues(typeof(ProductCategory))
-                        select new 
-                        {
-                            Id = (int)type,
-                            Name = type.GetDisplayName()
-                        };
+                             orderby type.GetDisplayName()
+                             select new
+                             {
+                                 Id = (int)type,
+                                 Name = type.GetDisplayName()
+                             };
 
             return new()
             {
@@ -222,4 +249,6 @@ public class ProductService : IProductService
             };
         }
     }
+
+
 }

@@ -1,4 +1,6 @@
 ﻿using MarketPlace.BLL.Extensions;
+using MarketPlace.DAL.Enum;
+using System.Transactions;
 
 namespace MarketPlace.BLL.Services;
 
@@ -10,13 +12,13 @@ public class ShopService : IShopService
         _unitOfWork = unitOfWork;
     }
 
-   
+
     public async Task<Response<IEnumerable<Shop>>> GetAsync()
     {
         try
         {
             var shops = await _unitOfWork.ShopRepository.ListAllAsync();
-            foreach(var shop in shops)
+            foreach (var shop in shops)
             {
                 shop.Products = (await _unitOfWork.ProductRepository
                     .ListAsync(p => p.ShopId == shop.Id)).ToList();
@@ -167,7 +169,7 @@ public class ShopService : IShopService
                 Data = true
             };
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             return new()
             {
@@ -250,5 +252,44 @@ public class ShopService : IShopService
         }
     }
 
-    
+    public async Task<Response<SelectList>> GetCategoriesByIdAsync(int id)
+    {
+        try
+        {
+            var shop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(s => s.Id == id);
+            if (shop == null)
+            {
+                return new()
+                {
+                    Description = "Shop not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+
+            var products = await _unitOfWork.ProductRepository.ListAsync(p => p.ShopId == shop.Id);
+
+            var shopCategories = from product in products.DistinctBy(p => p.Category)
+                                 let category = product.Category
+                                 orderby category.GetDisplayName()
+                                 select new
+                                 {
+                                     Id = (int)category,
+                                     Name = category.GetDisplayName()
+                                 };
+
+            return new()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Data = new SelectList(shopCategories, "Id", "Name")
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
+            };
+        }
+    }
 }
