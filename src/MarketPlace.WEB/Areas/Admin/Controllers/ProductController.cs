@@ -4,20 +4,24 @@ namespace MarketPlace.WEB.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize(Roles = "Admin")]
-[Route("Admin/{controller}/{action}")]
 public class ProductController : Controller
 {
-    private IProductService _productService;
+    private readonly IProductService _productService;
 
     public ProductController(IProductService productService)
     {
         _productService = productService;
     }
 
-    [HttpGet]
-    [Route("{shopId}")]
+
     public async Task<IActionResult> Index(int shopId)
     {
+        shopId = TempData["shopId"] switch
+        {
+            null => shopId,
+            _ => (int)TempData["shopId"]!
+        };
+
         var response = await _productService.GetByShopIdAsync(shopId);
         if (response.StatusCode == HttpStatusCode.OK)
         {
@@ -30,9 +34,7 @@ public class ProductController : Controller
         return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
 
-
-    [HttpGet]
-    [Route("{id=0}/{shopId}")]
+    [HttpPost]
     public async Task<IActionResult> Save(int id, int shopId)
     {
         // Create.
@@ -55,8 +57,7 @@ public class ProductController : Controller
 
 
     [HttpPost]
-    [Route("{id?}/{shopId?}")]
-    public async Task<IActionResult> Save(Product item)
+    public async Task<IActionResult> SaveProduct(Product item)
     {
         if (ModelState.IsValid)
         {
@@ -66,7 +67,8 @@ public class ProductController : Controller
                 var productResponse = await _productService.CreateAsync(item);
                 if (productResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    return RedirectToAction("Index", new { shopId = item.ShopId });
+                    TempData["shopId"] = item.ShopId;
+                    return RedirectToAction("Index");
                 }
                 ModelState.AddModelError("", productResponse.Description);
             }
@@ -76,13 +78,14 @@ public class ProductController : Controller
                 var response = await _productService.UpdateAsync(item);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    return RedirectToAction("Index", new { shopId = item.ShopId });
+                    TempData["shopId"] = item.ShopId;
+                    return RedirectToAction("Index");
                 }
                 ModelState.AddModelError("", response.Description);
             }
         }
 
-        return View(item);
+        return View("Save", item);
     }
 
 
@@ -92,7 +95,8 @@ public class ProductController : Controller
         var response = await _productService.DeleteAsync(id);
         if (response.StatusCode == HttpStatusCode.OK)
         {
-            return RedirectToAction("Index", new { shopId });
+            TempData["shopId"] = shopId;
+            return RedirectToAction("Index");
         }
         return View("Error", new ErrorViewModel(response.Deconstruct()));
     }

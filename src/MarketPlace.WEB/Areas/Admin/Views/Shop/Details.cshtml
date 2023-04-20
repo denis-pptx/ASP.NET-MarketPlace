@@ -1,11 +1,10 @@
 ﻿@model Shop
 
 @{
-    var title = "Details";
-    ViewData["Title"] = title;
+    ViewData["Title"] = "Details";
 }
 
-<h2>@title</h2>
+<h2>Shop details</h2>
 
 
 <div>
@@ -19,18 +18,19 @@
     </p>
 
     <div style="margin: 10px 0px;">
-        <form asp-controller="Product" asp-action="Index" asp-route-id="@Model.Id" method="get">
+        <form asp-controller="Product" asp-action="Index">
+            <input type="hidden" name="shopId" value="@Model.Id" />
             <input type="submit" value="Товары" />
         </form>
     </div>
 
     <div style="display: flex; gap: 10px;">
-        <form asp-action="Save" method="post">
+        <form asp-action="Save">
             <input type="hidden" name="id" value="@Model.Id" />
             <input type="submit" value="Изменить" />
         </form>
 
-        <form asp-action="Delete" method="post">
+        <form asp-action="Delete">
             <input type="hidden" name="id" value="@Model.Id" />
             <input type="submit" value="Удалить" />
         </form>

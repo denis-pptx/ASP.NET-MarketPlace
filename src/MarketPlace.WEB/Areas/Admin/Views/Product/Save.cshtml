@@ -9,8 +9,9 @@
 
 <h2>@title</h2>
 
-<form asp-action="Save">
+<form asp-action="SaveProduct">
     <div>
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
         <p>
             <label asp-for="Name"></label>
             <input asp-for="Name" />
@@ -31,9 +32,13 @@
 
         <p>
             <input type="submit" value="OK" />
-            <a asp-action="Index" asp-route-shopId="@Model.ShopId">Cancel</a>
         </p>
     </div>
+</form>
+
+<form asp-action="Index">
+    <input type="hidden" name="shopId" value="@Model.ShopId" />
+    <input type="submit" value="Cancel" />
 </form>
 
 <div asp-validation-summary="All"></div>

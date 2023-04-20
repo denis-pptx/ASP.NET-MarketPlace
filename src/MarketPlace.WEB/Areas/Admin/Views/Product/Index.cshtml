@@ -37,12 +37,15 @@
                 <td>@product.Category.GetDisplayName()</td>
 
                 <td>
-                    <a asp-action="Save" asp-route-id="@product.Id" 
-                        asp-route-shopId="@Model.ShopId">Изменить</a>
+                    <form asp-action="Save">
+                        <input type="hidden" name="id" value="@product.Id" />
+                        <input type="submit" value="Изменить" />
+                    </form>
                 </td>
                 <td>
-                    <form asp-action="Delete" method="post" asp-route-id="@product.Id" 
-                        asp-route-shopId="@Model.ShopId">
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" name="id" value="@product.Id" />
+                        <input type="hidden" name="shopId" value="@Model.ShopId" />
                         <input type="submit" value="Удалить" />
                     </form>
                 </td>
@@ -52,9 +55,14 @@
     </tbody>
 </table>
 
-<p>
-    <a asp-action="Save" asp-route-shopId="@Model.ShopId">Добавить товар</a>
-</p>
+
+<div style="margin: 10px 0px;">
+    <form asp-action="Save">
+        <input type="hidden" name="shopId" value="@Model.ShopId" />
+        <input type="submit" value="Добавить товар" />
+    </form>
+</div>
+
 <p>
     <a asp-controller="Shop" asp-action="Index">Назад</a>
 </p>
