@@ -1,4 +1,4 @@
-﻿@model Customer
+﻿@model RegisterDTO
 
 @{
     ViewData["Title"] = "Sign Up";
@@ -20,19 +20,18 @@
             <label asp-for="PasswordConfirm"></label>
             <input asp-for="PasswordConfirm" />
         </p>
-        <input type="hidden" name="Role" value="@MarketPlace.DAL.Enum.Role.Customer">
 
         <p>
-            <label asp-for="Profile.Age"></label>
-            <input asp-for="Profile.Age" />
+            <label asp-for="Age"></label>
+            <input asp-for="Age" />
         </p>
         <p>
-            <label asp-for="Profile.Email"></label>
-            <input asp-for="Profile.Email" />
+            <label asp-for="Email"></label>
+            <input asp-for="Email" />
         </p>
         <p>
-            <label asp-for="Profile.Phone"></label>
-            <input asp-for="Profile.Phone" />
+            <label asp-for="Phone"></label>
+            <input asp-for="Phone" />
         </p>
 
         <p>

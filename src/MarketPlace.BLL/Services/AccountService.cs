@@ -1,6 +1,4 @@
-﻿using MarketPlace.BLL.DTO;
-
-namespace MarketPlace.BLL.Services;
+﻿namespace MarketPlace.BLL.Services;
 
 public class AccountService : IAccountService
 {
@@ -49,12 +47,12 @@ public class AccountService : IAccountService
         }
     }
 
-    public async Task<Response<ClaimsPrincipal>> RegisterAsync(Customer item)
+    public async Task<Response<ClaimsPrincipal>> RegisterAsync(RegisterDTO dto)
     {
         try
         {
             var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(
-                u => u.Login.Trim().ToLowerInvariant() == item.Login.Trim().ToLowerInvariant());
+                u => u.Login.Trim().ToLowerInvariant() == dto.Login.Trim().ToLowerInvariant());
 
             if (user != null)
             {
@@ -65,11 +63,24 @@ public class AccountService : IAccountService
                 };
             }
 
-            await _unitOfWork.CustomerRepository.AddAsync(item);
+            Customer customer = new()
+            {
+                Login = dto.Login,
+                Password = dto.Password,
+                Role = DAL.Enum.Role.Customer,
+                Profile = new()
+                {
+                    Age = dto.Age,
+                    Email = dto.Email,
+                    Phone = dto.Phone
+                }
+            };
+
+            await _unitOfWork.CustomerRepository.AddAsync(customer);
             
             return new()
             {
-                Data = GetClaimsPrincipal(item),
+                Data = GetClaimsPrincipal(customer),
                 StatusCode = HttpStatusCode.OK
             };
         }

@@ -45,11 +45,11 @@ public class AccountController : Controller
     public IActionResult Register() => View();
 
     [HttpPost]
-    public async Task<IActionResult> Register(Customer customer)
+    public async Task<IActionResult> Register(RegisterDTO dto)
     {
         if (ModelState.IsValid)
         {
-            var response = await _accountService.RegisterAsync(customer);
+            var response = await _accountService.RegisterAsync(dto);
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 await HttpContext.SignInAsync(response.Data!);
@@ -58,6 +58,6 @@ public class AccountController : Controller
             ModelState.AddModelError("", response.Description);
         }
 
-        return View(customer);
+        return View(dto);
     }
 }
