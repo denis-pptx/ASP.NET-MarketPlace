@@ -21,3 +21,18 @@ body {
   margin-bottom: 60px;
 }
 
+
+/* Полоса прокрутки */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: #F1F1F1;
+}
+
+/* Бегунок полосы прокрутки */
+::-webkit-scrollbar-thumb {
+    background-color: #C0C0C0;
+    border-radius: 4px;
+}
+
+
