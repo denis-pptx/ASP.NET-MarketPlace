@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>fdc99991-3626-4724-8988-ecd7c3c93733</UserSecretsId>
   </PropertyGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.4" />
@@ -19,6 +20,10 @@
   <ItemGroup>
     <ProjectReference Include="..\MarketPlace.BLL\MarketPlace.BLL.csproj" />
     <ProjectReference Include="..\MarketPlace.DAL\MarketPlace.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,46 @@
-﻿@{
+﻿@model SelectList
+
+@{
     ViewData["Title"] = "Главная";
 }
 
+<style>
+    .card {
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    .card-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        text-align: center;
+    }
+</style>
+
 <h1>Главная</h1>
+
+<div class="container">
+    <div class="row">
+        @foreach (var category in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <a asp-controller="Product" asp-action="Index" asp-route-id="@category.Value" class="card-link">
+                    <div class="card h-100">
+                        <img src="~/images/@(Enum.GetName(typeof(MarketPlace.DAL.Enum.ProductCategory), Int32.Parse(category.Value))).png"
+                         class="card-img-top mx-auto w-50 mt-4" alt="@category.Text">
+                        <div class="card-body">
+                            <h5 class="card-title">@category.Text</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>

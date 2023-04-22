@@ -51,6 +51,7 @@ var app = builder.Build();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseStaticFiles();
 
 // Mapping routes to controllers.
 app.MapControllerRoute(
