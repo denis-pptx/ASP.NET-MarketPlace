@@ -48,8 +48,6 @@ public class CustomerController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Save(DAL.Entities.Customer item)
     {
-        ModelState.Remove("PasswordConfirm");
-
         if (ModelState.IsValid)
         {
             // Create.
