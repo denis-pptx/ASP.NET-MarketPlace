@@ -8,6 +8,7 @@ global using Microsoft.AspNetCore.Mvc.Rendering;
 global using MarketPlace.BLL.Interfaces;
 global using MarketPlace.DAL.Entities;
 global using MarketPlace.DAL.Interfaces;
+global using MarketPlace.DAL.Enum;
 global using MarketPlace.DAL.Response;
 global using MarketPlace.BLL.DTO;
 global using MarketPlace.BLL.Extensions;

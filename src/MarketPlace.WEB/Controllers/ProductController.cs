@@ -1,0 +1,30 @@
+﻿using MarketPlace.WEB.Models;
+
+namespace MarketPlace.WEB.Controllers;
+
+public class ProductController : Controller
+{
+    private readonly IProductService _productService;
+
+    public ProductController(IProductService productService)
+    {
+        _productService = productService;
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Index(IEnumerable<ProductCategory> categories, string searchString)
+    {
+        var response = await _productService.GetAsync(categories, searchString);
+        if (response.StatusCode == HttpStatusCode.OK)
+        {
+            return View(new ProductListViewModel()
+            {
+                Products = response.Data!,
+                AllCategories = _productService.GetCategories().Data!,
+                SelectedCategories = _productService.GetSelectListByCategories(categories).Data!,
+                SearchString = searchString
+            });
+        }
+        return View("Error", new ErrorViewModel(response.Deconstruct()));
+    }
+}

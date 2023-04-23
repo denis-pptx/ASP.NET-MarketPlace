@@ -1,7 +1,7 @@
-﻿namespace MarketPlace.WEB.Models;
+﻿namespace MarketPlace.WEB.Areas.Admin.Models;
 
 public class SellerViewModel
 {
-    public Seller Seller { get; set; } = null!;
+    public DAL.Entities.Seller Seller { get; set; } = null!;
     public SelectList Shops { get; set; } = null!;
 }

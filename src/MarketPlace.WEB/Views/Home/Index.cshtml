@@ -9,9 +9,9 @@
         transition: transform 0.25s ease;
     }
 
-    .card:hover {
-        transform: scale(1.05);
-    }
+        .card:hover {
+            transform: scale(1.05);
+        }
 
     .card-link {
         text-decoration: none;
@@ -26,21 +26,27 @@
 
 <h1>Главная</h1>
 
-<div class="container">
-    <div class="row">
-        @foreach (var category in Model)
-        {
-            <div class="col-md-3 mb-4">
-                <a asp-controller="Product" asp-action="Index" asp-route-id="@category.Value" class="card-link">
-                    <div class="card h-100">
-                        <img src="~/images/@(Enum.GetName(typeof(MarketPlace.DAL.Enum.ProductCategory), Int32.Parse(category.Value))).png"
-                         class="card-img-top mx-auto w-50 mt-4" alt="@category.Text">
-                        <div class="card-body">
+<form method="post" asp-controller="Product" asp-action="Index">
+    <div class="container">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Поиск" name="searchString">
+            <button class="btn btn-primary" type="submit">Найти</button>
+        </div>
+        <div class="row">
+            @foreach (var category in Model)
+            {
+                <div class="col-md-3 mb-4">
+                    <label class="card">
+                        <input class="form-check-input position-absolute top-0 start-0 mt-3 ms-3"
+                           type="checkbox" id="category_@category.Value" name="categories" value="@category.Value">
+                        <img src="~/images/@(Enum.GetName(typeof(MarketPlace.DAL.Enum.ProductCategory), Int32.Parse(category.Value))).png" 
+                            class="card-img-top mx-auto w-50 mt-4" alt="@category.Text">
+                        <div class="card-body text-center">
                             <h5 class="card-title">@category.Text</h5>
                         </div>
-                    </div>
-                </a>
-            </div>
-        }
+                    </label>
+                </div>
+            }
+        </div>
     </div>
-</div>
+</form>

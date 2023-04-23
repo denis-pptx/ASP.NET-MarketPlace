@@ -1,4 +1,5 @@
-﻿using MarketPlace.DAL.Entities;
+﻿using MarketPlace.BLL.Extensions;
+using MarketPlace.DAL.Entities;
 using MarketPlace.DAL.Enum;
 using Microsoft.AspNetCore.Http;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -19,6 +20,35 @@ public class ProductService : IProductService
         try
         {
             var products = await _unitOfWork.ProductRepository.ListAllAsync();
+
+            return new()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Data = products
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
+            };
+        }
+    }
+
+    public async Task<Response<IEnumerable<Product>>> GetAsync(
+        IEnumerable<ProductCategory> categories, string? searchString)
+    {
+        try
+        {
+            searchString = searchString ?? string.Empty;
+
+            var products = await _unitOfWork.ProductRepository.ListAsync(
+                p => categories.Count() == 0 || categories.Contains(p.Category));
+
+            products = products.Where(p => searchString == string.Empty 
+                                    || p.Name.IsSimilar(searchString));
 
             return new()
             {
@@ -226,7 +256,37 @@ public class ProductService : IProductService
     {
         try
         {
-            var categories = from type in (ProductCategory[])Enum.GetValues(typeof(ProductCategory))
+            var response = this.GetSelectListByCategories((IEnumerable<ProductCategory>)Enum.GetValues(typeof(ProductCategory)));
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return new()
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Data = response.Data
+                };
+            }
+
+            return new()
+            {
+                Description = response.Description,
+                StatusCode = response.StatusCode,
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
+            };
+        }
+    }
+
+    public Response<SelectList> GetSelectListByCategories(IEnumerable<ProductCategory> list)
+    {
+        try
+        {
+            var categories = from type in list
                              orderby type.GetDisplayName()
                              select new
                              {
@@ -249,6 +309,4 @@ public class ProductService : IProductService
             };
         }
     }
-
-
 }

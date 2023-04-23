@@ -1,9 +1,10 @@
 ﻿global using MarketPlace.WEB.Helpers;
-global using MarketPlace.WEB.Models;
+global using MarketPlace.WEB.GlobalModels;
 global using MarketPlace.BLL.Interfaces;
 global using MarketPlace.BLL.DTO;
 global using MarketPlace.BLL.Extensions;
 global using MarketPlace.DAL.Entities;
+global using MarketPlace.DAL.Enum;
 
 global using Microsoft.AspNetCore.OutputCaching;
 global using Microsoft.AspNetCore.Authorization;

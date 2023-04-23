@@ -3,6 +3,7 @@
 public interface IProductService
 {
     Task<Response<IEnumerable<Product>>> GetAsync();
+    Task<Response<IEnumerable<Product>>> GetAsync(IEnumerable<ProductCategory> categories, string searchString);
 
     Task<Response<IEnumerable<Product>>> GetByShopIdAsync(int shopId);
     Task<Response<IEnumerable<Product>>> GetByShopAndCategoryAsync(int shopId, int categoryId);
@@ -16,4 +17,6 @@ public interface IProductService
     Task<Response<bool>> UpdateAsync(Product product);
 
     Response<SelectList> GetCategories();
+
+    Response<SelectList> GetSelectListByCategories(IEnumerable<ProductCategory> categories);
 }
