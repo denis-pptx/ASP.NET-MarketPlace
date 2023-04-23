@@ -11,7 +11,6 @@ public class ProductController : Controller
         _productService = productService;
     }
 
-    [HttpPost]
     public async Task<IActionResult> Index(IEnumerable<ProductCategory> categories, string searchString)
     {
         var response = await _productService.GetAsync(categories, searchString);
@@ -19,7 +18,7 @@ public class ProductController : Controller
         {
             return View(new ProductListViewModel()
             {
-                Products = response.Data!,
+                Products = response.Data!.OrderBy(p => p.Category.GetDisplayName()).ThenBy(p => p.Name),
                 AllCategories = _productService.GetCategories().Data!,
                 SelectedCategories = _productService.GetSelectListByCategories(categories).Data!,
                 SearchString = searchString

@@ -19,20 +19,16 @@
 
     <div class="row mb-3">
         <div class="col-md-12">
-            <form method="post" asp-controller="Product" asp-action="Index">
+            <form method="get" asp-controller="Product" asp-action="Index">
 
                 <div class="input-group mb-3" id="search-group">
                     <input type="text" class="form-control" placeholder="Поиск" asp-for="SearchString">
-                    <button class="btn btn-secondary" type="button" id="search-clear">
+                    <button class="btn btn-danger" type="button" id="search-clear">
                         <i class="fa fa-times"></i>
                     </button>
                     <button class="btn btn-primary" type="submit">Найти</button>
                 </div>
 
-
-
-
-                <h4>Categories:</h4>
                 <div class="row">
                     @foreach (var category in Model.AllCategories)
                     {
@@ -44,25 +40,34 @@
                         </div>
                     }
                 </div>
+                <button class="btn btn-danger mt-2" type="button" id="clear-categories">Сбросить</button>
             </form>
         </div>
     </div>
 
+
+
     <div class="row">
         @foreach (var product in Model.Products)
         {
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <img class="card-img-top" src="@product.Name" alt="@product.Name">
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <img src="~/images/@(product).png" alt="Load failed"
+                     class="card-img-top mx-auto mt-4 w-50"
+                     onerror="this.src='/images/NoPhoto.png'; this.onerror=null;">
                     <div class="card-body">
                         <h5 class="card-title">@product.Name</h5>
-                        <p class="card-text">@product.Description</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a href="@Url.Action("Details", "Product", new { id = product.Id })" class="btn btn-sm btn-outline-secondary">View</a>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
+                        <h6 class="card-subtitle">@product.Category.GetDisplayName()</h6>
+                        <div class="d-flex justify-content-between mt-2">
+                            <div class="btn-group btn-group-sm">
+                                <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">Детали</a>
+                                <button type="button" class="btn btn-outline-primary">В корзину</button>
+                                <button type="button" class="btn btn-outline-danger">
+                                    <i class="far fa-heart"></i>
+                                </button>
                             </div>
-                            <small class="text-muted">$@product.Price</small>
+                            
+                            <h5>@product.Price р.</h5>
                         </div>
                     </div>
                 </div>
@@ -71,8 +76,7 @@
     </div>
 </div>
 
-@section Scripts
-{
+@section Scripts {
     <script>
         $(document).ready(function () {
             $("#search-clear").click(function () {
@@ -82,5 +86,17 @@
                 }, 100);
             });
         });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#clear-categories").click(function () {
+                $("input[type=checkbox][name=categories]").prop("checked", false);
+                setTimeout(() => {
+                    $(this).blur();
+                }, 100);
+            });
+        });
+
     </script>
 }

@@ -26,7 +26,7 @@
 
 <h1>Главная</h1>
 
-<form method="post" asp-controller="Product" asp-action="Index">
+<form method="get" asp-controller="Product" asp-action="Index">
     <div class="container">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Поиск" name="searchString">
@@ -39,8 +39,8 @@
                     <label class="card">
                         <input class="form-check-input position-absolute top-0 start-0 mt-3 ms-3"
                            type="checkbox" id="category_@category.Value" name="categories" value="@category.Value">
-                        <img src="~/images/@(Enum.GetName(typeof(MarketPlace.DAL.Enum.ProductCategory), Int32.Parse(category.Value))).png" 
-                            class="card-img-top mx-auto w-50 mt-4" alt="@category.Text">
+                        <img src="~/images/@(Enum.GetName(typeof(MarketPlace.DAL.Enum.ProductCategory), Int32.Parse(category.Value))).png"
+                         class="card-img-top mx-auto w-50 mt-4" onerror="this.src='/images/NoPhoto.png'; this.onerror=null;" alt="@category.Text">
                         <div class="card-body text-center">
                             <h5 class="card-title">@category.Text</h5>
                         </div>
