@@ -18,40 +18,41 @@
     </p>
 </form>
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>№</th>
-            <th>Название</th>
-            <th>Описание</th>
-            <th>Стоимость</th>
-            <th>Категория</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in Model.Products)
-        {
+<div class="container">
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
             <tr>
-                <td>@(num++)</td>
-                <td>@product.Name</td>
-                <td><textarea readonly>@product.Description</textarea></td>
-                <td>@product.Price</td>
-                <td>@product.Category.GetDisplayName()</td>
-
-                <td>
-                    <a asp-action="Save" asp-route-id="@product.Id">Изменить</a>
-                </td>
-                <td>
-                    <form asp-action="Delete" method="post" asp-route-id="@product.Id">
-                        <input type="submit" value="Удалить" />
-                    </form>
-                </td>
-
+                <th>№</th>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Стоимость</th>
+                <th>Категория</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@(num++)</td>
+                    <td>@product.Name</td>
+                    <td><textarea readonly>@product.Description</textarea></td>
+                    <td>@product.Price</td>
+                    <td>@product.Category.GetDisplayName()</td>
 
+                    <td>
+                        <a asp-action="Save" asp-route-id="@product.Id">Изменить</a>
+                    </td>
+                    <td>
+                        <form asp-action="Delete" method="post" asp-route-id="@product.Id">
+                            <input type="submit" value="Удалить" />
+                        </form>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 <p>
     <a asp-action="Save">Добавить товар</a>
 </p>

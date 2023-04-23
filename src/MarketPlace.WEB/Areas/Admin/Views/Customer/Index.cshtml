@@ -31,17 +31,16 @@
                     <td col-1>@customer.Profile.Age</td>
                     <td col-2>@customer.Profile.Email</td>
                     <td col-2>@customer.Profile.Phone</td>
-
-                    <td class="col-2 ">
-                        <div class="btn-toolbar d-flex justify-content-center">
-                            <div class="btn-group me-2">
-                                <a class="btn btn-primary" asp-action="Save" asp-route-id="@customer.Id">Изменить</a>
-                            </div>
-                            <div class="btn-group">
-                                <form asp-action="Delete" method="post" asp-route-id="@customer.Id">
-                                    <input type="submit" class="btn btn-danger" value="Удалить" />
-                                </form>
-                            </div>
+                    <td class="col-1">
+                        <div class="d-flex justify-content-center">
+                            <a class="btn btn-primary" asp-action="Save" asp-route-id="@customer.Id">Изменить</a>
+                        </div>
+                    </td>
+                    <td class="col-1">
+                        <div class="d-flex justify-content-center">
+                            <form asp-action="Delete" method="post" asp-route-id="@customer.Id">
+                                <input type="submit" class="btn btn-danger" value="Удалить" />
+                            </form>
                         </div>
                     </td>
                 </tr>
