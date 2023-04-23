@@ -57,7 +57,7 @@
                      onerror="this.src='/images/NoPhoto.png'; this.onerror=null;">
                     <div class="card-body">
                         <h5 class="card-title">@product.Name</h5>
-                        <h6 class="card-subtitle">@product.Category.GetDisplayName()</h6>
+                        <h6 class="card-subtitle text-muted">@product.Category.GetDisplayName()</h6>
                         <div class="d-flex justify-content-between mt-2">
                             <div class="btn-group btn-group-sm">
                                 <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">Детали</a>
