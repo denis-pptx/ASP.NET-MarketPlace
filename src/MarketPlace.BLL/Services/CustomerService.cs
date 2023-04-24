@@ -13,21 +13,6 @@ public class CustomerService : ICustomerService
         try
         {
             var customers = await _unitOfWork.CustomerRepository.ListAllAsync();
-            foreach (var customer in customers)
-            {
-                var profile = await _unitOfWork.CustomerProfileRepository
-                    .SingleOrDefaultAsync(cp => cp.CustomerId == customer.Id);
-
-                if (profile == null) 
-                {
-                    return new()
-                    {
-                        Description = "Customer's profile not found",
-                        StatusCode = HttpStatusCode.NotFound
-                    };
-                }
-                customer.Profile = profile;
-            }
 
             return new()
             {
@@ -61,7 +46,6 @@ public class CustomerService : ICustomerService
                 };
             }
 
-            item.Cart = new();
             await _unitOfWork.CustomerRepository.AddAsync(item);
 
             return new()
@@ -128,18 +112,6 @@ public class CustomerService : ICustomerService
                 };
             }
 
-            var profile = await _unitOfWork.CustomerProfileRepository
-                .SingleOrDefaultAsync(cp => cp.CustomerId == customer.Id);
-            if (profile == null)
-            {
-                return new()
-                {
-                    Description = "Customer's profile not found",
-                    StatusCode = HttpStatusCode.NotFound
-                };
-            }
-            customer.Profile = profile;
-
             return new()
             {
                 StatusCode = HttpStatusCode.OK,
@@ -169,18 +141,6 @@ public class CustomerService : ICustomerService
                     StatusCode = HttpStatusCode.NotFound
                 };
             }
-
-            var profile = await _unitOfWork.CustomerProfileRepository
-                .SingleOrDefaultAsync(cp => cp.CustomerId == customer.Id);
-            if (profile == null)
-            {
-                return new()
-                {
-                    Description = "Customer's profile not found",
-                    StatusCode = HttpStatusCode.NotFound
-                };
-            }
-            customer.Profile = profile;
 
             return new()
             {

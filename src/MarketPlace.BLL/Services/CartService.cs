@@ -36,11 +36,11 @@ public class CartService : ICartService
             }
 
 
-            cart.Products = (from cp in await _unitOfWork.CartProductRepository.ListAllAsync()
-                             join p in await _unitOfWork.ProductRepository.ListAllAsync()
-                             on cp.ProductId equals p.Id
-                             where cp.CartId == cart.Id
-                             select p).ToList();
+            //cart.Products = (from cp in await _unitOfWork.CartProductRepository.ListAllAsync()
+            //                 join p in await _unitOfWork.ProductRepository.ListAllAsync()
+            //                 on cp.ProductId equals p.Id
+            //                 where cp.CartId == cart.Id
+            //                 select p).ToList();
 
 
             return new()
@@ -93,11 +93,11 @@ public class CartService : ICartService
                 };
             }
 
-            cart.Products = (from cp in await _unitOfWork.CartProductRepository.ListAllAsync()
-                             join p in await _unitOfWork.ProductRepository.ListAllAsync()
-                             on cp.ProductId equals p.Id
-                             where cp.CartId == cart.Id
-                             select p).ToList();
+            //cart.Products = (from cp in await _unitOfWork.CartProductRepository.ListAllAsync()
+            //                 join p in await _unitOfWork.ProductRepository.ListAllAsync()
+            //                 on cp.ProductId equals p.Id
+            //                 where cp.CartId == cart.Id
+            //                 select p).ToList();
 
             if (cart.Products.Contains(product))
             {

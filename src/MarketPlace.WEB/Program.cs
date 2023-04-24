@@ -26,13 +26,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(connection));
 
 // Repositories registration.
-builder.Services.AddScoped<IRepository<User>, EfRepository<User>>();
-builder.Services.AddScoped<IRepository<Customer>, EfRepository<Customer>>();
-builder.Services.AddScoped<IRepository<Seller>, EfRepository<Seller>>();
-builder.Services.AddScoped<IRepository<Shop>, EfRepository<Shop>>();
-builder.Services.AddScoped<IRepository<Product>, EfRepository<Product>>();
-builder.Services.AddScoped<IRepository<CustomerProfile>, EfRepository<CustomerProfile>>();
-builder.Services.AddScoped<IRepository<Cart>, EfRepository<Cart>>();
 builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
 // Services registration.

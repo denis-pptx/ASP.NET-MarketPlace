@@ -67,7 +67,7 @@ public class AccountService : IAccountService
             {
                 Login = dto.Login,
                 Password = dto.Password,
-                Role = DAL.Enum.Role.Customer,
+                Role = Role.Customer,
                 Profile = new()
                 {
                     Age = dto.Age,

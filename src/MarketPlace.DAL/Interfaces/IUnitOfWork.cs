@@ -9,7 +9,6 @@ public interface IUnitOfWork
     IRepository<Customer> CustomerRepository { get; }
     IRepository<CustomerProfile> CustomerProfileRepository { get; }
     IRepository<Cart> CartRepository { get; }
-    IRepository<CartProduct> CartProductRepository { get; }
     Task RemoveDatabaseAsync();
     Task CreateDatabaseAsync();
     Task SaveAllAsync();
