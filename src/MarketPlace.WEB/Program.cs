@@ -32,6 +32,7 @@ builder.Services.AddScoped<IRepository<Seller>, EfRepository<Seller>>();
 builder.Services.AddScoped<IRepository<Shop>, EfRepository<Shop>>();
 builder.Services.AddScoped<IRepository<Product>, EfRepository<Product>>();
 builder.Services.AddScoped<IRepository<CustomerProfile>, EfRepository<CustomerProfile>>();
+builder.Services.AddScoped<IRepository<Cart>, EfRepository<Cart>>();
 builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 
 // Services registration.
@@ -40,6 +41,7 @@ builder.Services.AddScoped<IShopService, ShopService>();
 builder.Services.AddScoped<ISellerService, SellerService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 // Helpers registration.
 builder.Services.AddTransient<SaveHelper>();

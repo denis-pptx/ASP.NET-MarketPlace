@@ -50,7 +50,7 @@
     <div class="row">
         @foreach (var product in Model.Products)
         {
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="card mb-4">
                     <img src="~/images/@(product).png" alt="Load failed"
                      class="card-img-top mx-auto mt-4 w-50"
@@ -60,13 +60,12 @@
                         <h6 class="card-subtitle text-muted">@product.Category.GetDisplayName()</h6>
                         <div class="d-flex justify-content-between mt-2">
                             <div class="btn-group btn-group-sm">
-                                <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">Детали</a>
-                                <button type="button" class="btn btn-outline-primary">В корзину</button>
-                                <button type="button" class="btn btn-outline-danger">
-                                    <i class="far fa-heart"></i>
+                                <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">Details</a>
+                                <button type="button" class="btn btn-outline-primary add-to-cart" data-product-id="@product.Id">
+                                    <i class="fa fa-shopping-cart"></i>
                                 </button>
                             </div>
-                            
+
                             <h5>@product.Price р.</h5>
                         </div>
                     </div>
@@ -75,6 +74,8 @@
         }
     </div>
 </div>
+
+
 
 @section Scripts {
     <script>
@@ -97,6 +98,50 @@
                 }, 100);
             });
         });
+
+    </script>
+
+
+    <script>
+        $(document).on('click', '.add-to-cart', function () {
+            var button = $(this);
+            var productId = button.data('product-id');
+            var url = '@Url.Action("Add", "Cart", new { area = "Customer" })';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: { productId: productId },
+                success: function () {
+                    button.removeClass('add-to-cart').addClass('remove-from-cart');
+                    button.find('i').removeClass('fa-shopping-cart').addClass('fa-check');
+                    showToast('success', 'Товар добавлен в корзину');
+                },
+                error: function (jqXHR) {
+                    showToast('error', jqXHR.status + ': Не удалось добавить товар в корзину');
+                }
+            });
+        });
+
+        $(document).on('click', '.remove-from-cart', function () {
+            var button = $(this);
+            var productId = button.data('product-id');
+            var url = '@Url.Action("Remove", "Cart")';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: { productId: productId },
+                success: function () {
+                    button.removeClass('remove-from-cart').addClass('add-to-cart');
+                    button.find('i').removeClass('fa-check').addClass('fa-shopping-cart');
+                    showToast('success', 'Товар удален из корзины');
+                },
+                error: function (jqXHR) {
+                    showToast('error', jqXHR.status + ': Не удалось удалить товар из корзины');
+                }
+            });
+        });
+
+        
 
     </script>
 }

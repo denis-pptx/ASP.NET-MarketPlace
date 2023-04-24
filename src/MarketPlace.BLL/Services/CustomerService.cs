@@ -61,6 +61,7 @@ public class CustomerService : ICustomerService
                 };
             }
 
+            item.Cart = new();
             await _unitOfWork.CustomerRepository.AddAsync(item);
 
             return new()
