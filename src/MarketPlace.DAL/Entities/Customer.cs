@@ -2,6 +2,6 @@
 
 public class Customer : User
 {
-    public Profile Profile { get; set; } = null!;
-    public Cart Cart { get; set; } = null!;
+    public Profile Profile { get; set; } = new();
+    public Cart Cart { get; set; } = new();
 }

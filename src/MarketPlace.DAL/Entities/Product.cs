@@ -8,5 +8,5 @@ public class Product : Entity
     public ProductCategory Category { get; set; }
 
     public int ShopId { get; set; }
-    public List<Cart> Carts { get; set; } = null!;
+    public List<Cart> Carts { get; set; } = new();
 }

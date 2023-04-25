@@ -21,7 +21,7 @@ public class CustomerController : Controller
             return View(new CustomerListViewModel()
             {
                 Customers = response.Data!.OrderBy(c => c.Login)
-            }); 
+            });
         }
         return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
@@ -32,7 +32,7 @@ public class CustomerController : Controller
         // Create.
         if (id == 0)
         {
-            return View();
+            return View(new DAL.Entities.Customer());
         }
 
         // Update.
@@ -46,7 +46,8 @@ public class CustomerController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Save(DAL.Entities.Customer item)
+    public async Task<IActionResult> Save(
+        [Bind("Id", "Login", "Password", "Profile")] DAL.Entities.Customer item)
     {
         if (ModelState.IsValid)
         {
@@ -63,14 +64,22 @@ public class CustomerController : Controller
             // Update.
             else
             {
-                var response = await _customerService.UpdateAsync(item);
-                if (response.StatusCode == HttpStatusCode.OK)
+                var oldCustomerResponse = await _customerService.GetByIdAsync(item.Id);
+                if (oldCustomerResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    return RedirectToAction("Index");
+                    item.Cart = (await _customerService.GetByIdAsync(item.Id)).Data!.Cart;
+                    var response = await _customerService.UpdateAsync(item);
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    ModelState.AddModelError("", response.Description);
                 }
-                ModelState.AddModelError("", response.Description);
+                else
+                {
+                    return View("Error", new ErrorViewModel(oldCustomerResponse.Deconstruct()));
+                }
             }
-
         }
         return View(item);
     }
@@ -79,7 +88,7 @@ public class CustomerController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
-        var response = await _customerService.DeleteAsync(id);  
+        var response = await _customerService.DeleteAsync(id);
         if (response.StatusCode == HttpStatusCode.OK)
         {
             return RedirectToAction("Index");
