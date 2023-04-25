@@ -11,15 +11,15 @@ public class EfSellerRepository : IRepository<Seller>
         _sellers = db.Set<Seller>();
     }
 
-    public async Task AddAsync(Seller entity)
+    public async Task AddAsync(Seller seller)
     {
-        await _sellers.AddAsync(entity);
+        await _sellers.AddAsync(seller);
         await _db.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(Seller entity)
+    public async Task DeleteAsync(Seller seller)
     {
-        await Task.Run(() => _sellers.Remove(entity));
+        await Task.Run(() => _sellers.Remove(seller));
         await _db.SaveChangesAsync();
     }
 
@@ -58,9 +58,9 @@ public class EfSellerRepository : IRepository<Seller>
                                             .SingleOrDefault(filter));
     }
 
-    public async Task UpdateAsync(Seller entity)
+    public async Task UpdateAsync(Seller seller)
     {
-        await Task.Run(() => _sellers.Update(entity));
+        await Task.Run(() => _sellers.Update(seller));
         await _db.SaveChangesAsync();
     }
 }

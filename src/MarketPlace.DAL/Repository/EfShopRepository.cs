@@ -11,9 +11,9 @@ public class EfShopRepository : IRepository<Shop>
         _shops = db.Set<Shop>();
     }
 
-    public async Task AddAsync(Shop entity)
+    public async Task AddAsync(Shop shop)
     {
-        await _shops.AddAsync(entity);
+        await _shops.AddAsync(shop);
         await _db.SaveChangesAsync();
     }
 

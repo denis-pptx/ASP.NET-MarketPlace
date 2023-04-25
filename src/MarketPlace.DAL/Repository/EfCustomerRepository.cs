@@ -13,15 +13,15 @@ public class EfCustomerRepository : IRepository<Customer>
         _customers = db.Set<Customer>();
     }
 
-    public async Task AddAsync(Customer entity)
+    public async Task AddAsync(Customer customer)
     {
-        await _customers.AddAsync(entity);
+        await _customers.AddAsync(customer);
         await _db.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(Customer entity)
+    public async Task DeleteAsync(Customer customer)
     {
-        await Task.Run(() => _customers.Remove(entity));
+        await Task.Run(() => _customers.Remove(customer));
         await _db.SaveChangesAsync();
     }
 
@@ -65,9 +65,9 @@ public class EfCustomerRepository : IRepository<Customer>
                                              .Where(filter));
     }
 
-    public async Task UpdateAsync(Customer entity)
+    public async Task UpdateAsync(Customer customer)
     {
-        await Task.Run(() => _customers.Update(entity));
+        await Task.Run(() => _customers.Update(customer));
         await _db.SaveChangesAsync();
     }
 }
