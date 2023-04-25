@@ -3,5 +3,5 @@
 public class Seller : User
 {
     public int ShopId { get; set; }
-    public Shop Shop { get; set; } = new();
+    public Shop? Shop { get; set; }
 }
