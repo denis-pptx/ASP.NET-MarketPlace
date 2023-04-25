@@ -34,7 +34,7 @@ public class ShopController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Edit(Shop item)
+    public async Task<IActionResult> Edit([Bind("Id,Name,Description")] Shop item)
     {
         if (ModelState.IsValid)
         {
