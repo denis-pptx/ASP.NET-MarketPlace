@@ -4,8 +4,8 @@ namespace MarketPlace.DAL.Repository;
 
 public class EfCustomerRepository : IRepository<Customer>
 {
-    protected readonly AppDbContext _db;
-    protected readonly DbSet<Customer> _customers;
+    private readonly AppDbContext _db;
+    private readonly DbSet<Customer> _customers;
 
     public EfCustomerRepository(AppDbContext db)
     {
@@ -28,25 +28,25 @@ public class EfCustomerRepository : IRepository<Customer>
     public async Task<Customer?> FirstOrDefaultAsync(Func<Customer, bool> filter)
     {
         return await Task.Run(() => _customers.Include(c => c.Profile)
-                                              .Include(c => c.Cart)
-                                                  .ThenInclude(c => c!.Products)
-                                              .FirstOrDefault(filter));
+                                             .Include(c => c.Cart)
+                                                 .ThenInclude(c => c!.Products)
+                                             .FirstOrDefault(filter));
     }
 
     public async Task<Customer?> SingleOrDefaultAsync(Func<Customer, bool> filter)
     {
         return await Task.Run(() => _customers.Include(c => c.Profile)
-                                              .Include(c => c.Cart)
-                                                  .ThenInclude(c => c!.Products)
-                                              .SingleOrDefault(filter));
+                                             .Include(c => c.Cart)
+                                                 .ThenInclude(c => c!.Products)
+                                             .SingleOrDefault(filter));
     }
 
     public async Task<Customer?> GetByIdAsync(int id)
     {
         return await Task.Run(() => _customers.Include(c => c.Profile)
-                                              .Include(c => c.Cart)
-                                                  .ThenInclude(c => c!.Products)
-                                              .SingleOrDefault(c => c.Id == id));
+                                             .Include(c => c.Cart)
+                                                 .ThenInclude(c => c!.Products)
+                                             .SingleOrDefault(c => c.Id == id));
     }
 
     public async Task<IEnumerable<Customer>> ListAllAsync()
@@ -60,9 +60,9 @@ public class EfCustomerRepository : IRepository<Customer>
     public async Task<IEnumerable<Customer>> ListAsync(Func<Customer, bool> filter)
     {
         return await Task.Run(() => _customers.Include(c => c.Profile)
-                                              .Include(c => c.Cart)
-                                                  .ThenInclude(c => c!.Products)
-                                              .Where(filter));
+                                             .Include(c => c.Cart)
+                                                 .ThenInclude(c => c!.Products)
+                                             .Where(filter));
     }
 
     public async Task UpdateAsync(Customer entity)

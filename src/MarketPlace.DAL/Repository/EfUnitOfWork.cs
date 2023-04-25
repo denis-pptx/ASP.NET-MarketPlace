@@ -16,11 +16,11 @@ public class EfUnitOfWork : IUnitOfWork
         _db = db;
         _productRepository = new EfRepository<Product>(_db);
         _userRepository = new EfRepository<User>(_db);
-        _shopRepository = new EfRepository<Shop>(_db);
         _sellerRepository = new EfRepository<Seller>(_db);
         _customerProfileRepository = new EfRepository<CustomerProfile>(_db);
         _cartRepository = new EfRepository<Cart>(_db);
 
+        _shopRepository = new EfShopRepository(_db);
         _customerRepository = new EfCustomerRepository(_db);
     }
 
