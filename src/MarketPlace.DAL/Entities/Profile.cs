@@ -1,6 +1,6 @@
 ﻿namespace MarketPlace.DAL.Entities;
 
-public class CustomerProfile : Entity
+public class Profile : Entity
 {
     [Range(1, 100)]
     public int Age { get; set; }

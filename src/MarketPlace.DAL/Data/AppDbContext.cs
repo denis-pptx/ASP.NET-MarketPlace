@@ -7,7 +7,7 @@ public class AppDbContext : DbContext
 	public DbSet<Seller> Sellers { get; set; }
     public DbSet<Product> Products { get; set; }
 	public DbSet<Shop> Shops { get; set; }
-    public DbSet<CustomerProfile> CustomerProfiles { get; set; }
+    public DbSet<Profile> CustomerProfiles { get; set; }
     public DbSet<Cart> Carts { get; set; }
 	
 	public AppDbContext(DbContextOptions<AppDbContext> options)

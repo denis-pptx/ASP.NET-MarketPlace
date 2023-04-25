@@ -8,7 +8,7 @@ public class EfUnitOfWork : IUnitOfWork
     private readonly IRepository<Shop> _shopRepository;
     private readonly IRepository<Seller> _sellerRepository;
     private readonly IRepository<Customer> _customerRepository;
-    private readonly IRepository<CustomerProfile> _customerProfileRepository;
+    private readonly IRepository<Profile> _profileRepository;
     private readonly IRepository<Cart> _cartRepository;
 
     public EfUnitOfWork(AppDbContext db)
@@ -16,10 +16,10 @@ public class EfUnitOfWork : IUnitOfWork
         _db = db;
         _productRepository = new EfRepository<Product>(_db);
         _userRepository = new EfRepository<User>(_db);
-        _sellerRepository = new EfRepository<Seller>(_db);
-        _customerProfileRepository = new EfRepository<CustomerProfile>(_db);
+        _profileRepository = new EfRepository<Profile>(_db);
         _cartRepository = new EfRepository<Cart>(_db);
 
+        _sellerRepository = new EfSellerRepository(_db);
         _shopRepository = new EfShopRepository(_db);
         _customerRepository = new EfCustomerRepository(_db);
     }
@@ -32,7 +32,7 @@ public class EfUnitOfWork : IUnitOfWork
     public IRepository<Seller> SellerRepository => _sellerRepository;
 
     public IRepository<Customer> CustomerRepository => _customerRepository;
-    public IRepository<CustomerProfile> CustomerProfileRepository => _customerProfileRepository;
+    public IRepository<Profile> ProfileRepository => _profileRepository;
     public IRepository<Cart> CartRepository => _cartRepository;
 
     public async Task CreateDatabaseAsync()
