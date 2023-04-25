@@ -68,11 +68,12 @@ public class SellerController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Save(
-        [Bind("Id", "Login", "Password", "ShopId")] DAL.Entities.Seller item)
+    public async Task<IActionResult> Save([Bind("Id,Login,Password,ShopId")] DAL.Entities.Seller item)
     {
         if (ModelState.IsValid)
         {
+            item.Role = Role.Seller;
+
             // Create.
             if (item.Id == 0)
             {

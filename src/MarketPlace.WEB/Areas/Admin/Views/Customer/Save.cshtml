@@ -19,20 +19,20 @@
             <input asp-for="Password" />
         </p>
 
-        <input type="hidden" asp-for="Profile.Id" value="@Model.Profile.Id">
+        <input type="hidden" asp-for="Profile!.Id" value="@(Model.Profile?.Id ?? 0)">
         <p>
-            <label asp-for="Profile.Age"></label>
-            <input asp-for="Profile.Age" />
+            <label asp-for="Profile!.Age"></label>
+            <input asp-for="Profile!.Age" />
         </p>
         <p>
-            <label asp-for="Profile.Email"></label>
-            <input asp-for="Profile.Email" />
+            <label asp-for="Profile!.Email"></label>
+            <input asp-for="Profile!.Email" />
         </p>
         <p>
-            <label asp-for="Profile.Phone"></label>
-            <input asp-for="Profile.Phone" />
+            <label asp-for="Profile!.Phone"></label>
+            <input asp-for="Profile!.Phone" />
         </p>
-        <input type="hidden" asp-for="Profile.CustomerId" value="@Model.Id">
+        <input type="hidden" asp-for="Profile!.CustomerId" value="@Model.Id">
        
         <p>
             <input type="submit" value="OK" />

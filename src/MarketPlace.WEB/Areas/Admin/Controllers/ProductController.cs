@@ -44,11 +44,10 @@ public class ProductController : Controller
             return View("Error", new ErrorViewModel(shopResponse.Deconstruct()));
         }
         return View("Error", new ErrorViewModel(productResponse.Deconstruct()));
-        
+
     }
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
+    [HttpGet]
     public async Task<IActionResult> Save(int id, int shopId)
     {
         // Create.
@@ -71,9 +70,8 @@ public class ProductController : Controller
 
 
     [HttpPost]
-    [ActionName("SaveProduct")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Save(Product item)
+    public async Task<IActionResult> Save([Bind("Id,Name,Description,Price,Category,ShopId")] Product item)
     {
         if (ModelState.IsValid)
         {

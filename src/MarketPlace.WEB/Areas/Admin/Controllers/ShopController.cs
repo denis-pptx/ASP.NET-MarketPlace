@@ -27,9 +27,8 @@ public class ShopController : Controller
         return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Details([FromForm] int id)
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
     {
         var response = await _shopService.GetByIdAsync(id);
         if (response.StatusCode == HttpStatusCode.OK)
@@ -39,9 +38,8 @@ public class ShopController : Controller
         return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Save([FromForm] int id)
+    [HttpGet]
+    public async Task<IActionResult> Save(int id)
     {
         // Create.
         if (id == 0)
@@ -60,9 +58,8 @@ public class ShopController : Controller
 
 
     [HttpPost]
-    [ActionName("SaveShop")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Save([FromForm] Shop item)
+    public async Task<IActionResult> Save(Shop item)
     {
         if (ModelState.IsValid)
         {
@@ -92,9 +89,8 @@ public class ShopController : Controller
     }
 
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Delete([FromForm] int id)
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
     {
         var response = await _shopService.GetByIdAsync(id);
         if (response.StatusCode == HttpStatusCode.OK)
@@ -105,8 +101,9 @@ public class ShopController : Controller
     }
 
     [HttpPost]
+    [ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed([FromForm] int id)
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var response = await _shopService.DeleteAsync(id);
         if (response.StatusCode == HttpStatusCode.OK)

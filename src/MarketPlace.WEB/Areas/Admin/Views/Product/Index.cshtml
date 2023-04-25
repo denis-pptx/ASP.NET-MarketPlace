@@ -48,16 +48,13 @@
                 <td>@product.Category.GetDisplayName()</td>
 
                 <td>
-                    <form asp-action="Save">
-                        <input type="hidden" name="id" value="@product.Id" />
-                        <input type="submit" value="Изменить" />
-                    </form>
+                    <a class="btn btn-primary" asp-action="Save" asp-route-id="@product.Id">Изменить</a>
                 </td>
                 <td>
                     <form asp-action="Delete" method="post">
                         <input type="hidden" name="id" value="@product.Id" />
                         <input type="hidden" name="shopId" value="@Model.ShopId" />
-                        <input type="submit" value="Удалить" />
+                        <input class="btn btn-danger" type="submit" value="Удалить" />
                     </form>
                 </td>
 
@@ -68,17 +65,11 @@
 
 
 <p>
-    <form asp-action="Save">
-        <input type="hidden" name="shopId" value="@Model.ShopId" />
-        <input type="submit" value="Добавить товар" />
-    </form>
+    <a class="btn btn-primary" asp-action="Save" asp-route-shopId="@Model.ShopId">Добавить товар</a>
 </p>
 
 <p>
-    <form asp-controller="Shop" asp-action="Details">
-        <input type="hidden" name="id" value="@Model.ShopId" />
-        <input type="submit" value="Назад" />
-    </form>
+    <a class="btn btn-primary" asp-controller="Shop" asp-action="Details" asp-route-id="@Model.ShopId">Назад</a>
 </p>
 
 

@@ -46,8 +46,7 @@ public class CustomerController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Save(
-        [Bind("Id", "Login", "Password", "Profile")] DAL.Entities.Customer item)
+    public async Task<IActionResult> Save([Bind("Id,Login,Password,Profile")] DAL.Entities.Customer item)
     {
         if (ModelState.IsValid)
         {

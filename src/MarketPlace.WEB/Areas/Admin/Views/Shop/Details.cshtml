@@ -18,21 +18,14 @@
     </p>
 
     <div style="margin: 10px 0px;">
-        <form asp-controller="Product" asp-action="Index">
-            <input type="hidden" name="shopId" value="@Model.Id" />
-            <input type="submit" value="Товары" />
-        </form>
+        <a class="btn btn-primary" asp-controller="Product" asp-action="Index" asp-route-shopId="@Model.Id">Товары</a>
     </div>
 
     <div style="display: flex; gap: 10px;">
-        <form asp-action="Save">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <input type="submit" value="Изменить" />
-        </form>
-
+        <a class="btn btn-primary" asp-action="Save" asp-route-id="@Model.Id">Изменить</a>
         <form asp-action="Delete">
             <input type="hidden" name="id" value="@Model.Id" />
-            <input type="submit" value="Удалить" />
+            <input class="btn btn-danger" type="submit" value="Удалить" />
         </form>
     </div>
 
