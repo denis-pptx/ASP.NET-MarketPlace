@@ -73,7 +73,8 @@ public class AccountService : IAccountService
                     Age = dto.Age,
                     Email = dto.Email,
                     Phone = dto.Phone
-                }
+                },
+                Cart = new()
             };
 
             await _unitOfWork.CustomerRepository.AddAsync(customer);

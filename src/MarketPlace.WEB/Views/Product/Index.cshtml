@@ -117,7 +117,7 @@
                     showToast('success', 'Товар добавлен в корзину');
                 },
                 error: function (jqXHR) {
-                    showToast('error', jqXHR.status + ': Не удалось добавить товар в корзину');
+                    showToast('error', jqXHR.status + ': ' + jqXHR.responseText);
                 }
             });
         });
@@ -136,7 +136,7 @@
                     showToast('success', 'Товар удален из корзины');
                 },
                 error: function (jqXHR) {
-                    showToast('error', jqXHR.status + ': Не удалось удалить товар из корзины');
+                    showToast('error', jqXHR.status + ': ' + jqXHR.responseText);
                 }
             });
         });

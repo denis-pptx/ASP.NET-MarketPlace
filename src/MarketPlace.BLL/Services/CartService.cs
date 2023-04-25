@@ -35,14 +35,6 @@ public class CartService : ICartService
                 };
             }
 
-
-            //cart.Products = (from cp in await _unitOfWork.CartProductRepository.ListAllAsync()
-            //                 join p in await _unitOfWork.ProductRepository.ListAllAsync()
-            //                 on cp.ProductId equals p.Id
-            //                 where cp.CartId == cart.Id
-            //                 select p).ToList();
-
-
             return new()
             {
                 StatusCode = HttpStatusCode.OK,
@@ -93,13 +85,7 @@ public class CartService : ICartService
                 };
             }
 
-            //cart.Products = (from cp in await _unitOfWork.CartProductRepository.ListAllAsync()
-            //                 join p in await _unitOfWork.ProductRepository.ListAllAsync()
-            //                 on cp.ProductId equals p.Id
-            //                 where cp.CartId == cart.Id
-            //                 select p).ToList();
-
-            if (cart.Products.Contains(product))
+            if (cart.Products.Any(p => p.Id == product.Id))
             {
                 return new()
                 {
@@ -107,6 +93,14 @@ public class CartService : ICartService
                     StatusCode = HttpStatusCode.Conflict
                 };
             }
+            //if (cart.Products.Contains(product))
+            //{
+            //    return new()
+            //    {
+            //        Description = "Cart already contains this product",
+            //        StatusCode = HttpStatusCode.Conflict
+            //    };
+            //}
 
             cart.Products.Add(product);
             await _unitOfWork.CartRepository.UpdateAsync(cart);

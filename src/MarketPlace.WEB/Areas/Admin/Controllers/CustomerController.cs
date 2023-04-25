@@ -53,6 +53,7 @@ public class CustomerController : Controller
             // Create.
             if (item.Id == 0)
             {
+                item.Cart = new();
                 var response = await _customerService.CreateAsync(item);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
