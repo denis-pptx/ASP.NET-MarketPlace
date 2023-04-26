@@ -53,7 +53,6 @@ public class CustomerController : Controller
             // Create.
             if (item.Id == 0)
             {
-                item.Cart = new();
                 var response = await _customerService.CreateAsync(item);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
@@ -64,21 +63,12 @@ public class CustomerController : Controller
             // Update.
             else
             {
-                var oldCustomerResponse = await _customerService.GetByIdAsync(item.Id);
-                if (oldCustomerResponse.StatusCode == HttpStatusCode.OK)
+                var response = await _customerService.UpdateAsync(item);
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    item.Cart = (await _customerService.GetByIdAsync(item.Id)).Data!.Cart;
-                    var response = await _customerService.UpdateAsync(item);
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        return RedirectToAction("Index");
-                    }
-                    ModelState.AddModelError("", response.Description);
+                    return RedirectToAction("Index");
                 }
-                else
-                {
-                    return View("Error", new ErrorViewModel(oldCustomerResponse.Deconstruct()));
-                }
+                ModelState.AddModelError("", response.Description);
             }
         }
         return View(item);

@@ -18,12 +18,6 @@ public class ProductController : Controller
 
     public async Task<IActionResult> Index(int shopId, int categoryId)
     {
-        shopId = TempData["shopId"] switch
-        {
-            null => shopId,
-            _ => (int)TempData["shopId"]!
-        };
-
         var productResponse = await _productService.GetByShopAndCategoryAsync(shopId, categoryId);
         if (productResponse.StatusCode == HttpStatusCode.OK)
         {
@@ -81,8 +75,7 @@ public class ProductController : Controller
                 var productResponse = await _productService.CreateAsync(item);
                 if (productResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    TempData["shopId"] = item.ShopId;
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { shopId = item.ShopId });
                 }
                 ModelState.AddModelError("", productResponse.Description);
             }
@@ -92,8 +85,7 @@ public class ProductController : Controller
                 var response = await _productService.UpdateAsync(item);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    TempData["shopId"] = item.ShopId;
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { shopId = item.ShopId });
                 }
                 ModelState.AddModelError("", response.Description);
             }
@@ -110,8 +102,7 @@ public class ProductController : Controller
         var response = await _productService.DeleteAsync(id);
         if (response.StatusCode == HttpStatusCode.OK)
         {
-            TempData["shopId"] = shopId;
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { shopId });
         }
         return View("Error", new ErrorViewModel(response.Deconstruct()));
     }

@@ -224,8 +224,8 @@ public class ShopService : IShopService
                 };
             }
 
-            shop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(s => s.Id == item.Id);
-            if (shop == null)
+            var existingShop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(s => s.Id == item.Id);
+            if (existingShop == null)
             {
                 return new()
                 {
@@ -234,7 +234,10 @@ public class ShopService : IShopService
                 };
             }
 
-            await _unitOfWork.ShopRepository.UpdateAsync(item);
+            existingShop.Name = item.Name;
+            existingShop.Description = item.Description;
+
+            await _unitOfWork.ShopRepository.UpdateAsync(existingShop);
 
             return new()
             {

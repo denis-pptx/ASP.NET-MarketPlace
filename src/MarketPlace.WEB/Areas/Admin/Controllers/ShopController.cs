@@ -59,7 +59,7 @@ public class ShopController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Save(Shop item)
+    public async Task<IActionResult> Save([Bind("Id,Name,Description")] Shop item)
     {
         if (ModelState.IsValid)
         {

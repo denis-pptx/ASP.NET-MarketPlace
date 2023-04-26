@@ -2,6 +2,7 @@ using MarketPlace.BLL.Services;
 using MarketPlace.DAL.Data;
 using MarketPlace.DAL.Interfaces;
 using MarketPlace.DAL.Repository;
+using MarketPlace.WEB;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,9 +37,8 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();
 
-// Helpers registration.
-builder.Services.AddTransient<SaveHelper>();
-
+// AutoMapper cunfiguration
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
 var app = builder.Build();
 

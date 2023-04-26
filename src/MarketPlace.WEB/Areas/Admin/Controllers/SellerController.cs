@@ -72,8 +72,6 @@ public class SellerController : Controller
     {
         if (ModelState.IsValid)
         {
-            item.Role = Role.Seller;
-
             // Create.
             if (item.Id == 0)
             {

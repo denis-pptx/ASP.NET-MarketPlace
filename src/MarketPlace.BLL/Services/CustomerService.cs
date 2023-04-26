@@ -2,7 +2,8 @@
 
 public class CustomerService : ICustomerService
 {
-    private IUnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
+
     public CustomerService(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
@@ -46,6 +47,7 @@ public class CustomerService : ICustomerService
                 };
             }
 
+            item.Role = Role.Customer;
             await _unitOfWork.CustomerRepository.AddAsync(item);
 
             return new()
@@ -173,8 +175,8 @@ public class CustomerService : ICustomerService
                 };
             }
 
-            var customer = await _unitOfWork.CustomerRepository.SingleOrDefaultAsync(c => c.Id == item.Id);
-            if (customer == null)
+            var existingCustomer = await _unitOfWork.CustomerRepository.SingleOrDefaultAsync(c => c.Id == item.Id);
+            if (existingCustomer == null)
             {
                 return new()
                 {
@@ -183,7 +185,13 @@ public class CustomerService : ICustomerService
                 };
             }
 
-            await _unitOfWork.CustomerRepository.UpdateAsync(item);
+          
+            existingCustomer.Login = item.Login;
+            existingCustomer.Password = item.Password;
+            existingCustomer.Profile!.Age = item.Profile!.Age;
+            existingCustomer.Profile!.Email = item.Profile!.Email;
+            existingCustomer.Profile!.Phone = item.Profile!.Phone;
+            await _unitOfWork.CustomerRepository.UpdateAsync(existingCustomer);
 
             return new()
             {

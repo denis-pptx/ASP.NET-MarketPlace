@@ -61,6 +61,7 @@ public class SellerService : ISellerService
                 };
             }
 
+            item.Role = Role.Seller;
             await _unitOfWork.SellerRepository.AddAsync(item);
 
             return new()
@@ -168,8 +169,8 @@ public class SellerService : ISellerService
                 };
             }
 
-            var seller = await _unitOfWork.SellerRepository.SingleOrDefaultAsync(s => s.Id == item.Id);
-            if (seller == null)
+            var existingSeller = await _unitOfWork.SellerRepository.SingleOrDefaultAsync(s => s.Id == item.Id);
+            if (existingSeller == null)
             {
                 return new()
                 {
@@ -178,7 +179,11 @@ public class SellerService : ISellerService
                 };
             }
 
-            await _unitOfWork.SellerRepository.UpdateAsync(item);
+            existingSeller.Login = item.Login;
+            existingSeller.Password = item.Password;
+            existingSeller.ShopId = item.ShopId;
+
+            await _unitOfWork.SellerRepository.UpdateAsync(existingSeller);
 
             return new()
             {

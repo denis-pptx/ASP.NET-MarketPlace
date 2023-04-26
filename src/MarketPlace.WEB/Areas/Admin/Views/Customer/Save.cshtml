@@ -1,5 +1,4 @@
 ﻿@model Customer
-@inject SaveHelper saveHelper
 
 @{
     var title = SaveHelper.IsEdit(Model) ? "Изменение покупателя" : "Добавление покупателя";
@@ -19,7 +18,6 @@
             <input asp-for="Password" />
         </p>
 
-        <input type="hidden" asp-for="Profile!.Id" value="@(Model.Profile?.Id ?? 0)">
         <p>
             <label asp-for="Profile!.Age"></label>
             <input asp-for="Profile!.Age" />
@@ -32,7 +30,6 @@
             <label asp-for="Profile!.Phone"></label>
             <input asp-for="Profile!.Phone" />
         </p>
-        <input type="hidden" asp-for="Profile!.CustomerId" value="@Model.Id">
        
         <p>
             <input type="submit" value="OK" />

@@ -194,8 +194,8 @@ public class ProductService : IProductService
     {
         try
         {
-            var product = await _unitOfWork.ProductRepository.SingleOrDefaultAsync(p => p.Id == item.Id);
-            if (product == null)
+            var existingProduct = await _unitOfWork.ProductRepository.SingleOrDefaultAsync(p => p.Id == item.Id);
+            if (existingProduct == null)
             {
                 return new()
                 {
@@ -204,7 +204,11 @@ public class ProductService : IProductService
                 };
             }
 
-            await _unitOfWork.ProductRepository.UpdateAsync(item);
+            existingProduct.Name = item.Name;
+            existingProduct.Description = item.Description;
+            existingProduct.Price = item.Price;
+            existingProduct.Category = item.Category;
+            await _unitOfWork.ProductRepository.UpdateAsync(existingProduct);
 
             return new()
             {
