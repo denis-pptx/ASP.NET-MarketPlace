@@ -93,14 +93,6 @@ public class CartService : ICartService
                     StatusCode = HttpStatusCode.Conflict
                 };
             }
-            //if (cart.Products.Contains(product))
-            //{
-            //    return new()
-            //    {
-            //        Description = "Cart already contains this product",
-            //        StatusCode = HttpStatusCode.Conflict
-            //    };
-            //}
 
             cart.Products.Add(product);
             await _unitOfWork.CartRepository.UpdateAsync(cart);

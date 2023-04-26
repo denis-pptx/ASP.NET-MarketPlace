@@ -26,13 +26,13 @@ public class EfCartRepository : IRepository<Cart>
     public async Task<Cart?> FirstOrDefaultAsync(Func<Cart, bool> filter)
     {
         return await Task.Run(() => _carts.Include(c => c.Products)
-                                           .FirstOrDefault(filter));
+                                          .FirstOrDefault(filter));
     }
 
     public async Task<Cart?> GetByIdAsync(int id)
     {
         return await Task.Run(() => _carts.Include(c => c.Products)
-                                           .SingleOrDefault(c => c.Id == id));
+                                          .SingleOrDefault(c => c.Id == id));
     }
 
     public async Task<IEnumerable<Cart>> ListAllAsync()

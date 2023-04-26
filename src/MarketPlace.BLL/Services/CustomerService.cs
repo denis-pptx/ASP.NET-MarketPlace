@@ -48,6 +48,7 @@ public class CustomerService : ICustomerService
             }
 
             item.Role = Role.Customer;
+            item.Cart = new();
             await _unitOfWork.CustomerRepository.AddAsync(item);
 
             return new()
