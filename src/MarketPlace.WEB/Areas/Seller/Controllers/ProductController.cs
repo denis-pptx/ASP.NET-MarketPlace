@@ -65,7 +65,7 @@ public class ProductController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Save([Bind("Id,Name,Description,Price,Category,ShopId")] Product item)
+    public async Task<IActionResult> Save([Bind("Id,Name,Description,Price,Category")] Product item)
     {
         if (ModelState.IsValid)
         {
