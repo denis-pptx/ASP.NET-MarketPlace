@@ -78,5 +78,20 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        //remove active from buttons in 100 ms
+        const buttons = document.querySelectorAll('.btn');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+
+                setTimeout(() => {
+                    button.blur();
+                }, 160);
+            });
+        });
+    </script>
+
 </body>
 </html>

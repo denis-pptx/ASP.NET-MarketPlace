@@ -1,4 +1,5 @@
 ﻿@model ProductListViewModel
+@inject ICartService cartService
 
 @{
     ViewData["Title"] = "Product List";
@@ -11,6 +12,8 @@
         }
         return "";
     }
+
+    var cart = (await cartService.GetAsync(User.Identity!.Name!)).Data ?? new();
 }
 
 <div class="container">
@@ -23,10 +26,10 @@
 
                 <div class="input-group mb-3" id="search-group">
                     <input type="text" class="form-control" placeholder="Поиск" asp-for="SearchString">
-                    <button class="btn btn-danger" type="button" id="search-clear">
+                    <button class="btn btn-outline-danger" type="button" id="search-clear">
                         <i class="fa fa-times"></i>
                     </button>
-                    <button class="btn btn-primary" type="submit">Найти</button>
+                    <button class="btn btn-outline-primary" type="submit">Найти</button>
                 </div>
 
                 <div class="row">
@@ -40,12 +43,10 @@
                         </div>
                     }
                 </div>
-                <button class="btn btn-danger mt-2" type="button" id="clear-categories">Сбросить</button>
+                <button class="btn btn-outline-danger mt-2" type="button" id="clear-categories">Сбросить</button>
             </form>
         </div>
     </div>
-
-
 
     <div class="row">
         @foreach (var product in Model.Products)
@@ -59,11 +60,21 @@
                         <h5 class="card-title">@product.Name</h5>
                         <h6 class="card-subtitle text-muted">@product.Category.GetDisplayName()</h6>
                         <div class="d-flex justify-content-between mt-2">
-                            <div class="btn-group btn-group-sm">
+                            <div class="btn-group btn-group">
                                 <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">Details</a>
-                                <button type="button" class="btn btn-outline-primary add-to-cart" data-product-id="@product.Id">
-                                    <i class="fa fa-shopping-cart"></i>
-                                </button>
+
+                                @if (cart.Products.Any(p => p.Id == product.Id))
+                                {
+                                    <button type="button" class="btn btn-outline-primary remove-from-cart" data-product-id="@product.Id">
+                                        <i class="fa-solid fa-check"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-outline-primary add-to-cart" data-product-id="@product.Id">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </button>
+                                }
                             </div>
 
                             <h5>@product.Price р.</h5>
@@ -82,9 +93,6 @@
         $(document).ready(function () {
             $("#search-clear").click(function () {
                 $("#search-group").find("input[type=text]").val("");
-                setTimeout(() => {
-                    $(this).blur();
-                }, 100);
             });
         });
     </script>
@@ -93,9 +101,6 @@
         $(document).ready(function () {
             $("#clear-categories").click(function () {
                 $("input[type=checkbox][name=categories]").prop("checked", false);
-                setTimeout(() => {
-                    $(this).blur();
-                }, 100);
             });
         });
 
@@ -113,7 +118,7 @@
                 data: { productId: productId },
                 success: function () {
                     button.removeClass('add-to-cart').addClass('remove-from-cart');
-                    button.find('i').removeClass('fa-shopping-cart').addClass('fa-check');
+                    button.find('i').removeClass('fa-cart-shopping').addClass('fa-check');
                     showToast('success', 'Товар добавлен в корзину');
                 },
                 error: function (jqXHR) {
@@ -125,14 +130,14 @@
         $(document).on('click', '.remove-from-cart', function () {
             var button = $(this);
             var productId = button.data('product-id');
-            var url = '@Url.Action("Remove", "Cart")';
+            var url = '@Url.Action("Remove", "Cart", new { area = "Customer" })';
             $.ajax({
                 url: url,
                 type: 'POST',
                 data: { productId: productId },
                 success: function () {
                     button.removeClass('remove-from-cart').addClass('add-to-cart');
-                    button.find('i').removeClass('fa-check').addClass('fa-shopping-cart');
+                    button.find('i').removeClass('fa-check').addClass('fa-cart-shopping');
                     showToast('success', 'Товар удален из корзины');
                 },
                 error: function (jqXHR) {
@@ -141,7 +146,7 @@
             });
         });
 
-        
+
 
     </script>
 }

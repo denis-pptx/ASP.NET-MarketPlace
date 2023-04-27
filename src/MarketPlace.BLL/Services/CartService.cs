@@ -51,7 +51,7 @@ public class CartService : ICartService
         }
     }
 
-    public async Task<Response<bool>> AddProduct(string customerLogin, int productId)
+    public async Task<Response<bool>> AddProductAsync(string customerLogin, int productId)
     {
         try
         {
@@ -113,8 +113,64 @@ public class CartService : ICartService
         }
     }
 
-    public Task<Response<bool>> RemoveProduct(string customerLogin, int productId)
+    public async Task<Response<bool>> RemoveProductAsync(string customerLogin, int productId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var customer = await _unitOfWork.CustomerRepository.SingleOrDefaultAsync(c => c.Login == customerLogin);
+            if (customer == null)
+            {
+                return new()
+                {
+                    Description = "Customer not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+
+            var cart = await _unitOfWork.CartRepository.SingleOrDefaultAsync(c => c.CustomerId == customer.Id);
+            if (cart == null)
+            {
+                return new()
+                {
+                    Description = "Cart not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+
+            var product = await _unitOfWork.ProductRepository.SingleOrDefaultAsync(p => p.Id == productId);
+            if (product == null)
+            {
+                return new()
+                {
+                    Description = "Product not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+
+            if (!cart.Products.Remove(product))
+            {
+                return new()
+                {
+                    Description = "Cart doesn't contain this product",
+                    StatusCode = HttpStatusCode.Conflict
+                };
+            }
+
+            await _unitOfWork.CartRepository.UpdateAsync(cart);
+
+            return new()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Data = true
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
+            };
+        }
     }
 }

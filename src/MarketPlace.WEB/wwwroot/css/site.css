@@ -1,3 +1,4 @@
+/*default styles*/
 html {
   font-size: 14px;
 }
@@ -6,10 +7,6 @@ html {
   html {
     font-size: 16px;
   }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
@@ -21,15 +18,13 @@ body {
   margin-bottom: 60px;
 }
 
-
-/* Полоса прокрутки */
+/*scrollbar*/
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
     background-color: #F1F1F1;
 }
 
-/* Бегунок полосы прокрутки */
 ::-webkit-scrollbar-thumb {
     background-color: #C0C0C0;
     border-radius: 4px;
