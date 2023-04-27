@@ -10,8 +10,12 @@ public class AccountController : Controller
         _accountService = accountService;
     }
 
+
     [HttpGet]
     public IActionResult AccessDenied() => StatusCode(403, "Forbidden");
+
+    [HttpGet]
+    public IActionResult UnauthorizedModal() => PartialView("_UnauthorizedModal");
 
     public async Task<IActionResult> Logout()
     {

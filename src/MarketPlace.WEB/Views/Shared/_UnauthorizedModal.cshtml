@@ -1,0 +1,17 @@
+﻿<div id="unauthorized-modal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Вы не авторизованы</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Для выполнения этой операции необходимо авторизоваться.</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-outline-primary" asp-area="" asp-controller="Account" asp-action="Login">Войти</a>
+                <a class="btn btn-outline-primary" asp-area="" asp-controller="Account" asp-action="Register">Зарегистрироваться</a>
+            </div>
+        </div>
+    </div>
+</div>
