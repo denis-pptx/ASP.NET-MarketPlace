@@ -16,79 +16,78 @@
     var cart = (await cartService.GetAsync(User.Identity!.Name!)).Data ?? new();
 }
 
-<div class="container">
 
-    <h2>Product List</h2>
+<h2>Product List</h2>
 
-    <div class="row mb-3">
-        <div class="col-md-12">
-            <form method="get" asp-controller="Product" asp-action="Index">
+<div class="row mb-3">
+    <div class="col-md-12">
+        <form method="get" asp-controller="Product" asp-action="Index">
 
-                <div class="input-group mb-3" id="search-group">
-                    <input type="text" class="form-control" placeholder="Поиск" asp-for="SearchString">
-                    <button class="btn btn-outline-danger" type="button" id="search-clear">
-                        <i class="fa fa-times"></i>
-                    </button>
-                    <button class="btn btn-outline-primary" type="submit">Найти</button>
-                </div>
+            <div class="input-group mb-3" id="search-group">
+                <input type="text" class="form-control" placeholder="Поиск" asp-for="SearchString">
+                <button class="btn btn-outline-danger" type="button" id="search-clear">
+                    <i class="fa fa-times"></i>
+                </button>
+                <button class="btn btn-outline-primary" type="submit">Найти</button>
+            </div>
 
-                <div class="row">
-                    @foreach (var category in Model.AllCategories)
-                    {
-                        <div class="col-md-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="categories" value="@category.Value" id="@category.Text" @IsChecked(category)>
-                                <label class="form-check-label" for="@category.Text">@category.Text</label>
-                            </div>
+            <div class="row">
+                @foreach (var category in Model.AllCategories)
+                {
+                    <div class="col-md-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="categories" value="@category.Value" id="@category.Text" @IsChecked(category)>
+                            <label class="form-check-label" for="@category.Text">@category.Text</label>
                         </div>
-                    }
-                </div>
-                <button class="btn btn-outline-danger mt-2" type="button" id="clear-categories">Сбросить</button>
-            </form>
-        </div>
+                    </div>
+                }
+            </div>
+            <button class="btn btn-outline-danger mt-2" type="button" id="clear-categories">Сбросить</button>
+        </form>
     </div>
+</div>
 
-    <div class="row">
-        @foreach (var product in Model.Products)
-        {
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <img src="~/images/@(product).png" alt="Load failed"
-                     class="card-img-top mx-auto mt-4 w-50"
-                     onerror="this.src='/images/NoPhoto.png'; this.onerror=null;">
-                    <div class="card-body">
-                        <h5 class="card-title">@product.Name</h5>
-                        <h6 class="card-subtitle text-muted">@product.Category.GetDisplayName()</h6>
-                        <div class="d-flex justify-content-between mt-2">
-                            <div class="btn-group btn-group">
-                                <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">Details</a>
+<div class="row">
+    @foreach (var product in Model.Products)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="~/images/@(product).png" alt="Load failed"
+                    class="card-img-top mx-auto mt-4 w-50"
+                    onerror="this.src='/images/NoPhoto.png'; this.onerror=null;">
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <h6 class="card-subtitle text-muted">@product.Category.GetDisplayName()</h6>
+                    <div class="d-flex justify-content-between mt-2">
+                        <div class="btn-group btn-group">
+                            <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">Details</a>
 
-                                @if (!User.Identity.IsAuthenticated 
-                                    || User.IsInRole(MarketPlace.DAL.Enum.Role.Customer.ToString()))
+                            @if (!User.Identity.IsAuthenticated 
+                                || User.IsInRole(MarketPlace.DAL.Enum.Role.Customer.ToString()))
+                            {
+                                @if (cart.Products.Any(p => p.Id == product.Id))
                                 {
-                                    @if (cart.Products.Any(p => p.Id == product.Id))
-                                    {
-                                        <button type="button" class="btn btn-outline-primary remove-from-cart" data-product-id="@product.Id">
-                                            <i class="fa-solid fa-check"></i>
-                                        </button>
-                                    }
-                                    else
-                                    {
-                                        <button type="button" class="btn btn-outline-primary add-to-cart" data-product-id="@product.Id">
-                                            <i class="fa-solid fa-cart-shopping"></i>
-                                        </button>
-                                    }
+                                    <button type="button" class="btn btn-outline-primary remove-from-cart" data-product-id="@product.Id">
+                                        <i class="fa-solid fa-check"></i>
+                                    </button>
                                 }
-                            </div>
-
-                            <h5>@product.Price р.</h5>
+                                else
+                                {
+                                    <button type="button" class="btn btn-outline-primary add-to-cart" data-product-id="@product.Id">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </button>
+                                }
+                            }
                         </div>
+
+                        <h5>@product.Price р.</h5>
                     </div>
                 </div>
             </div>
-        }
-    </div>
+        </div>
+    }
 </div>
+
 
 
 @await Html.PartialAsync("_UnauthorizedModal")

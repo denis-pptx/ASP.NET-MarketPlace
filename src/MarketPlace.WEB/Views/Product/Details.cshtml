@@ -1,27 +1,27 @@
 ﻿@model Product
 
-<div class="container" >
-    <div class="card mb-3">
-        <div class="row g-0">
-            <div class="col-md-4">
-                <img src="~/images/@(Model.Id).jpg" alt="@Model.Name" class="img-fluid" />
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h2 class="card-title">@Model.Name</h2>
-                    <h3 class="card-subtitle text-muted">@Model.Category.GetDisplayName()</h3>
-                    <p class="card-text">@Model.Description</p>
-                    <div class="d-flex justify-content-between">
-                        <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-outline-primary">Добавить в корзину</button>
-                            <button type="button" class="btn btn-outline-danger">
-                                <i class="far fa-heart"></i>
-                            </button>
-                        </div>
-                        <h4>@Model.Price р.</h4>
+
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="~/images/@(Model.Id).jpg" alt="@Model.Name" class="img-fluid" />
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h2 class="card-title">@Model.Name</h2>
+                <h3 class="card-subtitle text-muted">@Model.Category.GetDisplayName()</h3>
+                <p class="card-text">@Model.Description</p>
+                <div class="d-flex justify-content-between">
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-outline-primary">Добавить в корзину</button>
+                        <button type="button" class="btn btn-outline-danger">
+                            <i class="far fa-heart"></i>
+                        </button>
                     </div>
+                    <h4>@Model.Price р.</h4>
                 </div>
             </div>
         </div>
     </div>
 </div>
+

@@ -9,30 +9,28 @@
 <h2>@title</h2>
 
 <form asp-action="Save">
-    <div>
-        <input type="hidden" asp-for="Id" value="@Model.Id" />
-        <p>
-            <label asp-for="Name"></label>
-            <input asp-for="Name" />
-        </p>
-        <p>
-            <label asp-for="Description"></label>
-            <textarea asp-for="Description" class="form-control"></textarea>
-        </p>
-        <p>
-            <label asp-for="Price"></label>
-            <input asp-for="Price" />
-        </p>
-        <p>
-            <label asp-for="Category"></label>
-            <select asp-for="Category" asp-items="@productService.GetCategories().Data"></select>
-        </p>
-        <input type="hidden" asp-for="ShopId" value="@Model.ShopId">
+    <input type="hidden" asp-for="Id" value="@Model.Id" />
+    <p>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+    </p>
+    <p>
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </p>
+    <p>
+        <label asp-for="Price"></label>
+        <input asp-for="Price" />
+    </p>
+    <p>
+        <label asp-for="Category"></label>
+        <select asp-for="Category" asp-items="@productService.GetCategories().Data"></select>
+    </p>
+    <input type="hidden" asp-for="ShopId" value="@Model.ShopId">
 
-        <p>
-            <input type="submit" value="OK" />
-        </p>
-    </div>
+    <p>
+        <input type="submit" value="OK" />
+    </p>
 </form>
 
 <form asp-action="Index">

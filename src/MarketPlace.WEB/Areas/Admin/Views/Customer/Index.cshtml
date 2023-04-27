@@ -8,46 +8,44 @@
 <h2>Список покупателей</h2>
 
 
-<div class="container">
-    <table class="table table-striped table-hover table-bordered">
-        <thead>
+<table class="table table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Логин</th>
+            <th>Пароль</th>
+            <th>Возраст</th>
+            <th>Почта</th>
+            <th>Телефон</th>
+            <th colspan="2">Операции</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model.Customers)
+        {
             <tr>
-                <th>#</th>
-                <th>Логин</th>
-                <th>Пароль</th>
-                <th>Возраст</th>
-                <th>Почта</th>
-                <th>Телефон</th>
-                <th colspan="2">Операции</th>
+                <td col-1>@(num++)</td>
+                <td col-2>@customer.Login</td>
+                <td col-2>@customer.Password</td>
+                <td col-1>@customer.Profile!.Age</td>
+                <td col-2>@customer.Profile!.Email</td>
+                <td col-2>@customer.Profile!.Phone</td>
+                <td class="col-1">
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-primary" asp-action="Save" asp-route-id="@customer.Id">Изменить</a>
+                    </div>
+                </td>
+                <td class="col-1">
+                    <div class="d-flex justify-content-center">
+                        <form asp-action="Delete" method="post" asp-route-id="@customer.Id">
+                            <input type="submit" class="btn btn-danger" value="Удалить" />
+                        </form>
+                    </div>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var customer in Model.Customers)
-            {
-                <tr>
-                    <td col-1>@(num++)</td>
-                    <td col-2>@customer.Login</td>
-                    <td col-2>@customer.Password</td>
-                    <td col-1>@customer.Profile.Age</td>
-                    <td col-2>@customer.Profile.Email</td>
-                    <td col-2>@customer.Profile.Phone</td>
-                    <td class="col-1">
-                        <div class="d-flex justify-content-center">
-                            <a class="btn btn-primary" asp-action="Save" asp-route-id="@customer.Id">Изменить</a>
-                        </div>
-                    </td>
-                    <td class="col-1">
-                        <div class="d-flex justify-content-center">
-                            <form asp-action="Delete" method="post" asp-route-id="@customer.Id">
-                                <input type="submit" class="btn btn-danger" value="Удалить" />
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+        }
+    </tbody>
+</table>
 
 <p>
     <a asp-action="Save">Добавить покупателя</a>

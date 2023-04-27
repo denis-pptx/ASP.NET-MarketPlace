@@ -37,9 +37,6 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();
 
-// AutoMapper cunfiguration
-builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
-
 var app = builder.Build();
 
 // Authentication / authorization settings.

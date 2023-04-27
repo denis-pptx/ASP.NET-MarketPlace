@@ -1,28 +1,26 @@
 ﻿@model Cart
 
-<div class="container">
-    <h1>Корзина</h1>
-    <div class="row">
-        @foreach (var item in Model.Products)
-        {
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">@item.Name</h5>
-                        <p class="card-text">@item.Description</p>
-                        <p class="card-text"><strong>@item.Price руб.</strong></p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="badge badge-secondary">@item.Category.GetDisplayName()</span>
-                            <span class="badge badge-primary">item.Quantity шт.</span>
-                        </div>
+<h1>Корзина</h1>
+<div class="row">
+    @foreach (var item in Model.Products)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="card-text">@item.Description</p>
+                    <p class="card-text"><strong>@item.Price руб.</strong></p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge badge-secondary">@item.Category.GetDisplayName()</span>
+                        <span class="badge badge-primary">item.Quantity шт.</span>
                     </div>
                 </div>
             </div>
-        }
-    </div>
-    <div class="row">
-        <div class="col-md-12 text-right">
-            <h3>Итого: "Model.TotalPrice" руб.</h3>
         </div>
+    }
+</div>
+<div class="row">
+    <div class="col-md-12 text-right">
+        <h3>Итого: "Model.TotalPrice" руб.</h3>
     </div>
 </div>

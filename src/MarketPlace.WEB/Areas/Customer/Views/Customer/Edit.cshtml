@@ -7,39 +7,36 @@
 <h2>Профиль</h2>
 
 <form asp-action="Edit">
-    <div>
-        <input type="hidden" asp-for="Id">
-        <p>
-            <label asp-for="Login"></label>
-            <input asp-for="Login" />
-        </p>
-        <p>
-            <label asp-for="Password"></label>
-            <input asp-for="Password" />
-        </p>
-        <input type="hidden" asp-for="Role">
+    <input type="hidden" asp-for="Id">
+    <p>
+        <label asp-for="Login"></label>
+        <input asp-for="Login" />
+    </p>
+    <p>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+    </p>
+    <input type="hidden" asp-for="Role">
 
-        <input type="hidden" asp-for="Profile.Id">
-        <p>
-            <label asp-for="Profile.Age"></label>
-            <input asp-for="Profile.Age" />
-        </p>
-        <p>
-            <label asp-for="Profile.Email"></label>
-            <input asp-for="Profile.Email" />
-        </p>
-        <p>
-            <label asp-for="Profile.Phone"></label>
-            <input asp-for="Profile.Phone" />
-        </p>
-        <input type="hidden" asp-for="Profile.CustomerId">
+    <input type="hidden" asp-for="Profile!.Id">
+    <p>
+        <label asp-for="Profile!.Age"></label>
+        <input asp-for="Profile!.Age" />
+    </p>
+    <p>
+        <label asp-for="Profile!.Email"></label>
+        <input asp-for="Profile!.Email" />
+    </p>
+    <p>
+        <label asp-for="Profile!.Phone"></label>
+        <input asp-for="Profile!.Phone" />
+    </p>
        
 
-        <p>
-            <input type="submit" value="OK" />
-            <a asp-action="Edit">Cancel</a>
-        </p>
-    </div>
+    <p>
+        <input type="submit" value="OK" />
+        <a asp-action="Edit">Cancel</a>
+    </p>
 </form>
 
 <div asp-validation-summary="All"></div>
