@@ -5,55 +5,66 @@
     int num = 1;
 }
 
-<h2>Список товаров</h2>
+<h2>Товары</h2>
 
-<form asp-action="Index">
-    <p>
-        <label asp-for="CategoryId">Категория: </label>
-        <select asp-for="CategoryId" asp-items="Model.Categories">
-            <option value="0">Все</option>
-        </select>
 
-        <input type="submit" value="Фильтр" />
-    </p>
-</form>
-
-<div class="container">
-    <table class="table table-striped table-hover table-bordered">
-        <thead>
-            <tr>
-                <th>№</th>
-                <th>Название</th>
-                <th>Описание</th>
-                <th>Стоимость</th>
-                <th>Категория</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var product in Model.Products)
-            {
-                <tr>
-                    <td>@(num++)</td>
-                    <td>@product.Name</td>
-                    <td><textarea readonly>@product.Description</textarea></td>
-                    <td>@product.Price</td>
-                    <td>@product.Category.GetDisplayName()</td>
-
-                    <td>
-                        <a asp-action="Save" asp-route-id="@product.Id">Изменить</a>
-                    </td>
-                    <td>
-                        <form asp-action="Delete" method="post" asp-route-id="@product.Id">
-                            <input type="submit" value="Удалить" />
-                        </form>
-                    </td>
-
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="row gx-3 mb-3 col-xl-6">
+    <div class="col-8">
+        <form asp-action="Index">
+            <div class="input-group">
+                <select class="form-select" asp-for="CategoryId" asp-items="Model.Categories">
+                    <option value="0">Все</option>
+                </select>
+                <button type="submit" class="btn btn-outline-primary">Фильтр</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-4">
+        <a class="btn btn-outline-primary" style="width: 100%;" asp-action="Save">Добавить товар</a>
+    </div>
 </div>
-<p>
-    <a asp-action="Save">Добавить товар</a>
-</p>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Название</th>
+            <th>Стоимость</th>
+            <th>Категория</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>@(num++)</td>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>@product.Category.GetDisplayName()</td>
+
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Операции
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-action="Details" asp-route-id="@product.Id">Детали</a></li>
+                            <li><a class="dropdown-item" asp-action="Save" asp-route-id="@product.Id">Изменить</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form asp-action="Delete" method="post" asp-route-id="@product.Id">
+                                    <input class="dropdown-item" type="submit" value="Удалить" />
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
 

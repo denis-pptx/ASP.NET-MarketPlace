@@ -2,11 +2,19 @@
 
 public class Product : Entity
 {
+    [Display(Name = "Название")]
     public string Name { get; set; } = null!;
+
+    [Display(Name = "Описание")]
     public string? Description { get; set; }
+
+    [Display(Name = "Цена")]
     public double Price { get; set; }
+
+    [Display(Name = "Категория")]
     public ProductCategory Category { get; set; }
 
-    public int ShopId { get; set; }
     public List<Cart> Carts { get; set; } = new();
+    public List<ProductPhoto> Photos { get; set; } = new();
+    public int ShopId { get; set; }
 }
