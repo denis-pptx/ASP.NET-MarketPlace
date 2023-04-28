@@ -22,7 +22,6 @@ public class ProductController : Controller
             return View(new ProductListViewModel()
             {
                 Products = productResponse.Data!.OrderBy(p => p.Category.GetDisplayName()).ThenBy(p => p.Name),
-                AllCategories = _productService.GetCategories().Data!,
                 SelectedCategories = _productService.GetSelectListByCategories(categories).Data!,
                 SearchString = searchString
             });

@@ -1,6 +1,6 @@
 ﻿@model ProductListViewModel
 @inject ICartService cartService
-
+@inject IProductService productService
 @{
     ViewData["Title"] = "Product List";
 
@@ -14,6 +14,7 @@
     }
 
     var cart = (await cartService.GetAsync(User.Identity!.Name!)).Data ?? new();
+    SelectList categories = productService.GetCategories().Data!;
 }
 
 
@@ -32,7 +33,7 @@
             </div>
 
             <div class="row">
-                @foreach (var category in Model.AllCategories)
+                @foreach (var category in categories)
                 {
                     <div class="col-md-3">
                         <div class="form-check">
