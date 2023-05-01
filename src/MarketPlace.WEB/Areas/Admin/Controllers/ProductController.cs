@@ -16,29 +16,21 @@ public class ProductController : Controller
     }
 
 
-    public async Task<IActionResult> Index(int shopId, int categoryId)
+    public async Task<IActionResult> Index(int shopId, ProductCategory category, SortOrder order)
     {
-        //var productResponse = await _productService.GetByShopAndCategoryAsync(shopId, categoryId);
-        //if (productResponse.StatusCode == HttpStatusCode.OK)
-        //{
-        //    var shopResponse = await _shopService.GetCategoriesByIdAsync(shopId);
-        //    if (shopResponse.StatusCode == HttpStatusCode.OK)
-        //    {
-        //        return View(new ProductListViewModel()
-        //        {
-        //            Products = productResponse.Data!.
-        //                OrderBy(p => p.Category.GetDisplayName()).ThenBy(p => p.Name),
-
-        //            Categories = shopResponse.Data!,
-        //            CategoryId = categoryId,
-
-        //            ShopId = shopId
-        //        });
-        //    }
-        //    return View("Error", new ErrorViewModel(shopResponse.Deconstruct()));
-        //}
-        //return View("Error", new ErrorViewModel(productResponse.Deconstruct()));
-        return View();
+        var response = await _productService.GetByShopIdAsync(shopId);
+        if (response.StatusCode == HttpStatusCode.OK)
+        {
+            return View(new ProductListViewModel()
+            {
+                Products = response.Data!.Where(p => category == 0 || p.Category == category).Sort(order),
+                Categories = response.Data!.GetCategories(),
+                Category = category,
+                Order = order,
+                ShopId = shopId
+            });
+        }
+        return View("Error", new ErrorViewModel(response.Deconstruct()));
 
     }
 

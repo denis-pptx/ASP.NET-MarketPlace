@@ -15,7 +15,7 @@
         
 
         <form id="filter-form" asp-action="Index" method="get">
-            <input hidden asp-for="@Model.Order">
+            <input type="hidden" asp-for="@Model.Order">
             <div class="input-group">
                 <select id="category-select" class="form-select" asp-for="Category" asp-items="Model.Categories">
                     <option value="0">Все</option>
@@ -40,13 +40,13 @@
                 @if (Model.Order == SortOrder.Name)
                 {
                     <a asp-action="Index" asp-route-category="@Model.Category" asp-route-order="@SortOrder.NameDescending">
-                        Название <i class="fa-solid fa-arrow-down-long"></i>
+                        Название <i class="fa-solid fa-arrow-up-long"></i>
                     </a>
                 }
                 else if (Model.Order == SortOrder.NameDescending)
                 {
                     <a asp-action="Index" asp-route-category="@Model.Category">
-                        Название <i class="fa-solid fa-arrow-up-long"></i>
+                        Название <i class="fa-solid fa-arrow-down-long"></i>
                     </a>
                 }
                 else
@@ -60,13 +60,13 @@
                 @if (Model.Order == SortOrder.Price)
                 {
                     <a asp-action="Index" asp-route-category="@Model.Category" asp-route-order="@SortOrder.PriceDescending">
-                        Стоимость <i class="fa-solid fa-arrow-down-long"></i>
+                        Стоимость <i class="fa-solid fa-arrow-up-long"></i>
                     </a>
                 }
                 else if (Model.Order == SortOrder.PriceDescending)
                 {
                     <a asp-action="Index" asp-route-category="@Model.Category">
-                        Стоимость <i class="fa-solid fa-arrow-up-long"></i>
+                        Стоимость <i class="fa-solid fa-arrow-down-long"></i>
                     </a>
                 }
                 else
@@ -80,13 +80,13 @@
                 @if (Model.Order == SortOrder.Category)
                 {
                     <a asp-action="Index" asp-route-category="@Model.Category" asp-route-order="@SortOrder.CategoryDescending">
-                        Категория <i class="fa-solid fa-arrow-down-long"></i>
+                        Категория <i class="fa-solid fa-arrow-up-long"></i>
                     </a>
                 }
                 else if (Model.Order == SortOrder.CategoryDescending)
                 {
                     <a asp-action="Index" asp-route-category="@Model.Category">
-                        Категория <i class="fa-solid fa-arrow-up-long"></i>
+                        Категория <i class="fa-solid fa-arrow-down-long"></i>
                     </a>
                 }
                 else

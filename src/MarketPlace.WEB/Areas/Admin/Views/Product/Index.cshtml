@@ -13,51 +13,126 @@
     };
 }
 
-<h2>Список товаров магазина @shopName</h2>
+<h2>Товары магазина @shopName</h2>
 
-<form asp-action="Index">
-    <p>
-        <label asp-for="CategoryId">Категория: </label>
-        <select asp-for="CategoryId" asp-items="Model.Categories">
-            <option value="0">Все</option>
-        </select>
 
-        <input type="hidden" name="shopId" value="@Model.ShopId" />
-        <input type="submit" value="Фильтр" />
-    </p>
-</form>
+<div class="row mb-2 mt-3 gx-3 col-xl-6">
+    <div class="col-auto">
+        <form id="filter-form" asp-action="Index" method="get">
+            <input type="hidden" asp-for="@Model.Order" />
+            <input type="hidden" asp-for="@Model.ShopId" />
+            <div class="input-group">
+                <select id="category-select" class="form-select" asp-for="Category" asp-items="Model.Categories">
+                    <option value="0">Все</option>
+                </select>
+                <button class="btn btn-outline-danger" type="button" id="filter-clear">
+                    <i class="fa-solid fa-arrow-rotate-right"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="col-auto">
+        <a class="btn btn-outline-primary" asp-action="Save" asp-route-shopId="@Model.ShopId">Добавить товар</a>
+    </div>
+</div>
 
-<table border="1">
+
+<table class="table table-striped table-hover">
     <thead>
         <tr>
             <th>№</th>
-            <th>Название</th>
+            <th>
+                @if (Model.Order == SortOrder.Name)
+                {
+                    <a asp-action="Index" asp-route-category="@Model.Category" asp-route-order="@SortOrder.NameDescending" asp-route-shopId="@Model.ShopId">
+                        Название <i class="fa-solid fa-arrow-up-long"></i>
+                    </a>
+                }
+                else if (Model.Order == SortOrder.NameDescending)
+                {
+                    <a asp-action="Index" asp-route-category="@Model.Category" asp-route-shopId="@Model.ShopId">
+                        Название <i class="fa-solid fa-arrow-down-long"></i>
+                    </a>
+                }
+                else
+                {
+                    <a asp-action="Index" asp-route-category="@Model.Category" asp-route-order="@SortOrder.Name" asp-route-shopId="@Model.ShopId">
+                        Название
+                    </a>
+                }
+            </th>
             <th>Описание</th>
-            <th>Стоимость</th>
-            <th>Категория</th>
+            <th>
+                @if (Model.Order == SortOrder.Price)
+                {
+                    <a asp-action="Index" asp-route-category="@Model.Category" asp-route-order="@SortOrder.PriceDescending" asp-route-shopId="@Model.ShopId">
+                        Стоимость <i class="fa-solid fa-arrow-up-long"></i>
+                    </a>
+                }
+                else if (Model.Order == SortOrder.PriceDescending)
+                {
+                    <a asp-action="Index" asp-route-category="@Model.Category" asp-route-shopId="@Model.ShopId">
+                        Стоимость <i class="fa-solid fa-arrow-down-long"></i>
+                    </a>
+                }
+                else
+                {
+                    <a asp-action="Index" asp-route-category="@Model.Category" asp-route-order="@SortOrder.Price" asp-route-shopId="@Model.ShopId">
+                        Стоимость
+                    </a>
+                }
+            </th>
+            <th>
+                @if (Model.Order == SortOrder.Category)
+                {
+                    <a asp-action="Index" asp-route-category="@Model.Category" asp-route-order="@SortOrder.CategoryDescending" asp-route-shopId="@Model.ShopId">
+                        Категория <i class="fa-solid fa-arrow-up-long"></i>
+                    </a>
+                }
+                else if (Model.Order == SortOrder.CategoryDescending)
+                {
+                    <a asp-action="Index" asp-route-category="@Model.Category" asp-route-shopId="@Model.ShopId">
+                        Категория <i class="fa-solid fa-arrow-down-long"></i>
+                    </a>
+                }
+                else
+                {
+                    <a asp-action="Index" asp-route-category="@Model.Category" asp-route-order="@SortOrder.Category" asp-route-shopId="@Model.ShopId">
+                        Категория
+                    </a>
+                }
+            </th>
+            <th>Действие</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var product in Model.Products)
         {
             <tr>
-                <td>@(num++)</td>
-                <td>@product.Name</td>
-                <td><textarea readonly>@product.Description</textarea></td>
-                <td>@product.Price</td>
-                <td>@product.Category.GetDisplayName()</td>
+                <td class="col-1">@(num++)</td>
+                <td class="col-2">@product.Name</td>
+                <td class="col-3"><textarea readonly>@product.Description</textarea></td>
+                <td class="col-2">@product.Price</td>
+                <td class="col-3">@product.Category.GetDisplayName()</td>
 
-                <td>
-                    <a class="btn btn-primary" asp-action="Save" asp-route-id="@product.Id">Изменить</a>
+                <td class="col-1">
+                <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Операции
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-action="Save" asp-route-id="@product.Id">Изменить</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form asp-action="Delete" method="post">
+                                    <input type="hidden" name="id" value="@product.Id" />
+                                    <input type="hidden" name="shopId" value="@Model.ShopId" />
+                                    <input class="btn dropdown-item" type="submit" value="Удалить" />
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                 </td>
-                <td>
-                    <form asp-action="Delete" method="post">
-                        <input type="hidden" name="id" value="@product.Id" />
-                        <input type="hidden" name="shopId" value="@Model.ShopId" />
-                        <input class="btn btn-danger" type="submit" value="Удалить" />
-                    </form>
-                </td>
-
             </tr>
         }
     </tbody>
@@ -65,12 +140,27 @@
 
 
 <p>
-    <a class="btn btn-primary" asp-action="Save" asp-route-shopId="@Model.ShopId">Добавить товар</a>
-</p>
-
-<p>
-    <a class="btn btn-primary" asp-controller="Shop" asp-action="Details" asp-route-id="@Model.ShopId">Назад</a>
+    <a class="btn btn-outline-primary" asp-controller="Shop" asp-action="Details" asp-route-id="@Model.ShopId">Назад</a>
 </p>
 
 
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#category-select').change(function () {
+                $('#filter-form').submit();
+            });
+        });
+    </script>
 
+    <script>
+        $(document).ready(function () {
+            $('#filter-clear').click(function () {
+                $('#category-select').val('0');
+                $('input[name="Order"]').val('0');
+                $('#filter-form').submit();
+            });
+        });
+
+    </script>
+}
