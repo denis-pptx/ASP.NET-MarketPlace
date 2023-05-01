@@ -10,18 +10,24 @@
 <h2>Товары</h2>
 
 
-<div class="row gx-3 mb-3 col-xl-6">
-    <div class="col-8">
-        <form asp-action="Index" method="get">
+<div class="row mb-2 mt-3 gx-3 col-xl-6">
+    <div class="col-auto">
+        
+
+        <form id="filter-form" asp-action="Index" method="get">
+            <input hidden asp-for="@Model.Order">
             <div class="input-group">
-                <select class="form-select" asp-for="Category" asp-items="Model.Categories">
+                <select id="category-select" class="form-select" asp-for="Category" asp-items="Model.Categories">
                     <option value="0">Все</option>
                 </select>
-                <button type="submit" class="btn btn-outline-primary">Фильтр</button>
+                <button class="btn btn-outline-danger" type="button" id="filter-clear">
+                    <i class="fa-solid fa-arrow-rotate-right"></i>
+                </button>
             </div>
         </form>
+        
     </div>
-    <div class="col-4">
+    <div class="col-auto">
         <a class="btn btn-outline-primary" style="width: 100%;" asp-action="Save">Добавить товар</a>
     </div>
 </div>
@@ -126,4 +132,23 @@
 </table>
 
 
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#category-select').change(function () {
+                $('#filter-form').submit();
+            });
+        });
+    </script>
 
+    <script>
+        $(document).ready(function () {
+            $('#filter-clear').click(function () {
+                $('#category-select').val('0');
+                $('input[name="Order"]').val('0');
+                $('#filter-form').submit();
+            });
+        });
+
+    </script>
+}
