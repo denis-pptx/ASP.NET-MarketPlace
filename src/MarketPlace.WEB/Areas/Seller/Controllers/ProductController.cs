@@ -9,7 +9,7 @@ public class ProductController : Controller
     private readonly IProductService _productService;
     private readonly ISellerService _sellerService;
     private readonly IShopService _shopService;
-    public ProductController(IProductService productService, 
+    public ProductController(IProductService productService,
         ISellerService sellerService, IShopService shopService)
     {
         _productService = productService;
@@ -17,31 +17,20 @@ public class ProductController : Controller
         _shopService = shopService;
     }
 
-    public async Task<IActionResult> Index(int categoryId)
+    public async Task<IActionResult> Index(ProductCategory category, SortOrder order)
     {
-        var sellerResponse = await _sellerService.GetShopIdByLogin(User.Identity?.Name ?? "");
-        if (sellerResponse.StatusCode == HttpStatusCode.OK)
+        var response = await _productService.GetBySellerLoginAsync(User.Identity!.Name!);
+        if (response.StatusCode == HttpStatusCode.OK)
         {
-            var productResponse = await _productService.GetByShopAndCategoryAsync(sellerResponse.Data, categoryId);
-            if (productResponse.StatusCode == HttpStatusCode.OK)
+            return View(new ProductListViewModel()
             {
-                var shopResponse = await _shopService.GetCategoriesByIdAsync(sellerResponse.Data);
-                if (shopResponse.StatusCode == HttpStatusCode.OK)
-                {
-                    return View(new ProductListViewModel()
-                    {
-                        Products = productResponse.Data!.
-                            OrderBy(p => p.Category.GetDisplayName()).ThenBy(p => p.Name),
-
-                        Categories = shopResponse.Data!,
-                        CategoryId = categoryId
-                    });
-                }
-                return View("Error", new ErrorViewModel(shopResponse.Deconstruct()));
-            }
-            return View("Error", new ErrorViewModel(productResponse.Deconstruct()));
+                Products = response.Data!.Where(p => category == 0 || p.Category == category).Sort(order),
+                Categories = response.Data!.GetCategories(),
+                Category = category,
+                Order = order
+            });
         }
-        return View("Error", new ErrorViewModel(sellerResponse.Deconstruct()));
+        return View("Error", new ErrorViewModel(response.Deconstruct()));
     }
 
     [HttpGet]

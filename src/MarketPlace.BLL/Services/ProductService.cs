@@ -1,10 +1,4 @@
-﻿using MarketPlace.BLL.Extensions;
-using MarketPlace.DAL.Entities;
-using MarketPlace.DAL.Enum;
-using Microsoft.AspNetCore.Http;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace MarketPlace.BLL.Services;
+﻿namespace MarketPlace.BLL.Services;
 
 public class ProductService : IProductService
 {
@@ -47,7 +41,7 @@ public class ProductService : IProductService
             var products = await _unitOfWork.ProductRepository.ListAsync(
                 p => categories.Count() == 0 || categories.Contains(p.Category));
 
-            products = products.Where(p => searchString == string.Empty 
+            products = products.Where(p => searchString == string.Empty
                                     || p.Name.IsSimilar(searchString));
 
             return new()
@@ -98,21 +92,37 @@ public class ProductService : IProductService
         }
     }
 
-    public async Task<Response<IEnumerable<Product>>> GetByShopAndCategoryAsync(int shopId, int categoryId)
+    public async Task<Response<IEnumerable<Product>>> GetBySellerLoginAsync(string sellerLogin)
     {
         try
         {
-            var productResponse = await this.GetByShopIdAsync(shopId);
-            if (productResponse.StatusCode == HttpStatusCode.OK)
+            var seller = await _unitOfWork.SellerRepository.SingleOrDefaultAsync(s => s.Login == sellerLogin);
+            if (seller == null)
             {
                 return new()
                 {
-                    StatusCode = HttpStatusCode.OK,
-                    Data = productResponse.Data!.Where(p => categoryId == 0 || (int)p.Category == categoryId)
+                    Description = "Seller not found",
+                    StatusCode = HttpStatusCode.NotFound
                 };
             }
 
-            return productResponse;
+            var shop = await _unitOfWork.ShopRepository.SingleOrDefaultAsync(s => s.Id == seller.ShopId);
+            if (shop == null)
+            {
+                return new()
+                {
+                    Description = "Shop not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+
+            var products = await _unitOfWork.ProductRepository.ListAsync(p => p.ShopId == shop.Id);
+
+            return new()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Data = products
+            };
         }
         catch (Exception ex)
         {
@@ -123,6 +133,7 @@ public class ProductService : IProductService
             };
         }
     }
+
 
     public async Task<Response<bool>> CreateAsync(Product product)
     {
@@ -313,4 +324,5 @@ public class ProductService : IProductService
             };
         }
     }
+
 }
