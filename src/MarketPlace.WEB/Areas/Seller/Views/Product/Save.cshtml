@@ -53,14 +53,14 @@
                 <span class="input-group-text">Фото</span>
             </div>
 
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="btn-group">
                 <button type="submit" class="btn btn-outline-primary">Подтвердить</button>
                 <a class="btn btn-outline-danger" asp-action="Index">Отменить</a>
             </div>
 
         </form>
-
-        <div asp-validation-summary="ModelOnly"></div>
     </div>
 
     @if (Model.Photo != null && Model.Photo.Length > 0)
