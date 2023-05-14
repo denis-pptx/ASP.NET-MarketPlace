@@ -18,20 +18,26 @@ public class ProductController : Controller
 
     public async Task<IActionResult> Index(int shopId, ProductCategory category, SortOrder order)
     {
-        var response = await _productService.GetByShopIdAsync(shopId);
-        if (response.StatusCode == HttpStatusCode.OK)
-        {
-            return View(new ProductListViewModel()
-            {
-                Products = response.Data!.Where(p => category == 0 || p.Category == category).Sort(order),
-                Categories = response.Data!.GetCategories(),
-                Category = category,
-                Order = order,
-                ShopId = shopId
-            });
-        }
-        return View("Error", new ErrorViewModel(response.Deconstruct()));
+        var productResponse = await _productService.GetAsync(shopId, 
+            category == 0 ? null : new List<ProductCategory> { category });
 
+        var categoriesResponse = await _shopService.GetCategoriesByIdAsync(shopId);
+
+
+        if (new List<BaseResponse>() { productResponse, categoriesResponse }
+            .Any(r => r.StatusCode != HttpStatusCode.OK))
+        {
+            return View("Error", new ErrorViewModel(productResponse.Deconstruct()));
+        }
+       
+        return View(new ProductListViewModel()
+        {
+            Products = productResponse.Data.Sort(order),
+            Categories = categoriesResponse.Data,
+            Category = category,
+            Order = order,
+            ShopId = shopId
+        });
     }
 
     [HttpGet]

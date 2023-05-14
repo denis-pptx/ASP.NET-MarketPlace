@@ -59,8 +59,7 @@ public class ProductService : IProductService
             };
         }
     }
-
-    public async Task<Response<IEnumerable<Product>>> GetByShopIdAsync(int shopId)
+    public async Task<Response<IEnumerable<Product>>> GetAsync(int shopId, IEnumerable<ProductCategory>? categories = null)
     {
         try
         {
@@ -75,6 +74,11 @@ public class ProductService : IProductService
             }
 
             var products = await _unitOfWork.ProductRepository.ListAsync(p => p.ShopId == shopId);
+
+            if (categories != null)
+            {
+                products = products.Where(p => categories.Contains(p.Category));
+            }
 
             return new()
             {
@@ -91,6 +95,7 @@ public class ProductService : IProductService
             };
         }
     }
+
 
     public async Task<Response<IEnumerable<Product>>> GetBySellerLoginAsync(string sellerLogin)
     {
@@ -325,4 +330,5 @@ public class ProductService : IProductService
         }
     }
 
+    
 }

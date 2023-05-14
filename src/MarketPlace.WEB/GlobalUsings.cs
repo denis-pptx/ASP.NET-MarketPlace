@@ -5,6 +5,7 @@ global using MarketPlace.BLL.DTO;
 global using MarketPlace.BLL.Extensions;
 global using MarketPlace.DAL.Entities;
 global using MarketPlace.DAL.Enum;
+global using MarketPlace.DAL.Response;
 
 global using Microsoft.AspNetCore.OutputCaching;
 global using Microsoft.AspNetCore.Authorization;
