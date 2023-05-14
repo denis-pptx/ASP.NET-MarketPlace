@@ -1,27 +1,33 @@
 ﻿@model LoginDTO
 
 @{
-    ViewData["Title"] = "Sign In";
+    ViewData["Title"] = "Авторизация";
 }
 
-<h2>Login Form</h2>
 
-<form asp-action="Login" asp-controller="Account">
-    <div>
-        <p>
-            <label asp-for="Login"></label>
-            <input asp-for="Login"/>
-            <span asp-validation-for="Login"/>
-        </p>
-        <p>
-            <label asp-for="Password"></label>
-            <input asp-for="Password" />
-            <span asp-validation-for="Password"/>
-        </p>
-        <p>
-            <input type="submit" value="Sign In" />
-        </p>
+<div class="row justify-content-center">
+    <div class="col-md-4 mt-5">
+        <h2>@ViewData["Title"]</h2>
+
+        <form asp-action="Login" asp-controller="Account">
+
+            <div class="form-floating mb-3">
+                <input asp-for="Login" class="form-control" placeholder="Login">
+                <label asp-for="Login" class="form-label"></label>
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Password" class="form-control" placeholder="Password">
+                <label asp-for="Password" class="form-label"></label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-outline-primary">Войти</button>
+                <a class="btn btn-outline-danger" asp-action="Register">Зарегистрироваться</a>
+            </div>
+        </form>
+
+        <div asp-validation-summary="ModelOnly"></div>
     </div>
-</form>
-
-<div asp-validation-summary="All"></div>
+</div>
