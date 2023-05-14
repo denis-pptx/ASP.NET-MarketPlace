@@ -14,6 +14,7 @@ public class Product : Entity
     [Display(Name = "Категория")]
     public ProductCategory Category { get; set; }
 
-    public virtual List<ProductPhoto> Photos { get; set; } = new();
+    public byte[]? Photo { get; set; }
+
     public int ShopId { get; set; }
 }

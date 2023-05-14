@@ -1,4 +1,5 @@
 ﻿using MarketPlace.WEB.Areas.Seller.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MarketPlace.WEB.Areas.Seller.Controllers;
 
@@ -64,7 +65,7 @@ public class ProductController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Save([Bind("Id,Name,Description,Price,Category")] Product item)
+    public async Task<IActionResult> Save([Bind("Id,Name,Description,Price,Category")] Product item, IFormFile? photo)
     {
         if (ModelState.IsValid)
         {
@@ -75,6 +76,8 @@ public class ProductController : Controller
                 if (sellerResponse.StatusCode == HttpStatusCode.OK)
                 {
                     item.ShopId = sellerResponse.Data;
+                    item.Photo = photo?.ToByteArray() ?? null;
+
                     var productResponse = await _productService.CreateAsync(item);
                     if (productResponse.StatusCode == HttpStatusCode.OK)
                     {
