@@ -2,6 +2,6 @@
 
 public class Customer : User
 {
-    public Profile? Profile { get; set; }
-    public Cart? Cart { get; set; }
+    public virtual Profile? Profile { get; set; }
+    public virtual Cart? Cart { get; set; }
 }

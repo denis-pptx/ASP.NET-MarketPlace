@@ -19,10 +19,8 @@ public class EfUnitOfWork : IUnitOfWork
         _userRepository = new EfRepository<User>(_db);
         _shopRepository = new EfRepository<Shop>(_db);
         _sellerRepository = new EfRepository<Seller>(_db);
-
-
-        _cartRepository = new EfCartRepository(_db);
-        _customerRepository = new EfCustomerRepository(_db);
+        _cartRepository = new EfRepository<Cart>(_db);
+        _customerRepository = new EfRepository<Customer>(_db);
     }
 
     public IRepository<Product> ProductRepository => _productRepository;
