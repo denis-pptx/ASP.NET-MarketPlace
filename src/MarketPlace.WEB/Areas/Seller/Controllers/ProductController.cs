@@ -90,6 +90,7 @@ public class ProductController : Controller
             // Update.
             else
             {
+                item.Photo = photo?.ToByteArray() ?? item.Photo;
                 var response = await _productService.UpdateAsync(item);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {

@@ -224,6 +224,7 @@ public class ProductService : IProductService
             existingProduct.Description = item.Description;
             existingProduct.Price = item.Price;
             existingProduct.Category = item.Category;
+            existingProduct.Photo = item.Photo;
             await _unitOfWork.ProductRepository.UpdateAsync(existingProduct);
 
             return new()
