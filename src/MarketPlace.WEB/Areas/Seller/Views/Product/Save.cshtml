@@ -12,6 +12,12 @@
         max-height: 100%;
         max-width: 100%;
         border-radius: 2%;
+        border: 1px solid gray;
+    }
+
+    .image-container {
+        max-height: 425px; 
+        overflow: hidden;
     }
 </style>
 
@@ -59,7 +65,7 @@
 
     @if (Model.Photo != null && Model.Photo.Length > 0)
     {
-        <div class="col-md-4">
+        <div class="col-md-4 image-container">
             <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(Model.Photo)}")" class="image" />
         </div>
     }
