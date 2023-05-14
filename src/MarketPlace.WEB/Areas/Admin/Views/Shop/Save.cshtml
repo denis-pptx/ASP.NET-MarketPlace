@@ -22,10 +22,21 @@
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
-        <div class="btn-group">
-            <button type="submit" class="btn btn-outline-danger">Сохранить</button>
-            <a class="btn btn-outline-primary" asp-action="Index">Отмена</a>
-        </div>
+        @if (SaveHelper.IsEdit(Model))
+        {
+            <div class="btn-group">
+                <button type="submit" class="btn btn-outline-danger">Сохранить</button>
+                <a class="btn btn-outline-primary" asp-action="Index">Отмена</a>
+            </div>
+        }
+        else
+        {
+            <div class="btn-group">
+                <button type="submit" class="btn btn-outline-primary">Добавить</button>
+                <a class="btn btn-outline-danger" asp-action="Index">Отмена</a>
+            </div>
+        }
+
     </form>
 
     <div asp-validation-summary="ModelOnly"></div>

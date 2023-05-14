@@ -7,35 +7,50 @@
 }
 
 <h2>@title</h2>
+<hr />
 
-<form asp-action="Save">
-    <input type="hidden" asp-for="Id" value="@Model.Id" />
-    <p>
-        <label asp-for="Name"></label>
-        <input asp-for="Name" />
-    </p>
-    <p>
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-    </p>
-    <p>
-        <label asp-for="Price"></label>
-        <input asp-for="Price" />
-    </p>
-    <p>
-        <label asp-for="Category"></label>
-        <select asp-for="Category" asp-items="@productService.GetCategories().Data"></select>
-    </p>
-    <input type="hidden" asp-for="ShopId" value="@Model.ShopId">
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Save" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+            <div class="form-floating mb-3">
+                <input asp-for="Name" class="form-control" placeholder="Name">
+                <label asp-for="Name" class="form-label"></label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <textarea asp-for="Description" class="form-control" style="height: 100px" placeholder="Description"></textarea>
+                <label asp-for="Description" class="form-label"></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Price" class="form-control" placeholder="Price">
+                <label asp-for="Price" class="form-label"></label>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <select asp-for="Category" class="form-select" asp-items="@productService.GetCategories().Data"></select>
+                <label asp-for="Category" class="form-label"></label>
+            </div>
+            <div class="input-group mb-3">
+                <input type="file" name="photo" class="form-control" accept="image/*">
+                <span class="input-group-text">Фото</span>
+            </div>
+             <input type="hidden" asp-for="ShopId" value="@Model.ShopId">
 
-    <p>
-        <input type="submit" value="OK" />
-    </p>
-</form>
+            <div class="btn-group">
+                <button type="submit" class="btn btn-outline-primary">Подтвердить</button>
+                <a class="btn btn-outline-danger" asp-route-shopId="@Model.ShopId" asp-action="Index">Отменить</a>
+            </div>
 
-<form asp-action="Index">
-    <input type="hidden" name="shopId" value="@Model.ShopId" />
-    <input type="submit" value="Cancel" />
-</form>
+        </form>
 
-<div asp-validation-summary="All"></div>
+        <div asp-validation-summary="ModelOnly"></div>
+    </div>
+
+    @if (Model.Photo != null && Model.Photo.Length > 0)
+    {
+        <div class="col-md-4 image-container">
+            <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(Model.Photo)}")" class="image" />
+        </div>
+    }
+</div>
