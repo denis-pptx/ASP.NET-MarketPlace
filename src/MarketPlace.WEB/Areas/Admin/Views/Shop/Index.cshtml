@@ -33,7 +33,7 @@
             <th>№</th>
             <th>Название</th>
             <th>Описание</th>
-            <th colspan="2">Операции</th>
+            <th colspan="3">Операции</th>
         </tr>
     </thead>
     <tbody>
@@ -42,26 +42,25 @@
             <tr>
                 <td class="col-1">@(num++)</td>
                 <td class="col-2">@shop.Name</td>
-                <td class="col-7"><textarea readonly class="form-control">@shop.Description</textarea></td>
+                <td class="col-6"><textarea readonly class="form-control">@shop.Description</textarea></td>
 
 
                 <td class="col-1">
-                    <div class="dropdown">
-                        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            Действие
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" asp-action="Details" asp-route-id="@shop.Id">Детали</a></li>
-                            <li><a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-shopId="@shop.Id">Товары</a></li>
-                            <li><a class="dropdown-item" asp-action="Save" asp-route-id="@shop.Id">Изменить</a></li>
-                        </ul>
+                    <div class="d-flex justify-content-center">
+                       <a class="btn btn-outline-primary" asp-action="Save" asp-route-id="@shop.Id">Изменить</a>
                     </div>
                 </td>
-
                 <td class="col-1">
-                    <form asp-action="Delete" method="post" asp-route-id="@shop.Id">
-                        <input type="submit" class="btn btn-outline-danger" value="Удалить" />
-                    </form>
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Index" asp-route-shopId="@shop.Id">Товары</a>
+                    </div>
+                </td>
+                <td class="col-1">
+                    <div class="d-flex justify-content-center">
+                        <form asp-action="Delete" method="post" asp-route-id="@shop.Id">
+                            <input type="submit" class="btn btn-outline-danger" value="Удалить" />
+                        </form>
+                    </div>
                 </td>
             </tr>
         }

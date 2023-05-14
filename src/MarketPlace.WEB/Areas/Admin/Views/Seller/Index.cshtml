@@ -49,12 +49,16 @@
                 <td class="col-3">@seller.Shop!.Name</td>
 
                 <td col-1>
-                    <a class="btn btn-outline-primary" asp-action="Save" asp-route-id="@seller.Id">Изменить</a>
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-outline-primary" asp-action="Save" asp-route-id="@seller.Id">Изменить</a>
+                    </div>
                 </td>
                 <td class="col-1">
-                    <form asp-action="Delete" method="post" asp-route-id="@seller.Id">
-                        <input class="btn btn-outline-danger" type="submit" value="Удалить" />
-                    </form>
+                    <div class="d-flex justify-content-center">
+                        <form asp-action="Delete" method="post" asp-route-id="@seller.Id">
+                            <input class="btn btn-outline-danger" type="submit" value="Удалить" />
+                        </form>
+                    </div>
                 </td>
             </tr>
         }
