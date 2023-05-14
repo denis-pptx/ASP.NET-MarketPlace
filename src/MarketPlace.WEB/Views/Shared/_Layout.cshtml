@@ -1,4 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var role = string.Empty;
+
+    if (User.IsInRole(MarketPlace.DAL.Enum.Role.Admin.ToString()))
+        role = "Администратор";
+    else if (User.IsInRole(MarketPlace.DAL.Enum.Role.Seller.ToString()))
+        role = "Продавец";
+    else if (User.IsInRole(MarketPlace.DAL.Enum.Role.Customer.ToString()))
+        role = "Покупатель";
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -13,58 +24,71 @@
     <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div>
-        <a asp-controller="Home" asp-action="Index" asp-route-area="">Главная</a>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
 
-        <p>
-            @if (!User.Identity!.IsAuthenticated)
-            {
-                <div>
-                    <a asp-area="" asp-controller="Account" asp-action="Login">Войти</a> |
-                    <a asp-area ="" asp-controller="Account" asp-action="Register">Зарегистрироваться</a>
-                </div>
-            }
-            else
-            {
-                <div>
-                    <a asp-area="" asp-controller="Account" asp-action="Logout">Выйти</a>
-                    <p>
-                        Логин: @User.FindFirst(ClaimsIdentity.DefaultNameClaimType)?.Value.
-                        Роль: @User.FindFirst(ClaimsIdentity.DefaultRoleClaimType)?.Value
-                    </p>
-                </div>
-            }
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-area="">MarketPlace</a>
 
-            @if (User.IsInRole(MarketPlace.DAL.Enum.Role.Admin.ToString()))
-            {
-                <div>
-                    <span>Админ-панель: </span>
-                    <a asp-area="Admin" asp-action="Index" asp-controller="Shop">Магазины</a> |
-                    <a asp-area="Admin" asp-controller="Seller" asp-action="Index">Продавцы</a> |
-                    <a asp-area="Admin" asp-controller="Customer" asp-action="Index">Покупатели</a>
-                </div>
-            }
-            else if (User.IsInRole(MarketPlace.DAL.Enum.Role.Seller.ToString()))
-            {
-                <div>
-                    <span>Панель продавца: </span>
+                <div class="collapse navbar-collapse">
 
-                    <a asp-area="Seller" asp-controller="Shop" asp-action="Index">Магазин</a> |
-                    <a asp-area="Seller" asp-controller="Product" asp-action="Index">Товары</a>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        @if (User.IsInRole(MarketPlace.DAL.Enum.Role.Admin.ToString()))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-action="Index" asp-controller="Shop">Магазины</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Seller" asp-action="Index">Продавцы</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="Customer" asp-action="Index">Покупатели</a>
+                            </li>
+                        }
+                        else if (User.IsInRole(MarketPlace.DAL.Enum.Role.Seller.ToString()))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Seller" asp-controller="Shop" asp-action="Index">Магазин</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Seller" asp-controller="Product" asp-action="Index">Товары</a>
+                            </li>
+                        }
+                        else if (User.IsInRole(MarketPlace.DAL.Enum.Role.Customer.ToString()))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="Customer" asp-action="Edit">Профиль</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">Корзина</a>
+                            </li>
+                        }
+                    </ul>
+                    
+                    <ul class="navbar-nav ms-auto d-flex">
+                        @if (!User.Identity!.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-outline-secondary me-2" asp-area="" asp-controller="Account" asp-action="Login">Войти</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class=" btn btn-outline-secondary" asp-area="" asp-controller="Account" asp-action="Register">Зарегистрироваться</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item mt-1">
+                                <span class="navbar-brand" style="color: gray;">@role</span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-outline-secondary" asp-area="" asp-controller="Account" asp-action="Logout">Выйти</a>
+                            </li>
+                        }
+                    </ul>
                 </div>
-            }
-            else if (User.IsInRole(MarketPlace.DAL.Enum.Role.Customer.ToString()))
-            {
-                <div>
-                    <span>Панель покупателя: </span>
-
-                    <a asp-route-area="Customer" asp-controller="Customer" asp-action="Edit">Профиль</a> |
-                    <a asp-area="Customer" asp-controller="Cart" asp-action="Index">Корзина</a> |
-                    <a asp-area="Customer" asp-controller="Product" asp-action="Index">Избранные</a>
-                </div>
-            }
-        </p>
-    </div>
+            </div>
+        </nav>
+    </header>
 
     <div class="container">
         <main role="main" class="pb-3">
