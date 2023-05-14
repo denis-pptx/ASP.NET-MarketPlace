@@ -7,21 +7,26 @@
 
 <h2>@title</h2>
 
-<form asp-action="Save">
-    <input type="hidden" asp-for="Id" />
-    <p>
-        <label asp-for="Name"></label>
-        <input asp-for="Name" />
-    </p>
-    <p>     
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-    </p>
 
-    <p>
-        <input type="submit" value="OK" />
-        <a asp-action="Index">Cancel</a>
-    </p>
-</form>
+<div class="col-md-4">
+    <form asp-action="Save">
+        <input type="hidden" asp-for="Id" />
+        <div class="form-floating mb-3">
+            <input asp-for="Name" class="form-control" placeholder="Name">
+            <label asp-for="Name" class="form-label"></label>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea asp-for="Description" class="form-control" placeholder="Description"></textarea>
+            <label asp-for="Description" class="form-label"></label>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
 
-<div asp-validation-summary="All"></div>
+        <div class="btn-group">
+            <button type="submit" class="btn btn-outline-danger">Сохранить</button>
+            <a class="btn btn-outline-primary" asp-action="Index">Отмена</a>
+        </div>
+    </form>
+
+    <div asp-validation-summary="ModelOnly"></div>
+</div>
