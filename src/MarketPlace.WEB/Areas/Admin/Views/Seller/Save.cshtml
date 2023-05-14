@@ -7,25 +7,40 @@
 
 <h2>@title</h2>
 
-<form asp-action="Save">
-    <p>
-        <label asp-for="Seller.Login"></label>
-        <input asp-for="Seller.Login" name="Login" />
-    </p>
-    <p>
-        <label asp-for="Seller.Password"></label>
-        <input asp-for="Seller.Password" name="Password" />
-    </p>
-    <input type="hidden" asp-for="Seller.Role" name="Role" value="@MarketPlace.DAL.Enum.Role.Seller">
-    <p>
-        <label asp-for="Seller.ShopId">Shop: </label>
-        <select asp-for="Seller.ShopId" name="ShopId" asp-items="@Model.Shops"></select>
-    </p>
+<div class="col-md-4">
+    <form asp-action="Save">
 
-    <p>
-        <input type="submit" value="OK" />
-        <a asp-action="Index">Cancel</a>
-    </p>
-</form>
+        <div class="form-floating mb-3">
+            <input asp-for="Seller.Login" name="Login" class="form-control" placeholder="Login">
+            <label asp-for="Seller.Login" class="form-label"></label>
+            <span asp-validation-for="Seller.Login" class="text-danger"></span>
 
-<div asp-validation-summary="All"></div>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Seller.Password" name="Password" class="form-control" placeholder="Password">
+            <label asp-for="Seller.Password" class="form-label"></label>
+            <span asp-validation-for="Seller.Login" class="text-danger"></span>
+        </div>
+        
+        <div class="input-group mb-3">
+            <label class="input-group-text" asp-for="Seller.ShopId">Магазин</label>
+            <select class="form-select" asp-for="Seller.ShopId" name="ShopId" asp-items="@Model.Shops"></select>
+        </div>
+        
+    <div class="text-danger" asp-validation-summary="All"></div>
+
+        <div class="btn-group">
+            @if (SaveHelper.IsEdit(Model.Seller))
+            {
+                <button type="submit" class="btn btn-outline-danger">Сохранить</button>
+                <a class="btn btn-outline-primary" asp-action="Index">Отмена</a>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-outline-primary">Добавить</button>
+                <a class="btn btn-outline-danger" asp-action="Index">Отмена</a>
+            }
+        </div>
+    </form>
+
+</div>
