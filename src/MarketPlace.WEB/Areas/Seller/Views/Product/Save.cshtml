@@ -35,7 +35,32 @@
         <button type="submit" class="btn btn-outline-primary">Подтвердить</button>
         <a class="btn btn-outline-danger" asp-action="Index">Отменить</a>
     </div>
+
+    <div id="product-photos"></div>
     
 </form>
 
 <div asp-validation-summary="ModelOnly"></div>
+
+
+
+
+@section Scripts {
+    <script>
+        $(function () {
+
+            $.ajax({
+                url: '@Url.Action("Index", "ProductPhoto", new { area = "" })',
+                type: 'GET',
+                data: { productId: @Model.Id },
+                success: function (result) {
+                    console.log(result);
+                    $('#product-photos').html(result);
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+    </script>
+}

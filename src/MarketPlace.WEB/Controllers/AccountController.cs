@@ -1,6 +1,4 @@
-﻿using MarketPlace.BLL.DTO;
-
-namespace MarketPlace.WEB.Controllers;
+﻿namespace MarketPlace.WEB.Controllers;
 
 public class AccountController : Controller
 {

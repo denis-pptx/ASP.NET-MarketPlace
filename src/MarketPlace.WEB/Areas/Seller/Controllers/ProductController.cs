@@ -50,7 +50,7 @@ public class ProductController : Controller
         // Create.
         if (id == 0)
         {
-            return View();
+            return View(new Product());
         }
 
         // Update.
