@@ -35,17 +35,6 @@ public class ProductController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Details(int id)
-    {
-        var response = await _productService.GetByIdAsync(id);
-        if (response.StatusCode == HttpStatusCode.OK)
-        {
-            return View(response.Data);
-        }
-        return View("Error", new ErrorViewModel(response.Deconstruct()));
-    }
-
-    [HttpGet]
     public async Task<IActionResult> Save(int id)
     {
         // Create.

@@ -16,7 +16,7 @@
 <h2>Товары магазина @shopName</h2>
 
 
-<div class="row mb-2 mt-3 gx-3 col-xl-6">
+<div class="row mb-2 mt-1 gx-2 col-xl-6">
     <div class="col-auto">
         <form id="filter-form" asp-action="Index" method="get">
             <input type="hidden" asp-for="@Model.Order" />
@@ -37,7 +37,7 @@
 </div>
 
 
-<table class="table table-striped table-hover">
+<table class="table table-striped table-hover table-bordered">
     <thead>
         <tr>
             <th>№</th>
@@ -102,7 +102,7 @@
                     </a>
                 }
             </th>
-            <th>Действие</th>
+            <th colspan="2">Операции</th>
         </tr>
     </thead>
     <tbody>
@@ -111,26 +111,21 @@
             <tr>
                 <td class="col-1">@(num++)</td>
                 <td class="col-2">@product.Name</td>
-                <td class="col-3"><textarea readonly>@product.Description</textarea></td>
+                <td class="col-3"><textarea readonly class="form-control">@product.Description</textarea></td>
                 <td class="col-2">@product.Price</td>
                 <td class="col-3">@product.Category.GetDisplayName()</td>
 
+
                 <td class="col-1">
-                <div class="dropdown">
-                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Операции
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" asp-action="Save" asp-route-id="@product.Id">Изменить</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form asp-action="Delete" method="post">
-                                    <input type="hidden" name="id" value="@product.Id" />
-                                    <input type="hidden" name="shopId" value="@Model.ShopId" />
-                                    <input class="btn dropdown-item" type="submit" value="Удалить" />
-                                </form>
-                            </li>
-                        </ul>
+                    <a class="btn btn-outline-primary" asp-action="Save" asp-route-id="@product.Id">Изменить</a>
+                </td>
+                <td class="col-1">
+                    <div class="d-flex justify-content-center">
+                        <form asp-action="Delete" method="post">
+                            <input type="hidden" name="id" value="@product.Id" />
+                            <input type="hidden" name="shopId" value="@Model.ShopId" />
+                            <input class="btn btn-outline-danger" type="submit" value="Удалить" />
+                        </form>
                     </div>
                 </td>
             </tr>
@@ -140,7 +135,7 @@
 
 
 <p>
-    <a class="btn btn-outline-primary" asp-controller="Shop" asp-action="Details" asp-route-id="@Model.ShopId">Назад</a>
+    <a class="btn btn-outline-primary" asp-controller="Shop" asp-action="Index">Назад</a>
 </p>
 
 

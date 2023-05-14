@@ -7,10 +7,10 @@
 
 
 
-<h2>Товары</h2>
+<h2>@ViewData["Title"]</h2>
 
 
-<div class="row mb-2 mt-3 gx-3 col-xl-6">
+<div class="row mb-2 mt-3 gx-2 col-xl-6">
     <div class="col-auto">
         
 
@@ -28,7 +28,7 @@
         
     </div>
     <div class="col-auto">
-        <a class="btn btn-outline-primary" style="width: 100%;" asp-action="Save">Добавить товар</a>
+        <a class="btn btn-outline-primary" style="width: 100%;" asp-action="Save">Добавить</a>
     </div>
 </div>
 
@@ -108,18 +108,12 @@
                 <td class="col-3">@product.Price</td>
                 <td class="col-3">@product.Category.GetDisplayName()</td>
 
-                <td class="col-1 flex-grow-1 flex-shrink-1">
-                    <div class="dropdown">
-                        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            Действие
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" asp-action="Details" asp-route-id="@product.Id">Детали</a></li>
-                            <li><a class="dropdown-item" asp-action="Save" asp-route-id="@product.Id">Изменить</a></li>
-                        </ul>
+                <td class="col-1">
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-outline-primary" asp-action="Save" asp-route-id="@product.Id">Изменить</a>
                     </div>
                 </td>
-                <td class="col-1 flex-grow-1 flex-shrink-1">
+                <td class="col-1">
                     <div class="d-flex justify-content-center">
                         <form asp-action="Delete" method="post" asp-route-id="@product.Id">
                             <input type="submit" class="btn btn-outline-danger" value="Удалить" />

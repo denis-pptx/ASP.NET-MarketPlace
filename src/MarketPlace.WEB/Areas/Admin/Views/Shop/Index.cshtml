@@ -5,42 +5,62 @@
     int num = 1;
 }
 
-<h2>Список магазинов</h2>
+<h2>@ViewData["Title"]</h2>
 
-<form asp-action="Index">
-    <p>
-        <label>Название: </label>
-        <input asp-for="@Model.Name" />
 
-        <input type="submit" value="Фильтр" />
-    </p>
-</form>
+<div class="row mb-2 mt-1 gx-2 col-xl-6">
+    <div class="col-auto">
+        <form asp-action="Index" id="search-form">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Название" asp-for="@Model.Name" id="search-input">
+                <button class="btn btn-outline-danger" type="button" id="search-clear">
+                    <i class="fa-solid fa-arrow-rotate-right"></i>
+                </button>
+                <button class="btn btn-outline-primary" type="submit">Найти</button>
+            </div>
+        </form>
+    </div>
 
-<table border="1">
+    <div class="col-auto">
+        <a class="btn btn-outline-primary" asp-action="Save">Добавить</a>
+    </div>
+</div>
+
+
+<table class="table table-striped table-hover table-bordered">
     <thead>
         <tr>
             <th>№</th>
             <th>Название</th>
             <th>Описание</th>
+            <th colspan="2">Операции</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var shop in Model.Shops)
         {
             <tr>
-                <td>@(num++)</td>
-                <td>@shop.Name</td>
-                <td><textarea readonly>@shop.Description</textarea></td>
+                <td class="col-1">@(num++)</td>
+                <td class="col-2">@shop.Name</td>
+                <td class="col-7"><textarea readonly class="form-control">@shop.Description</textarea></td>
 
-                <td>
-                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@shop.Id">Детали</a>
+
+                <td class="col-1">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            Действие
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-action="Details" asp-route-id="@shop.Id">Детали</a></li>
+                            <li><a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-shopId="@shop.Id">Товары</a></li>
+                            <li><a class="dropdown-item" asp-action="Save" asp-route-id="@shop.Id">Изменить</a></li>
+                        </ul>
+                    </div>
                 </td>
-                <td>
-                    <a class="btn btn-primary" asp-action="Save" asp-route-id="@shop.Id">Изменить</a>
-                </td>
-                <td>
+
+                <td class="col-1">
                     <form asp-action="Delete" method="post" asp-route-id="@shop.Id">
-                        <input type="submit" class="btn btn-danger" value="Удалить" />
+                        <input type="submit" class="btn btn-outline-danger" value="Удалить" />
                     </form>
                 </td>
             </tr>
@@ -48,6 +68,16 @@
     </tbody>
 </table>
 
-<p>
-    <a class="btn btn-primary" asp-action="Save">Добавить магазин</a>
-</p>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#search-clear').click(function () {
+                $('#search-input').val('');
+                $('#search-form').submit();
+            });
+        });
+
+    </script>
+}
