@@ -32,7 +32,7 @@
     </div>
 </div>
 
-<table class="table table-striped table-hover">
+<table class="table table-striped table-hover table-bordered">
     <thead>
         <tr>
             <th>№</th>
@@ -96,7 +96,7 @@
                     </a>
                 }
             </th>
-            <th>Действие</th>
+            <th colspan="2">Операции</th>
         </tr>
     </thead>
     <tbody>
@@ -104,28 +104,28 @@
         {
             <tr>
                 <td class="col-1">@(num++)</td>
-                <td class="col-4">@product.Name</td>
+                <td class="col-3">@product.Name</td>
                 <td class="col-3">@product.Price</td>
                 <td class="col-3">@product.Category.GetDisplayName()</td>
 
-                <td class="col-1">
+                <td class="col-1 flex-grow-1 flex-shrink-1">
                     <div class="dropdown">
-                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Операции
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            Действие
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" asp-action="Details" asp-route-id="@product.Id">Детали</a></li>
                             <li><a class="dropdown-item" asp-action="Save" asp-route-id="@product.Id">Изменить</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form asp-action="Delete" method="post" asp-route-id="@product.Id">
-                                    <input class="dropdown-item" type="submit" value="Удалить" />
-                                </form>
-                            </li>
                         </ul>
                     </div>
                 </td>
-
+                <td class="col-1 flex-grow-1 flex-shrink-1">
+                    <div class="d-flex justify-content-center">
+                        <form asp-action="Delete" method="post" asp-route-id="@product.Id">
+                            <input type="submit" class="btn btn-outline-danger" value="Удалить" />
+                        </form>
+                    </div>
+                </td>
             </tr>
         }
     </tbody>
