@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using MarketPlace.DAL.Entities;
+using System.Runtime.CompilerServices;
 
 namespace MarketPlace.BLL.Services;
 
@@ -51,6 +52,7 @@ public class CartService : ICartService
         }
     }
 
+    
     public async Task<Response<bool>> AddProductAsync(string customerLogin, int productId)
     {
         try
@@ -65,16 +67,6 @@ public class CartService : ICartService
                 };
             }
 
-            var cart = await _unitOfWork.CartRepository.SingleOrDefaultAsync(c => c.CustomerId == customer.Id);
-            if (cart == null)
-            {
-                return new()
-                {
-                    Description = "Cart not found",
-                    StatusCode = HttpStatusCode.NotFound
-                };
-            }
-
             var product = await _unitOfWork.ProductRepository.SingleOrDefaultAsync(p => p.Id == productId);
             if (product == null)
             {
@@ -85,7 +77,7 @@ public class CartService : ICartService
                 };
             }
 
-            if (cart.Products.Any(p => p.Id == product.Id))
+            if (customer.Cart!.Items.Any(i => i.ProductId == product.Id))
             {
                 return new()
                 {
@@ -94,8 +86,13 @@ public class CartService : ICartService
                 };
             }
 
-            cart.Products.Add(product);
-            await _unitOfWork.CartRepository.UpdateAsync(cart);
+            customer.Cart.Items.Add(new CartItem()
+            {
+                Quantity = 1,
+                ProductId = product.Id
+            });
+
+            await _unitOfWork.SaveAllAsync();
 
             return new()
             {
@@ -127,36 +124,27 @@ public class CartService : ICartService
                 };
             }
 
-            var cart = await _unitOfWork.CartRepository.SingleOrDefaultAsync(c => c.CustomerId == customer.Id);
-            if (cart == null)
+            
+            if (!customer.Cart!.Items.Any(i => i.ProductId == productId))
             {
                 return new()
                 {
-                    Description = "Cart not found",
-                    StatusCode = HttpStatusCode.NotFound
-                };
-            }
-
-            var product = await _unitOfWork.ProductRepository.SingleOrDefaultAsync(p => p.Id == productId);
-            if (product == null)
-            {
-                return new()
-                {
-                    Description = "Product not found",
-                    StatusCode = HttpStatusCode.NotFound
-                };
-            }
-
-            if (!cart.Products.Remove(product))
-            {
-                return new()
-                {
-                    Description = "Cart doesn't contain this product",
+                    Description = "Customer cart doesn't contains cart item",
                     StatusCode = HttpStatusCode.Conflict
                 };
             }
 
-            await _unitOfWork.CartRepository.UpdateAsync(cart);
+            var cartItem = await _unitOfWork.CartItemRepository.SingleOrDefaultAsync(i => i.ProductId == productId);
+            if (cartItem == null)
+            {
+                return new()
+                {
+                    Description = "Cart item not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+
+            await _unitOfWork.CartItemRepository.DeleteAsync(cartItem);
 
             return new()
             {

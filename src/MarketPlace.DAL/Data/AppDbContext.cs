@@ -10,14 +10,15 @@ public class AppDbContext : DbContext
 	public DbSet<Shop> Shops { get; set; }
     public DbSet<Profile> Profiles { get; set; }
     public DbSet<Cart> Carts { get; set; }
+    public DbSet<CartItem> CartItems { get; set; }
 	
 	public AppDbContext(DbContextOptions<AppDbContext> options)
 		: base(options)
 	{
-        //ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-        // Database.EnsureDeleted(); 
-		// Database.EnsureCreated();
-    }
+		//ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+		//Database.EnsureDeleted();
+		//Database.EnsureCreated();
+	}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

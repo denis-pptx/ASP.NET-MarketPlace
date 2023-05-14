@@ -66,7 +66,7 @@
                             @if (!User.Identity.IsAuthenticated 
                                 || User.IsInRole(MarketPlace.DAL.Enum.Role.Customer.ToString()))
                             {
-                                @if (cart.Products.Any(p => p.Id == product.Id))
+                                @if (cart.Items.Any(i => i.ProductId == product.Id))
                                 {
                                     <button type="button" class="btn btn-outline-primary remove-from-cart" data-product-id="@product.Id">
                                         <i class="fa-solid fa-check"></i>

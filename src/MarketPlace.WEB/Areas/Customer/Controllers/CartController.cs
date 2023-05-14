@@ -22,13 +22,13 @@ public class CartController : Controller
 
     public async Task<IActionResult> Add(int productId)
     {
-        var response = await _cartService.AddProductAsync(User.Identity?.Name ?? "", productId);
+        var response = await _cartService.AddProductAsync(User.Identity?.Name!, productId);
         return StatusCode((int)response.StatusCode, response.Description);
     }
 
     public async Task<IActionResult> Remove(int productId)
     {
-        var response = await _cartService.RemoveProductAsync(User.Identity?.Name ?? "", productId);
+        var response = await _cartService.RemoveProductAsync(User.Identity?.Name!, productId);
         return StatusCode((int)response.StatusCode, response.Description);
     }
 }
