@@ -1,43 +1,53 @@
 ﻿@model RegisterDTO
 
 @{
-    ViewData["Title"] = "Sign Up";
+    ViewData["Title"] = "Рергистрация";
 }
 
-<h2>Register Form</h2>
 
-<form asp-action="Register" asp-controller="Account" >
-    <div>
-        <p>
-            <label asp-for="Login"></label>
-            <input asp-for="Login" />
-        </p>
-        <p>
-            <label asp-for="Password"></label>
-            <input asp-for="Password" />
-        </p>
-        <p>
-            <label asp-for="PasswordConfirm"></label>
-            <input asp-for="PasswordConfirm" />
-        </p>
+<div class="row justify-content-center">
+    <div class="col-md-4 mt-5">
+        <h2>@ViewData["Title"]</h2>
 
-        <p>
-            <label asp-for="Age"></label>
-            <input asp-for="Age" />
-        </p>
-        <p>
-            <label asp-for="Email"></label>
-            <input asp-for="Email" />
-        </p>
-        <p>
-            <label asp-for="Phone"></label>
-            <input asp-for="Phone" />
-        </p>
+        <form sp-action="Register" asp-controller="Account">
 
-        <p>
-            <input type="submit" value="Sign Up" />
-        </p>
+            <div class="form-floating mb-3">
+                <input asp-for="Login" class="form-control" placeholder="Login">
+                <label asp-for="Login" class="form-label"></label>
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Password" class="form-control" placeholder="Password">
+                <label asp-for="Password" class="form-label"></label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="PasswordConfirm" class="form-control" placeholder="PasswordConfirm">
+                <label asp-for="PasswordConfirm" class="form-label"></label>
+                <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Age" class="form-control" placeholder="Age">
+                <label asp-for="Age" class="form-label"></label>
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Email" class="form-control" placeholder="Email">
+                <label asp-for="Email" class="form-label"></label>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Phone" class="form-control" placeholder="Phone">
+                <label asp-for="Phone" class="form-label"></label>
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-outline-primary">Зарегистрироваться</button>
+                <a class="btn btn-outline-danger" asp-action="Login">Войти</a>
+            </div>
+        </form>
+
+        <div asp-validation-summary="ModelOnly"></div>
     </div>
-</form>
-
-<div asp-validation-summary="All"></div>
+</div>
