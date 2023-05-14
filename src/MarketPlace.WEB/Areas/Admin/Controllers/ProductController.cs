@@ -64,13 +64,14 @@ public class ProductController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Save([Bind("Id,Name,Description,Price,Category,ShopId")] Product item)
+    public async Task<IActionResult> Save([Bind("Id,Name,Description,Price,Category,ShopId")] Product item, IFormFile? photo)
     {
         if (ModelState.IsValid)
         {
             // Create.
             if (item.Id == 0)
             {
+                item.Photo = photo?.ToByteArray() ?? null;
                 var productResponse = await _productService.CreateAsync(item);
                 if (productResponse.StatusCode == HttpStatusCode.OK)
                 {
@@ -81,6 +82,7 @@ public class ProductController : Controller
             // Update.
             else
             {
+                item.Photo = photo?.ToByteArray() ?? item.Photo;
                 var response = await _productService.UpdateAsync(item);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
