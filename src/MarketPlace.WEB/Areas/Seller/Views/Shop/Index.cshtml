@@ -7,17 +7,15 @@
 
 <h2>@title</h2>
 
-
-<div>
-    <p>
-        <label asp-for="Name"></label>
-        <input disabled asp-for="Name" />
-    </p>
-    <p>
-        <label asp-for="Description"></label>
+<div class="col-md-4">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input disabled asp-for="Name" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label disabled asp-for="Description" class="form-label"></label>
         <textarea disabled asp-for="Description" class="form-control"></textarea>
-    </p>
-    <p>
-        <a asp-action="Edit">Изменить</a>
-    </p>
+    </div>
+
+    <a class="btn btn-outline-danger" asp-action="Edit">Изменить</a>
 </div>
