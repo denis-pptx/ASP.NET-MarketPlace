@@ -17,7 +17,12 @@
     SelectList categories = productService.GetCategories().Data!;
 }
 
-
+<style>
+    .card-img-top {
+        height: 200px; 
+        object-fit: contain;
+    }
+</style>
 <h2>Product List</h2>
 
 <div class="row mb-3">
@@ -53,9 +58,15 @@
     {
         <div class="col-md-4">
             <div class="card mb-4">
-                <img src="~/images/@(product).png" alt="Load failed"
-                    class="card-img-top mx-auto mt-4 w-50"
-                    onerror="this.src='/images/NoPhoto.png'; this.onerror=null;">
+               
+                @if (product.Photo != null && product.Photo.Length > 0)
+                {
+                    <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(product.Photo)}")" class="card-img-top mx-auto mt-4 w-50" />
+                }
+                else
+                {
+                    <img src="/images/NoPhoto.png" class="card-img-top mx-auto mt-4 w-50" />
+                }
                 <div class="card-body">
                     <h5 class="card-title">@product.Name</h5>
                     <h6 class="card-subtitle text-muted">@product.Category.GetDisplayName()</h6>
@@ -63,8 +74,7 @@
                         <div class="btn-group btn-group">
                             <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">Details</a>
 
-                            @if (!User.Identity.IsAuthenticated 
-                                || User.IsInRole(MarketPlace.DAL.Enum.Role.Customer.ToString()))
+                            @if (!User.Identity.IsAuthenticated || User.IsInRole(MarketPlace.DAL.Enum.Role.Customer.ToString()))
                             {
                                 @if (cart.Items.Any(i => i.ProductId == product.Id))
                                 {
