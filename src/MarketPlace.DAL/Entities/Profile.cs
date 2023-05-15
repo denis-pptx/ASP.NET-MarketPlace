@@ -2,6 +2,7 @@
 
 public class Profile : Entity
 {
+    [Display(Name = "Возраст")]
     [Required(ErrorMessage = "Не указан возраст")]
     [Range(1, 100, ErrorMessage = "Некорректный возраст")]
     public int Age { get; set; }
@@ -11,6 +12,7 @@ public class Profile : Entity
     [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)(\.(\w)+)$", ErrorMessage = "Некорректный адрес электронной почты")]
     public string Email { get; set; } = null!;
 
+    [Display(Name = "Телефон")]
     [Phone(ErrorMessage = "Некорректный телефон")]
     [Required(ErrorMessage = "Не указан телефон")]
     public string Phone { get; set; } = null!;

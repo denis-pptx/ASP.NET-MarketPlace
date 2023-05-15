@@ -2,7 +2,7 @@
 @inject ICartService cartService
 @inject IProductService productService
 @{
-    ViewData["Title"] = "Product List";
+    ViewData["Title"] = "Товары";
 
     string IsChecked(SelectListItem item)
     {
@@ -23,7 +23,9 @@
         object-fit: contain;
     }
 </style>
-<h2>Product List</h2>
+
+<h2>@ViewData["Title"]</h2>
+<hr/>
 
 <div class="row mb-3">
     <div class="col-md-12">
