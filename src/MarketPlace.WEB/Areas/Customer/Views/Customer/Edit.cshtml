@@ -4,39 +4,43 @@
     ViewData["Title"] = "Профиль";
 }
 
-<h2>Профиль</h2>
+<h2>@ViewData["Title"]</h2>
+<hr />
 
-<form asp-action="Edit">
-    <input type="hidden" asp-for="Id">
-    <p>
-        <label asp-for="Login"></label>
-        <input asp-for="Login" />
-    </p>
-    <p>
-        <label asp-for="Password"></label>
-        <input asp-for="Password" />
-    </p>
-    <input type="hidden" asp-for="Role">
+<div class="col-md-4">
+    <form asp-action="Edit">
+        <input type="hidden" asp-for="Id">
+        <div class="form-floating mb-3">
+            <input asp-for="Login" class="form-control" placeholder="Login">
+            <label asp-for="Login" class="form-label"></label>
+            <span asp-validation-for="Login" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Password" class="form-control" placeholder="Password">
+            <label asp-for="Password" class="form-label"></label>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Profile!.Age" class="form-control" placeholder="Age">
+            <label asp-for="Profile!.Age" class="form-label"></label>
+            <span asp-validation-for="Profile!.Age" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Profile!.Email" class="form-control" placeholder="Email">
+            <label asp-for="Profile!.Email" class="form-label"></label>
+            <span asp-validation-for="Profile!.Email" class="text-danger"></span>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Profile!.Phone" class="form-control" placeholder="Phone">
+            <label asp-for="Profile!.Phone" class="form-label"></label>
+            <span asp-validation-for="Profile!.Phone" class="text-danger"></span>
+        </div>
 
-    <input type="hidden" asp-for="Profile!.Id">
-    <p>
-        <label asp-for="Profile!.Age"></label>
-        <input asp-for="Profile!.Age" />
-    </p>
-    <p>
-        <label asp-for="Profile!.Email"></label>
-        <input asp-for="Profile!.Email" />
-    </p>
-    <p>
-        <label asp-for="Profile!.Phone"></label>
-        <input asp-for="Profile!.Phone" />
-    </p>
-       
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <p>
-        <input type="submit" value="OK" />
-        <a asp-action="Edit">Cancel</a>
-    </p>
-</form>
-
-<div asp-validation-summary="All"></div>
+        <div class="btn-group">
+            <button type="submit" class="btn btn-outline-danger">Сохранить</button>
+            <a class="btn btn-outline-primary" asp-action="Edit">Отмена</a>
+        </div>
+    </form>
+</div>
