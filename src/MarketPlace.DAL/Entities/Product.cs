@@ -3,6 +3,8 @@
 public class Product : Entity
 {
     [Display(Name = "Название")]
+    [Required(ErrorMessage = "Не указано название")]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = "Некорректное название")]
     public string Name { get; set; } = null!;
 
     [Display(Name = "Описание")]
