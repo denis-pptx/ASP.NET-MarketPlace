@@ -10,5 +10,6 @@ public class LoginDTO
     [Display(Name = "Пароль")]
     [Required(ErrorMessage = "Не указан пароль")]
     [StringLength(50, MinimumLength = 2, ErrorMessage = "Некорректный телефон")]
+    [DataType(DataType.Password)]
     public string Password { get; set; } = null!;
 }

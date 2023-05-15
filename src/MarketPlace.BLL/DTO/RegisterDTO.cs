@@ -11,11 +11,13 @@ public class RegisterDTO
     [Display(Name = "Пароль")]
     [Required(ErrorMessage = "Не указан пароль")]
     [StringLength(50, MinimumLength = 2, ErrorMessage = "Некорректный пароль")]
+    [DataType(DataType.Password)]
     public string Password { get; set; } = null!;
 
     [Display(Name = "Подтверждение пароля")]
     [Required(ErrorMessage = "Повторите пароль")]
     [Compare("Password", ErrorMessage = "Пароли не совпадают")]
+    [DataType(DataType.Password)]
     public string PasswordConfirm { get; set; } = null!;
 
     [Display(Name = "Возраст")]
