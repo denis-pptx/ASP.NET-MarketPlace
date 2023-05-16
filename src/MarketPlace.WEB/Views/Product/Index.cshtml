@@ -19,13 +19,13 @@
 
 <style>
     .card-img-top {
-        height: 200px; 
+        height: 200px;
         object-fit: contain;
     }
 </style>
 
 <h2>@ViewData["Title"]</h2>
-<hr/>
+<hr />
 
 <div class="row mb-3">
     <div class="col-md-12">
@@ -60,7 +60,7 @@
     {
         <div class="col-md-4">
             <div class="card mb-4">
-               
+                
                 @if (product.Photo != null && product.Photo.Length > 0)
                 {
                     <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(product.Photo)}")" class="card-img-top mx-auto mt-4 w-50" />
@@ -69,12 +69,14 @@
                 {
                     <img src="/images/NoPhoto.png" class="card-img-top mx-auto mt-4 w-50" />
                 }
+              
+
                 <div class="card-body">
                     <h5 class="card-title">@product.Name</h5>
                     <h6 class="card-subtitle text-muted">@product.Category.GetDisplayName()</h6>
                     <div class="d-flex justify-content-between mt-2">
                         <div class="btn-group btn-group">
-                            <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">Details</a>
+                            <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">Детали</a>
 
                             @if (!User.Identity.IsAuthenticated || User.IsInRole(MarketPlace.DAL.Enum.Role.Customer.ToString()))
                             {

@@ -1,27 +1,45 @@
 ﻿@model Product
 
+@{
+    ViewData["Title"] = "Детали";
 
-<div class="card mb-3">
+    var productImageSrc = string.Empty;
+    if (Model.Photo != null && Model.Photo.Length > 0)
+        productImageSrc = @$"data:image/jpeg;base64,{Convert.ToBase64String(Model.Photo)}";
+    else
+        productImageSrc = @"/images/NoPhoto.png";
+
+}
+
+
+<div class="card mt-4">
     <div class="row g-0">
-        <div class="col-md-4">
-            <img src="~/images/@(Model.Id).jpg" alt="@Model.Name" class="img-fluid" />
+        <div class="col-md-3">
+            @if (Model.Photo != null && Model.Photo.Length > 0)
+            {
+                <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(Model.Photo)}")" class="card-img" />
+            }
+            else
+            {
+                <img src="@("/images/NoPhoto.png")" class="card-img" style="padding: 5%;" />
+            }
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="card-body">
-                <h2 class="card-title">@Model.Name</h2>
-                <h3 class="card-subtitle text-muted">@Model.Category.GetDisplayName()</h3>
-                <p class="card-text">@Model.Description</p>
-                <div class="d-flex justify-content-between">
-                    <div class="btn-group btn-group-sm">
-                        <button type="button" class="btn btn-outline-primary">Добавить в корзину</button>
-                        <button type="button" class="btn btn-outline-danger">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                    <h4>@Model.Price р.</h4>
-                </div>
+                <h5 class="card-title">@Model.Name</h5>
+                <h6 class="card-subtitle text-muted">@Model.Category.GetDisplayName()</h6>
+
+                <p class="card-text mt-3">@Model.Description</p>
+                <h6 class="card-subtitle mb-2 text-muted text-dark">Цена: @Model.Price р.</h6>
+                <a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary">К списку товаров</a>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+
 
