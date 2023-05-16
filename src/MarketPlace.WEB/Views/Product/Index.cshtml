@@ -32,7 +32,7 @@
         <form method="get" asp-controller="Product" asp-action="Index">
 
             <div class="input-group mb-3" id="search-group">
-                <input type="text" class="form-control" placeholder="Поиск" name="searchString">
+                <input type="text" class="form-control" placeholder="Поиск" name="searchString" value="@Model.SearchString">
                 <button class="btn btn-outline-danger" type="button" id="search-clear">
                     <i class="fa fa-times"></i>
                 </button>

@@ -35,8 +35,8 @@ public static class StringExtension
             }
         }
 
-        // Проверим, является ли расстояние Левенштейна меньше определенного порога (например, 3)
-        int maxDistance = 3;
+        // Проверим, является ли расстояние Левенштейна меньше определенного порога (например, 1)
+        int maxDistance = 1;
         return distances[a.Length, b.Length] <= maxDistance;
     }
 }
