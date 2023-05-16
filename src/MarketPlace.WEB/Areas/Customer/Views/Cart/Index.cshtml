@@ -34,14 +34,18 @@
         padding-right: 15px;
     }
 
-        .card-checkbox input[type="checkbox"] {
-            transform: scale(1.5);
-            transition: transform 0.15s ease;
-        }
+    .card-checkbox input[type="checkbox"] {
+        transform: scale(1.5);
+        transition: transform 0.15s ease;
+    }
 
-            .card-checkbox input[type="checkbox"]:hover {
-                transform: scale(1.8);
-            }
+    .card-checkbox input[type="checkbox"]:hover {
+        transform: scale(1.8);
+    }
+
+    .out-of-stock {
+        opacity: 0.6; 
+    }
 
 </style>
 
@@ -59,9 +63,12 @@ else
             <form id="buy-form" method="post" asp-area="Customer" asp-controller="Order" asp-action="Index">
                 @foreach (var item in Model.Items)
                 {
-                    <div class="card @(Model.Items.IndexOf(item) == 0 ? "" : "mt-4")">
+                    bool isOutOfStock = item.Product!.Quantity == 0;
+
+                    <div class="card @(Model.Items.IndexOf(item) == 0 ? "" : "mt-4") @(isOutOfStock ? "out-of-stock" : "")">
                         <div class="card-checkbox">
-                            <input class="form-check-input" type="checkbox" name="cartItems" value="@item.Id" id="checkbox_@item.Id">
+                            <input class="form-check-input" type="checkbox" name="cartItems" @(isOutOfStock ? "disabled" : "") 
+                                value="@item.Id" id="checkbox_@item.Id">
                         </div>
 
                         <div class="row g-0">
@@ -79,10 +86,25 @@ else
                                 <div class="card-body">
                                     <h5 class="card-title">@item.Product.Name</h5>
                                     <h6 class="card-subtitle text-muted">@item.Product.Category.GetDisplayName()</h6>
-                                    <h6 class="card-subtitle mt-2">Магазин: @((await shopService.GetByIdAsync(item.Product.ShopId)).Data.Name)</h6>
+                                    <h6 class="card-subtitle text-muted mt-1">Магазин: @((await shopService.GetByIdAsync(item.Product.ShopId)).Data.Name)</h6>
 
                                     <p class="card-text mt-2" style="white-space: pre-wrap">@item.Product.Description</p>
+                                    
                                     <h6 class="card-subtitle">Цена: @item.Product.Price р.</h6>
+
+                                    <div class="col-3">
+                                        <div class="input-group mt-3">
+                                            @if (isOutOfStock == true)
+                                            {
+                                                <span class="input-group-text">Нет в наличии</span>
+                                            } 
+                                            else
+                                            {
+                                                <label class="input-group-text" for="inputQuantity_@(item.Id)">Количество</label>
+                                                <input type="number" class="form-control quantity-input" value="@item.Quantity" min="1" max="@item.Product.Quantity" id="inputQuantity_@(item.Id)">
+                                            }
+                                        </div>
+                                    </div>
 
                                     <div class="mt-3">
                                         <input type="button" class="btn btn-outline-danger remove-from-cart" data-product-id="@item.ProductId" value="Удалить из корзины" />
@@ -147,5 +169,42 @@ else
         $('#buy-button').on('click', function () {
             $('#buy-form').submit();
         });
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('.quantity-input').on('change', function () {
+                var input = $(this);
+                var productId = input.closest('.card').find('.remove-from-cart').data('product-id');
+                var quantity = parseInt(input.val());
+                var maxQuantity = parseInt(input.attr('max'));
+
+                if (isNaN(quantity) || quantity < 1) {
+                    input.val(1);
+                    quantity = 1;
+                } else if (quantity > maxQuantity) {
+                    input.val(maxQuantity);
+                    quantity = maxQuantity;
+                }
+
+                updateQuantity(productId, quantity);
+            });
+        });
+
+        function updateQuantity(productId, quantity) {
+            var url = '@Url.Action("UpdateQuantity", "Cart", new { area = "Customer" })';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: { productId: productId, quantity: quantity },
+                success: function () {
+                    // Обработка успешного обновления количества
+                },
+                error: function (jqXHR) {
+                    showToast('error', jqXHR.status + ': ' + jqXHR.responseText);
+                }
+            });
+        }
     </script>
 }

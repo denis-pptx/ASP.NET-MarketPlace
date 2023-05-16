@@ -88,6 +88,7 @@ public class CartService : ICartService
 
             customer.Cart.Items.Add(new CartItem()
             {
+                Quantity = 1,
                 ProductId = product.Id
             });
 
@@ -144,6 +145,78 @@ public class CartService : ICartService
             }
 
             await _unitOfWork.CartItemRepository.DeleteAsync(cartItem);
+
+            return new()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Data = true
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
+            };
+        }
+    }
+
+    public async Task<Response<bool>> UpdateQuantity(string customerLogin, int productId, int quantity)
+    {
+        try
+        {
+            var customer = await _unitOfWork.CustomerRepository.SingleOrDefaultAsync(c => c.Login == customerLogin);
+            if (customer == null)
+            {
+                return new()
+                {
+                    Description = "Customer not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+
+            var product = await _unitOfWork.ProductRepository.SingleOrDefaultAsync(p => p.Id == productId);
+            if (product == null)
+            {
+                return new()
+                {
+                    Description = "Product not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+
+            
+            if (!customer.Cart!.Items.Any(i => i.ProductId == product.Id))
+            {
+                return new()
+                {
+                    Description = "Cart doesn't contain this product",
+                    StatusCode = HttpStatusCode.Conflict
+                };
+            }
+
+            if (quantity > product.Quantity)
+            {
+                return new()
+                {
+                    Description = "New quantity is more than product stock",
+                    StatusCode = HttpStatusCode.Conflict
+                };
+            }
+
+            var existingCartItem = customer.Cart.Items.SingleOrDefault(ci => ci.ProductId == productId);
+            if (existingCartItem == null)
+            {
+                return new()
+                {
+                    Description = "Cart item not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+
+            existingCartItem.Quantity = quantity;
+            await _unitOfWork.SaveAllAsync();
 
             return new()
             {
