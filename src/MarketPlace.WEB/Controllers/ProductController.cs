@@ -14,6 +14,7 @@ public class ProductController : Controller
         _cartService = cartService;
     }
 
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> Index(IEnumerable<ProductCategory> categories, string searchString)
     {
         var productResponse = await _productService.GetAsync(categories, searchString);

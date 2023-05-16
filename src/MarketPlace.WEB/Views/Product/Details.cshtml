@@ -1,13 +1,10 @@
 ﻿@model Product
+@inject ICartService cartService
 
 @{
     ViewData["Title"] = "Детали";
 
-    var productImageSrc = string.Empty;
-    if (Model.Photo != null && Model.Photo.Length > 0)
-        productImageSrc = @$"data:image/jpeg;base64,{Convert.ToBase64String(Model.Photo)}";
-    else
-        productImageSrc = @"/images/NoPhoto.png";
+    var cart = (await cartService.GetAsync(User.Identity!.Name!)).Data ?? new();
 
 }
 
@@ -29,9 +26,30 @@
                 <h5 class="card-title">@Model.Name</h5>
                 <h6 class="card-subtitle text-muted">@Model.Category.GetDisplayName()</h6>
 
-                <p class="card-text mt-3">@Model.Description</p>
-                <h6 class="card-subtitle mb-2 text-muted text-dark">Цена: @Model.Price р.</h6>
-                <a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary">К списку товаров</a>
+                <p class="card-text mt-2">@Model.Description</p>
+                <h6 class="card-subtitle mb-2">Цена: @Model.Price р.</h6>
+
+                <div class="btn-group btn-group">
+                    <a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary">К списку товаров</a>
+
+                    @if (!User.Identity.IsAuthenticated || User.IsInRole(MarketPlace.DAL.Enum.Role.Customer.ToString()))
+                    {
+                        @if (cart.Items.Any(i => i.ProductId == Model.Id))
+                        {
+                            <button type="button" class="btn btn-outline-primary remove-from-cart" data-product-id="@Model.Id">
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-outline-primary add-to-cart" data-product-id="@Model.Id">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </button>
+                        }
+                    }
+                </div>
+
+                
             </div>
         </div>
     </div>
