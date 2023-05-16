@@ -52,7 +52,27 @@ public class CartService : ICartService
         }
     }
 
-    
+    public async Task<Response<IEnumerable<CartItem>>> GetAsync(IEnumerable<int> cartItemsIds)
+    {
+        try
+        {
+            var cartItems = await _unitOfWork.CartItemRepository.ListAsync(ci => cartItemsIds.Contains(ci.Id));
+
+            return new()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Data = cartItems
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
+            };
+        }
+    }
     public async Task<Response<bool>> AddProductAsync(string customerLogin, int productId)
     {
         try
@@ -233,4 +253,6 @@ public class CartService : ICartService
             };
         }
     }
+
+    
 }

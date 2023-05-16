@@ -34,17 +34,17 @@
         padding-right: 15px;
     }
 
-    .card-checkbox input[type="checkbox"] {
-        transform: scale(1.5);
-        transition: transform 0.15s ease;
-    }
+        .card-checkbox input[type="checkbox"] {
+            transform: scale(1.5);
+            transition: transform 0.15s ease;
+        }
 
-    .card-checkbox input[type="checkbox"]:hover {
-        transform: scale(1.8);
-    }
+            .card-checkbox input[type="checkbox"]:hover {
+                transform: scale(1.8);
+            }
 
     .out-of-stock {
-        opacity: 0.6; 
+        opacity: 0.6;
     }
 
 </style>
@@ -60,15 +60,15 @@ else
 {
     <div class="row">
         <div class="col-md-12">
-            <form id="buy-form" method="post" asp-area="Customer" asp-controller="Order" asp-action="Index">
+            <form id="buy-form" method="post" asp-area="Customer" asp-controller="OrderPreview" asp-action="Index">
                 @foreach (var item in Model.Items)
                 {
                     bool isOutOfStock = item.Product!.Quantity == 0;
 
                     <div class="card @(Model.Items.IndexOf(item) == 0 ? "" : "mt-4") @(isOutOfStock ? "out-of-stock" : "")">
                         <div class="card-checkbox">
-                            <input class="form-check-input" type="checkbox" name="cartItems" @(isOutOfStock ? "disabled" : "") 
-                                value="@item.Id" id="checkbox_@item.Id">
+                            <input class="form-check-input" type="checkbox" name="cartItemsIds" @(isOutOfStock ? "disabled" : "")
+                           value="@item.Id" id="checkbox_@item.Id">
                         </div>
 
                         <div class="row g-0">
@@ -89,7 +89,7 @@ else
                                     <h6 class="card-subtitle text-muted mt-1">Магазин: @((await shopService.GetByIdAsync(item.Product.ShopId)).Data.Name)</h6>
 
                                     <p class="card-text mt-2" style="white-space: pre-wrap">@item.Product.Description</p>
-                                    
+
                                     <h6 class="card-subtitle">Цена: @item.Product.Price р.</h6>
 
                                     <div class="col-3">
@@ -97,7 +97,7 @@ else
                                             @if (isOutOfStock == true)
                                             {
                                                 <span class="input-group-text">Нет в наличии</span>
-                                            } 
+                                            }
                                             else
                                             {
                                                 <label class="input-group-text" for="inputQuantity_@(item.Id)">Количество</label>
@@ -151,16 +151,22 @@ else
 
 
     <script>
+        function updateBuyButtonVisibility() {
+            var selectedCount = $('.card-checkbox input[type="checkbox"]:checked').length;
+
+            if (selectedCount > 0) {
+                $('#buy-button').removeClass('d-none');
+            } else {
+                $('#buy-button').addClass('d-none');
+            }
+        }
+
         $(document).ready(function () {
             $('.card-checkbox input[type="checkbox"]').on('change', function () {
-                var selectedCount = $('.card-checkbox input[type="checkbox"]:checked').length;
-
-                if (selectedCount > 0) {
-                    $('#buy-button').removeClass('d-none');
-                } else {
-                    $('#buy-button').addClass('d-none');
-                }
+                updateBuyButtonVisibility();
             });
+
+            updateBuyButtonVisibility(); // Вызов функции при загрузке страницы
         });
     </script>
 

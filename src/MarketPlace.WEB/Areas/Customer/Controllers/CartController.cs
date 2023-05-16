@@ -10,6 +10,7 @@ public class CartController : Controller
         _cartService = cartService;
     }
 
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> Index()
     {
         var response = await _cartService.GetAsync(User.Identity?.Name ?? "");
