@@ -88,7 +88,6 @@ public class CartService : ICartService
 
             customer.Cart.Items.Add(new CartItem()
             {
-                Quantity = 1,
                 ProductId = product.Id
             });
 
