@@ -167,8 +167,13 @@ else
             });
 
             updateBuyButtonVisibility(); // Вызов функции при загрузке страницы
+
+            $(window).on('pageshow', function () {
+                updateBuyButtonVisibility(); // Вызов функции при каждом показе страницы
+            });
         });
     </script>
+
 
 
     <script>
