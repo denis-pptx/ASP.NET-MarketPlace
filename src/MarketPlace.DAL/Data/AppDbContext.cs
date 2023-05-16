@@ -16,7 +16,7 @@ public class AppDbContext : DbContext
 	{
 		//ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 		//Database.EnsureDeleted();
-		//Database.EnsureCreated();
+		Database.EnsureCreated();
 	}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
