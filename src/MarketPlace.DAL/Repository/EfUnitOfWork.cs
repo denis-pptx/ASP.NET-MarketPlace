@@ -12,7 +12,8 @@ public class EfUnitOfWork : IUnitOfWork
     private readonly IRepository<Customer> _customerRepository;
     private readonly IRepository<Cart> _cartRepository;
     private readonly IRepository<CartItem> _cartItemRepository;
-
+    private readonly IRepository<Order> _orderRepository;
+    private readonly IRepository<OrderItem> _orderItemRepository;
     public EfUnitOfWork(AppDbContext db)
     {
         _db = db;
@@ -23,6 +24,8 @@ public class EfUnitOfWork : IUnitOfWork
         _cartRepository = new EfRepository<Cart>(_db);
         _customerRepository = new EfRepository<Customer>(_db);
         _cartItemRepository = new EfRepository<CartItem>(_db);
+        _orderRepository = new EfRepository<Order>(_db);
+        _orderItemRepository = new EfRepository<OrderItem>(_db);
     }
 
     public IRepository<Product> ProductRepository => _productRepository;
@@ -32,6 +35,8 @@ public class EfUnitOfWork : IUnitOfWork
     public IRepository<Customer> CustomerRepository => _customerRepository;
     public IRepository<Cart> CartRepository => _cartRepository;
     public IRepository<CartItem> CartItemRepository => _cartItemRepository;
+    public IRepository<Order> OrderRepository => _orderRepository;
+    public IRepository<OrderItem> OrderItemRepository => _orderItemRepository;
     public async Task CreateDatabaseAsync()
     {
         await _db.Database.EnsureCreatedAsync();

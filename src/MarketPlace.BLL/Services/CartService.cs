@@ -73,6 +73,31 @@ public class CartService : ICartService
             };
         }
     }
+
+    public async Task<Response<bool>> RemoveAsync(IEnumerable<int> cartsItemsIds)
+    {
+        try
+        {
+            var cartItems = await _unitOfWork.CartItemRepository.ListAsync(ci => cartsItemsIds.Contains(ci.Id));
+
+            foreach (var cartItem in cartItems)
+                await _unitOfWork.CartItemRepository.DeleteAsync(cartItem);
+            
+            return new()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Data = true
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
+            };
+        }
+    }
     public async Task<Response<bool>> AddProductAsync(string customerLogin, int productId)
     {
         try

@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<CartItem>
 
-@inject ICartService cartService
-@inject IProductService productService
-
 @{
     ViewData["Title"] = "Просмотр заказа";
 
@@ -10,7 +7,6 @@
     foreach (var item in Model)
         totalPrice += (item.Product!.Price * item.Quantity);
 }
-
 
 <style>
     .card-img-top {
@@ -22,43 +18,40 @@
 <h2>@ViewData["Title"]</h2>
 <hr />
 
-
-<div class="row">
-
-    <form id="buy-form" method="post" asp-area="Customer" asp-controller="Order" asp-action="Index">
-        <div class="row mb-3 mt-2 gx-3 col-xl-6">
-            <div class="col-auto">
-                <h4>Общая стоимость: @totalPrice р.</h4>
-            </div>
-            <div class="col-auto">
-                <button class="btn btn-outline-primary" id="buy-button">Купить</button>
-            </div>
+<form id="buy-form" method="post" asp-area="Customer" asp-controller="Payment" asp-action="Buy">
+    <div class="row mb-3 mt-2 gx-3">
+        <div class="col-auto">
+            <h4>Общая стоимость: @totalPrice р.</h4>
         </div>
-    </form>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-primary" id="buy-button">Купить</button>
+        </div>
+    </div>
 
-    @foreach (var item in Model)
-    {
-        <div class="col-md-4">
-            <div class="card mb-4">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    @if (item.Product!.Photo != null && item.Product!.Photo.Length > 0)
+                    {
+                        <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item.Product!.Photo)}")" class="card-img-top mx-auto mt-4 w-50" />
+                    }
+                    else
+                    {
+                        <img src="/images/NoPhoto.png" class="card-img-top mx-auto mt-4 w-50" />
+                    }
 
-                @if (item.Product!.Photo != null && item.Product!.Photo.Length > 0)
-                {
-                    <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item.Product!.Photo)}")" class="card-img-top mx-auto mt-4 w-50" />
-                }
-                else
-                {
-                    <img src="/images/NoPhoto.png" class="card-img-top mx-auto mt-4 w-50" />
-                }
-
-
-                <div class="card-body">
-                    <h5 class="card-title">@item.Product!.Name</h5>
-                    <h6 class="card-subtitle text-muted">@item.Product!.Category.GetDisplayName()</h6>
-                    <div class="d-flex justify-content-between mt-2">
-                        <h5>@item.Product!.Price р. x @item.Quantity = @(item.Product!.Price * item.Quantity) р.</h5>
+                    <input type="hidden" name="cartItemsIds" value="@item.Id" />
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Product!.Name</h5>
+                        <h6 class="card-subtitle text-muted">@item.Product!.Category.GetDisplayName()</h6>
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5>@item.Product!.Price р. x @item.Quantity = @(item.Product!.Price * item.Quantity) р.</h5>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
+</form>
