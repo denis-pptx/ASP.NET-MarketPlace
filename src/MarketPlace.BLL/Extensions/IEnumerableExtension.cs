@@ -21,6 +21,8 @@ public static class IEnumerableExtension
             SortOrder.PriceDescending => products.OrderByDescending(p => p.Price),
             SortOrder.Category => products.OrderBy(p => p.Category),
             SortOrder.CategoryDescending => products.OrderByDescending(p => p.Category),
+            SortOrder.Quantity => products.OrderBy(p => p.Quantity),
+            SortOrder.QuantityDescending => products.OrderByDescending(p => p.Quantity),
             _ => products
         };
     }

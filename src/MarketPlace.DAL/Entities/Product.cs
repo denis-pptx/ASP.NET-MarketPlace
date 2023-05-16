@@ -13,6 +13,10 @@ public class Product : Entity
     [Display(Name = "Цена")]
     public double Price { get; set; }
 
+    [Display(Name = "Количество")]
+    [Range(0, 9999, ErrorMessage = "Некорректное количество")]
+    public int Quantity { get; set; }
+
     [Display(Name = "Категория")]
     public ProductCategory Category { get; set; }
 

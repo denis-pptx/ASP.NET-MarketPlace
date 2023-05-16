@@ -42,12 +42,15 @@
                 <label asp-for="Price" class="form-label"></label>
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
-
+            <div class="form-floating mb-3">
+                <input asp-for="Quantity" class="form-control" placeholder="Quantity">
+                <label asp-for="Quantity" class="form-label"></label>
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
             <div class="form-floating mb-3">
                 <select asp-for="Category" class="form-select" asp-items="@productService.GetCategories().Data"></select>
                 <label asp-for="Category" class="form-label"></label>
             </div>
-
             <div class="input-group mb-3">
                 <input type="file" name="photo" class="form-control" accept="image/*">
                 <span class="input-group-text">Фото</span>

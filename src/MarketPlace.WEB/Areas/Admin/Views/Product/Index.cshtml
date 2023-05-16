@@ -18,6 +18,9 @@
 
 <div class="row mb-3 mt-1 gx-3 col-xl-6">
     <div class="col-auto">
+        <a class="btn btn-outline-primary" asp-controller="Shop" asp-action="Index">Назад</a>
+    </div>
+    <div class="col-auto">
         <form id="filter-form" asp-action="Index" method="get">
             <input type="hidden" asp-for="@Model.Order" />
             <input type="hidden" asp-for="@Model.ShopId" />
@@ -35,7 +38,6 @@
         <a class="btn btn-outline-primary" asp-action="Save" asp-route-shopId="@Model.ShopId">Добавить товар</a>
     </div>
 </div>
-
 
 <table class="table table-striped table-hover table-bordered">
     <thead>
@@ -61,7 +63,6 @@
                     </a>
                 }
             </th>
-            <th>Описание</th>
             <th>
                 @if (Model.Order == SortOrder.Price)
                 {
@@ -79,6 +80,26 @@
                 {
                     <a asp-action="Index" asp-route-category="@Model.Category" asp-route-order="@SortOrder.Price" asp-route-shopId="@Model.ShopId">
                         Стоимость
+                    </a>
+                }
+            </th>
+            <th>
+                @if (Model.Order == SortOrder.Quantity)
+                {
+                    <a asp-action="Index" asp-route-category="@Model.Category" asp-route-order="@SortOrder.QuantityDescending" asp-route-shopId="@Model.ShopId">
+                        Количество <i class="fa-solid fa-arrow-up-long"></i>
+                    </a>
+                }
+                else if (Model.Order == SortOrder.QuantityDescending)
+                {
+                    <a asp-action="Index" asp-route-category="@Model.Category" asp-route-shopId="@Model.ShopId">
+                        Количество <i class="fa-solid fa-arrow-down-long"></i>
+                    </a>
+                }
+                else
+                {
+                    <a asp-action="Index" asp-route-category="@Model.Category" asp-route-order="@SortOrder.Quantity" asp-route-shopId="@Model.ShopId">
+                        Количество
                     </a>
                 }
             </th>
@@ -110,10 +131,10 @@
         {
             <tr>
                 <td class="col-1">@(num++)</td>
-                <td class="col-2">@product.Name</td>
-                <td class="col-3"><textarea readonly class="form-control">@product.Description</textarea></td>
+                <td class="col-3">@product.Name</td>
                 <td class="col-2">@product.Price</td>
-                <td class="col-3">@product.Category.GetDisplayName()</td>
+                <td class="col-2">@product.Quantity</td>
+                <td class="col-2">@product.Category.GetDisplayName()</td>
 
 
                 <td class="col-1">
@@ -134,9 +155,7 @@
 </table>
 
 
-<p>
-    <a class="btn btn-outline-primary" asp-controller="Shop" asp-action="Index">Назад</a>
-</p>
+
 
 
 @section Scripts {

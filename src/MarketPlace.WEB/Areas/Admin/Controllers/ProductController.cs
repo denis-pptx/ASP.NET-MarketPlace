@@ -64,7 +64,7 @@ public class ProductController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Save([Bind("Id,Name,Description,Price,Category,ShopId")] Product item, IFormFile? photo)
+    public async Task<IActionResult> Save([Bind("Id,Name,Description,Price,Quantity,Category,ShopId")] Product item, IFormFile? photo)
     {
         if (ModelState.IsValid)
         {

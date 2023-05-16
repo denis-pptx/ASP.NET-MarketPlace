@@ -77,6 +77,26 @@
                 }
             </th>
             <th>
+                @if (Model.Order == SortOrder.Quantity)
+                {
+                    <a asp-action="Index" asp-route-category="@Model.Category" asp-route-order="@SortOrder.QuantityDescending">
+                        Количество <i class="fa-solid fa-arrow-up-long"></i>
+                    </a>
+                }
+                else if (Model.Order == SortOrder.QuantityDescending)
+                {
+                    <a asp-action="Index" asp-route-category="@Model.Category">
+                        Количество <i class="fa-solid fa-arrow-down-long"></i>
+                    </a>
+                }
+                else
+                {
+                    <a asp-action="Index" asp-route-category="@Model.Category" asp-route-order="@SortOrder.Quantity">
+                        Количество
+                    </a>
+                }
+            </th>
+            <th>
                 @if (Model.Order == SortOrder.Category)
                 {
                     <a asp-action="Index" asp-route-category="@Model.Category" asp-route-order="@SortOrder.CategoryDescending">
@@ -105,8 +125,9 @@
             <tr>
                 <td class="col-1">@(num++)</td>
                 <td class="col-3">@product.Name</td>
-                <td class="col-3">@product.Price</td>
-                <td class="col-3">@product.Category.GetDisplayName()</td>
+                <td class="col-2">@product.Price</td>
+                <td class="col-2">@product.Quantity</td>
+                <td class="col-2">@product.Category.GetDisplayName()</td>
 
                 <td class="col-1">
                     <div class="d-flex justify-content-center">

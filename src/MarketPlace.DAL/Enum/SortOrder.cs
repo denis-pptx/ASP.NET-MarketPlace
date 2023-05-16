@@ -7,5 +7,7 @@ public enum SortOrder
     Price,
     PriceDescending,
     Category,
-    CategoryDescending
+    CategoryDescending,
+    Quantity,
+    QuantityDescending
 }
