@@ -1,26 +1,98 @@
 ﻿@model Cart
 
-<h1>Корзина</h1>
-<div class="row">
-    @foreach (var item in Model.Items)
-    {
-        <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Product!.Name</h5>
-                    <p class="card-text">@item.Product!.Description</p>
-                    <p class="card-text"><strong>@item.Product.Price руб.</strong></p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="badge badge-secondary">@item.Product.Category.GetDisplayName()</span>
-                        <span class="badge badge-primary">item.Quantity шт.</span>
+@{
+    ViewData["Title"] = "Корзина";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<style>
+    .cart-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cart-image {
+        width: 30%;
+        transform: translateX(-11%);
+    }
+</style>
+
+@if (Model.Items.Count == 0)
+{
+    <div class="text-center cart-container">
+        <img src="/images/Cart.png" class="cart-image" />
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Перейти к товарам</a>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            @foreach (var item in Model.Items)
+            {
+                <div class="card @(Model.Items.IndexOf(item) == 0 ? "" : "mt-4")">
+                    <div class="row g-0">
+                        <div class="col-md-3">
+                            @if (item.Product!.Photo != null && item.Product.Photo.Length > 0)
+                            {
+                                <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item.Product!.Photo)}")" class="card-img" />
+                            }
+                            else
+                            {
+                                <img src="@("/images/NoPhoto.png")" class="card-img" style="padding: 5%;" />
+                            }
+                        </div>
+                        <div class="col-md-9">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.Product.Name</h5>
+                                <h6 class="card-subtitle text-muted">@item.Product.Category.GetDisplayName()</h6>
+
+                                <p class="card-text mt-2" style="white-space: pre-wrap">@item.Product.Description</p>
+                                <h6 class="card-subtitle">Цена: @item.Product.Price р.</h6>
+
+                                <div class="mt-3">
+                                    <input type="submit" class="btn btn-outline-danger remove-from-cart" data-product-id="@item.ProductId" value="Удалить из корзины" />
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
-    }
-</div>
-<div class="row">
-    <div class="col-md-12 text-right">
-        <h3>Итого: "Model.TotalPrice" руб.</h3>
     </div>
-</div>
+}
+
+@await Html.PartialAsync("_Unauthorized")
+
+@section Scripts {
+    <script>
+        $(document).on('click', '.remove-from-cart', function () {
+            var isAuthenticated = @(User.Identity!.IsAuthenticated ? "true" : "false");
+
+            if (!isAuthenticated) {
+                $('#unauthorized-modal .modal-body p').text('Для удаления из корзизны необходимо авторизоваться.');
+                $('#unauthorized-modal').modal('show');
+            } else {
+                var button = $(this);
+                var productId = button.data('product-id');
+                var url = '@Url.Action("Remove", "Cart", new { area = "Customer" })';
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: { productId: productId },
+                    success: function () {
+                        window.location.href = '@Url.Action("Index", "Cart", new { area = "Customer" })';
+                    },
+                    error: function (jqXHR) {
+                        showToast('error', jqXHR.status + ': ' + jqXHR.responseText);
+                    }
+                });
+            }
+        });
+    </script>
+}

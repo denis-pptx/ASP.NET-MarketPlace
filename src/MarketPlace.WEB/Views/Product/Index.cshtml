@@ -158,7 +158,7 @@
             var isAuthenticated = @(User.Identity!.IsAuthenticated ? "true" : "false");
 
             if (!isAuthenticated) {
-                $('#unauthorized-modal .modal-body p').text('Для добавления в корзину необходимо авторизоваться.');
+                $('#unauthorized-modal .modal-body p').text('Для удаления из корзизны необходимо авторизоваться.');
                 $('#unauthorized-modal').modal('show');
             } else {
                 var button = $(this);
