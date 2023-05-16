@@ -1,6 +1,4 @@
-﻿using MarketPlace.DAL.Response;
-
-namespace MarketPlace.WEB.Areas.Customer.Controllers;
+﻿namespace MarketPlace.WEB.Areas.Customer.Controllers;
 
 [Area("Customer")]
 [Authorize(Roles = "Customer")]
