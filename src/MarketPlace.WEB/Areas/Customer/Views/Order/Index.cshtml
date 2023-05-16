@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Order>
+
+@{
+    ViewData["Title"] = "Заказы";
+    int num = 1;
+}
+
+
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+
+<table class="table table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Магазин</th>
+            <th>Товар</th>
+            <th>Описание</th>
+            <th>Цена</th>
+            <th>Количество</th>
+            <th>Категория</th>
+            <th>Операция</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            foreach (var orderItem in order.Items)
+            {
+                <tr>
+                    <td class="col-1">@(num++)</td>
+                    <td class="col-1">@orderItem.ShopName</td>
+                    <td class="col-2">@orderItem.Name</td>
+                    <td class="col-3"><textarea class="form-control" readonly>@orderItem.Description</textarea></td>
+                    <td class="col-1">@orderItem.Price</td>
+                    <td class="col-1">@orderItem.Quantity</td>
+                    <td class="col-2">@orderItem.Category.GetDisplayName()</td>
+
+                    <td class="col-1">
+                        <div class="d-flex justify-content-center">
+                            <form asp-action="Delete" method="post" asp-route-id="@order.Id">
+                                <input type="submit" class="btn btn-outline-danger" value="Удалить" 
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Удалить все товары, относящиеся к одному заказу в этом магазине" />
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

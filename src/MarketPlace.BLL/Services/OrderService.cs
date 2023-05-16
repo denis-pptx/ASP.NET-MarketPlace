@@ -69,6 +69,37 @@ public class OrderService : IOrderService
         }
     }
 
+    public async Task<Response<IEnumerable<Order>>> GetAsync(string customerLogin)
+    {
+        try
+        {
+            var customer = await _unitOfWork.CustomerRepository.SingleOrDefaultAsync(c => c.Login == customerLogin);
+            if (customer == null)
+            {
+                return new()
+                {
+                    Description = "Customer not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+
+            var orders = await _unitOfWork.OrderRepository.ListAsync(o => o.CustomerId == customer.Id);
+
+            return new()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Data = orders
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError
+            };
+        }
+    }
     public async Task<Response<IEnumerable<Order>>> CreateAsync(IEnumerable<int> cartsItemsIds)
     {
         try
@@ -80,10 +111,11 @@ public class OrderService : IOrderService
             {
                 orderItems.Add(new()
                 {
+                    ShopName = cartItem.Product!.Shop!.Name,
                     Name = cartItem.Product!.Name,
                     Description = cartItem.Product!.Description,
                     Price = cartItem.Product!.Price,
-                    Quantity = cartItem.Product!.Quantity,
+                    Quantity = cartItem.Quantity,
                     Category = cartItem.Product!.Category,
                     Photo = cartItem.Product!.Photo,
                     ProductId = cartItem.Product!.Id,
@@ -103,7 +135,7 @@ public class OrderService : IOrderService
                 });
             }
 
-            
+
             return new()
             {
                 StatusCode = HttpStatusCode.OK,
@@ -116,6 +148,40 @@ public class OrderService : IOrderService
             {
                 Description = ex.Message,
                 StatusCode = HttpStatusCode.InternalServerError
+            };
+        }
+    }
+
+    public async Task<Response<bool>> DeleteAsync(int id)
+    {
+        try
+        {
+            var order = await _unitOfWork.OrderRepository.SingleOrDefaultAsync(o => o.Id == id);
+            if (order == null)
+            {
+                return new()
+                {
+                    Description = "Product not found",
+                    StatusCode = HttpStatusCode.NotFound,
+                    Data = false
+                };
+            }
+
+            await _unitOfWork.OrderRepository.DeleteAsync(order);
+
+            return new()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Data = true
+            };
+        }
+        catch (Exception ex)
+        {
+            return new()
+            {
+                Description = ex.Message,
+                StatusCode = HttpStatusCode.InternalServerError,
+                Data = false
             };
         }
     }
