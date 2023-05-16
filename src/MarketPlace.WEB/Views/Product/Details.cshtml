@@ -1,5 +1,6 @@
 ﻿@model Product
 @inject ICartService cartService
+@inject IShopService shopService
 
 @{
     ViewData["Title"] = "Детали";
@@ -28,6 +29,7 @@
             <div class="card-body">
                 <h5 class="card-title">@Model.Name</h5>
                 <h6 class="card-subtitle text-muted">@Model.Category.GetDisplayName()</h6>
+                <h6 class="card-subtitle mt-2">Магазин: @((await shopService.GetByIdAsync(Model.ShopId)).Data.Name)</h6>
 
                 <p class="card-text mt-2" style="white-space: pre-wrap">@Model.Description</p>
                 <h6 class="card-subtitle">Цена: @Model.Price р.</h6>
@@ -51,6 +53,8 @@
                         }
                     }
                 </div>
+
+                
             </div>
         </div>
     </div>
