@@ -21,15 +21,11 @@
 
 
 MVC
-
 Services
-
 UnitOfWork
 Repository
-
-
+Dependency injection
 N-Layer architecture (DAL, BLL, WEB)
-
 ASP NET MVC
 Entity Framework
 Js
