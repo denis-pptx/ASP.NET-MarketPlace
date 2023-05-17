@@ -20,7 +20,7 @@
       <HashCode>AAAAgAAAAAAIQgAAAAAAAAEAAAAAIAgAAAAAAAAAIIE=</HashCode>
       <FileName>DAL\EfRepository.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="MarketPlace.DAL.Repository.EfUnitOfWork" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="28.25" Y="4.25" Width="1.5" />
@@ -28,7 +28,7 @@
       <HashCode>gAEAgCApIAEAAAAAFAAEAAAECAAAEAQAAAEAJBIAAAA=</HashCode>
       <FileName>DAL\EfUnitOfWork.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="MarketPlace.DAL.Entities.Cart">
     <Position X="19.75" Y="3" Width="1.5" />
