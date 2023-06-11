@@ -169,23 +169,13 @@ public class CartService : ICartService
                 };
             }
 
-            
-            if (!customer.Cart!.Items.Any(i => i.ProductId == productId))
+            var cartItem = customer.Cart!.Items.SingleOrDefault(ci => ci.ProductId == productId);
+            if (cartItem == null)
             {
                 return new()
                 {
                     Description = "Customer cart doesn't contains cart item",
                     StatusCode = HttpStatusCode.Conflict
-                };
-            }
-
-            var cartItem = await _unitOfWork.CartItemRepository.SingleOrDefaultAsync(i => i.ProductId == productId);
-            if (cartItem == null)
-            {
-                return new()
-                {
-                    Description = "Cart item not found",
-                    StatusCode = HttpStatusCode.NotFound
                 };
             }
 
