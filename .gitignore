@@ -4,3 +4,4 @@
 ignore/*
 **/Db
 **/Migrations
+src/MarketPlace.WEB/wwwroot/lib/*
