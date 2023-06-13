@@ -2,33 +2,31 @@
 
 MarketPlace – an online store developed using ASP.NET MVC. 
 
-This project is a course work on the discipline "Object-oriented programming".
+This project is a course work on the discipline "Object-oriented programming" completed during the 4th semester (February - May 2023).
 
 
 
 ## Content
 
-- [MarketPlace](#marketplace)
-  - [Content](#content)
-  - [Description](#description)
-  - [Application Interface](#application-interface)
-    - [Admin Interface](#admin-interface)
-    - [Seller Interface](#seller-interface)
-    - [Customer Interface](#customer-interface)
-    - [Guest Interface](#guest-interface)
-  - [Use Case Diagrams](#use-case-diagrams)
-    - [Admin Use Case Diagram](#admin-use-case-diagram)
-    - [Seller Use Case Diagram](#seller-use-case-diagram)
-    - [Customer Use Case Diagram](#customer-use-case-diagram)
-    - [Guest Use Case Diagram](#guest-use-case-diagram)
-  - [UML Diagrams](#uml-diagrams)
-    - [DAL Diagram](#dal-diagram)
-    - [BLL Diagram](#bll-diagram)
-    - [WEB Layer Diagram](#web-layer-diagram)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Author](#author)
-  - [License](#license)
+- [Description](#description)
+- [Application Interface](#application-interface)
+  - [Admin](#admin-interface)
+  - [Seller](#seller-interface)
+  - [Customer](#customer-interface)
+  - [Guest](#guest-interface)
+- [Use Case Diagrams](#use-case-diagrams)
+  - [Admin](#admin-use-case-diagram)
+  - [Seller](#seller-use-case-diagram)
+  - [Customer](#customer-use-case-diagram)
+  - [Guest](#guest-use-case-diagram)
+- [UML Diagrams](#uml-diagrams)
+  - [DAL](#dal-diagram)
+  - [BLL](#bll-diagram)
+  - [WEB](#web-layer-diagram)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Author](#author)
+- [License](#license)
 
 
 
