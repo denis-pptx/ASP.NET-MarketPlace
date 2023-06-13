@@ -104,7 +104,7 @@ MarketPlace is an online store that allows users to browse and purchase products
 
 ## Author
 
-Project author: Dzianis Konchyk.
+Project author: [Dzianis Konchyk](https://github.com/denis-pptx).
 
 
 
