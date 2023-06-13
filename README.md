@@ -61,7 +61,7 @@ MarketPlace is an online store that allows users to browse and purchase products
 ## Use Case Diagrams
 
 ### Admin Use Case Diagram
-![Admin Use Case Diagram](media/UseCase/admin.png)
+![Admin Use Case Diagram](media/UseCase/Admin.png)
 
 ### Seller Use Case Diagram
 ![Seller Use Case Diagram](media/UseCase/Seller.png)
