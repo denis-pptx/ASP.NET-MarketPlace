@@ -8,25 +8,27 @@ This project is a course work on the discipline "Object-oriented programming".
 
 ## Content
 
-- [Description](#description)
-- [Application Interface](#application-interface)
-  - [Admin](#admin-interface)
-  - [Seller](#seller-interface)
-  - [Customer](#customer-interface)
-  - [Guest](#guest-interface)
-- [Use Case Diagrams](#use-case-diagrams)
-  - [Admin](#admin-use-case-diagram)
-  - [Seller](#seller-use-case-diagram)
-  - [Customer](#customer-use-case-diagram)
-  - [Guest](#guest-use-case-diagram)
-- [UML Diagrams](#uml-diagrams)
-  - [DAL](#dal-diagram)
-  - [BLL](#bll-diagram)
-  - [WEB](#web-diagram)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Author](#author)
-- [License](#license)
+- [MarketPlace](#marketplace)
+  - [Content](#content)
+  - [Description](#description)
+  - [Application Interface](#application-interface)
+    - [Admin Interface](#admin-interface)
+    - [Seller Interface](#seller-interface)
+    - [Customer Interface](#customer-interface)
+    - [Guest Interface](#guest-interface)
+  - [Use Case Diagrams](#use-case-diagrams)
+    - [Admin Use Case Diagram](#admin-use-case-diagram)
+    - [Seller Use Case Diagram](#seller-use-case-diagram)
+    - [Customer Use Case Diagram](#customer-use-case-diagram)
+    - [Guest Use Case Diagram](#guest-use-case-diagram)
+  - [UML Diagrams](#uml-diagrams)
+    - [DAL Diagram](#dal-diagram)
+    - [BLL Diagram](#bll-diagram)
+    - [WEB Layer Diagram](#web-layer-diagram)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Author](#author)
+  - [License](#license)
 
 
 
@@ -61,7 +63,7 @@ MarketPlace is an online store that allows users to browse and purchase products
 ## Use Case Diagrams
 
 ### Admin Use Case Diagram
-![Admin Use Case Diagram](media/UseCase/Admin.png)
+![Admin Use Case Diagram](media/UseCase/admin.png)
 
 ### Seller Use Case Diagram
 ![Seller Use Case Diagram](media/UseCase/Seller.png)
@@ -82,7 +84,7 @@ MarketPlace is an online store that allows users to browse and purchase products
 ### BLL Diagram
 ![BLL Layer Diagram](media/UML/BLL.png)
 
-### WEB Diagram
+### WEB Layer Diagram
 ![WEB Layer Diagram](media/UML/WEB.png)
 
 
