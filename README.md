@@ -1,6 +1,6 @@
 # MarketPlace
 
-MarketPlace – an online store developed using ASP.NET MVC. 
+MarketPlace – an online store developed using ASP.NET Core MVC. 
 
 This project is a course work on the discipline "Object-oriented programming" completed during the 4th semester (February - May 2023).
 
@@ -104,7 +104,7 @@ MarketPlace is an online store that allows users to browse and purchase products
 
 ## Author
 
-Project author: [Dzianis Konchyk](https://github.com/denis-pptx).
+Project author: [Denis Konchik](https://github.com/denis-pptx).
 
 
 
